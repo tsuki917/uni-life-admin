@@ -1,7 +1,12 @@
 import React from "react";
-
+import { BrowserRouter } from "react-router-dom";
+import Home from "./component/Home.jsx";
 const App = () => {
-  return <h1>Hello, world!</h1>;
+  return (
+    <BrowserRouter>
+      <Home />
+    </BrowserRouter>
+  );
 };
 
 export default App;
