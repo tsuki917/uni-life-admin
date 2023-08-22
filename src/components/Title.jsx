@@ -70,6 +70,8 @@ export default function Title() {
             <ToggleButton
               value="home"
               aria-label="home"
+              LinkComponent={Link}
+              to="/"
               sx={{
                 bgcolor: "background.paper",
                 "&:hover": {
@@ -84,6 +86,8 @@ export default function Title() {
             <ToggleButton
               value="subject"
               aria-label="subject"
+              LinkComponent={Link}
+              to="/subjects"
               sx={{
                 bgcolor: "background.paper",
                 "&:hover": {
@@ -98,6 +102,8 @@ export default function Title() {
             <ToggleButton
               value="task"
               aria-label="task"
+              LinkComponent={Link}
+              to="/task"
               sx={{
                 bgcolor: "background.paper",
                 "&:hover": {
