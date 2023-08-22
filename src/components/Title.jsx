@@ -7,6 +7,8 @@ import {
   MenuItem,
   Toolbar,
   Button,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,6 +22,7 @@ const rightLink = {
 export default function Title() {
   const navigation = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [toggleView, setToggleView] = useState("home");
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -31,6 +34,9 @@ export default function Title() {
   const pageChange = (e) => {
     const { name } = e.target;
     navigation(name);
+  };
+  const handleToggleChange = (e, newView) => {
+    setToggleView(newView);
   };
   return (
     <div>
@@ -49,6 +55,61 @@ export default function Title() {
           >
             Adminater
           </Button>
+          <ToggleButtonGroup
+            exclusive
+            color="primary"
+            value={toggleView}
+            onChange={handleToggleChange}
+            sx={{
+              "& .MuiToggleButton-root.Mui-selected": {
+                backgroundColor: "#d9d9db", // 選択されているアイテムの背景色を指定
+                color: "black", // 選択されているアイテムのテキスト色を指定
+              },
+            }}
+          >
+            <ToggleButton
+              value="home"
+              aria-label="home"
+              sx={{
+                bgcolor: "background.paper",
+                "&:hover": {
+                  bgcolor: "#d9d9db", // ホバー時の背景色も指定（必要に応じて）
+                },
+                ml: 4,
+                fontSize: 12,
+              }}
+            >
+              home
+            </ToggleButton>
+            <ToggleButton
+              value="subject"
+              aria-label="subject"
+              sx={{
+                bgcolor: "background.paper",
+                "&:hover": {
+                  bgcolor: "#d9d9db", // ホバー時の背景色も指定（必要に応じて）
+                },
+                ml: 4,
+                fontSize: 12,
+              }}
+            >
+              subject
+            </ToggleButton>
+            <ToggleButton
+              value="task"
+              aria-label="task"
+              sx={{
+                bgcolor: "background.paper",
+                "&:hover": {
+                  bgcolor: "#d9d9db", // ホバー時の背景色も指定（必要に応じて）
+                },
+                ml: 4,
+                fontSize: 12,
+              }}
+            >
+              task
+            </ToggleButton>
+          </ToggleButtonGroup>
           <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
             <Menu
               id="menu-app-bar"

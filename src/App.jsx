@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./component/Home.jsx";
-import FirstSetting from "./component/FirstSetting.jsx";
-import Title from "./component/Title.jsx";
+import Home from "./components/Home.jsx";
+import FirstSetting from "./components/FirstSetting.jsx";
+import Title from "./components/Title.jsx";
 export default function App() {
   return (
     <div>
