@@ -1,0 +1,14 @@
+body{
+    margin:0;
+}
+.title{
+    border: 1px black solid;
+    margin:0;
+    width: 10%;
+}
+
+.title-box{
+    border: 1px black solid;
+    width: 100%;
+    
+}
