@@ -1,12 +1,18 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./component/Home.jsx";
-const App = () => {
+import FirstSetting from "./component/FirstSetting.jsx";
+import Title from "./component/Title.jsx";
+export default function App() {
   return (
-    <BrowserRouter>
-      <Home />
-    </BrowserRouter>
+    <div>
+      <Title />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/setting" element={<FirstSetting />} className="" />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
-};
-
-export default App;
+}

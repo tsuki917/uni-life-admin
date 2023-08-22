@@ -1,0 +1,12 @@
+{
+  "subject-name": "string",
+  "small-exam-rate": "number",
+  "small-exam-point": "number",
+  "middle-exam-rate": "number",
+  "middle-exam-point": "number",
+  "final-exam-rate": "number",
+  "final-exam-point": "number",
+  "report-rate": "number",
+  "report-points": "number[]",
+  "time-stamp": "day"
+}
