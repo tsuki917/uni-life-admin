@@ -6,11 +6,14 @@ import Title from "./component/Title.jsx";
 export default function App() {
   return (
     <div>
-      <Title />
       <BrowserRouter>
         <Routes>
+          <Route path="/*" element={<Title />} />
+        </Routes>
+
+        <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/setting" element={<FirstSetting />} className="" />
+          <Route path="/setting" element={<FirstSetting />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 
-import { AppBar, IconButton, Menu, MenuItem, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Button,
+} from "@mui/material";
 import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
+import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 const rightLink = {
   fontSize: 16,
@@ -11,6 +18,7 @@ const rightLink = {
 };
 
 export default function Title() {
+  const navigation = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenu = (event) => {
@@ -20,19 +28,27 @@ export default function Title() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const pageChange = (e) => {
+    const { name } = e.target;
+    navigation(name);
+  };
   return (
     <div>
       <AppBar position="fixed">
         <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Link
+          <Button
             variant="h6"
             underline="none"
             color="inherit"
-            href="/"
             sx={{ fontSize: 24 }}
+            LinkComponent={Link}
+            to="/"
+            // onClick={(e) => {
+            //   pageChange(e);
+            // }}
           >
             Adminater
-          </Link>
+          </Button>
           <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
             <Menu
               id="menu-app-bar"
@@ -51,14 +67,28 @@ export default function Title() {
               MenuListProps={{ onMouseLeave: handleClose }}
             >
               <MenuItem>
-                <Link href="/" underline="none">
+                <Button
+                  name="/"
+                  to="/"
+                  LinkComponent={Link}
+                  // onClick={(e) => {
+                  //   pageChange(e);
+                  // }}
+                >
                   home
-                </Link>
+                </Button>
               </MenuItem>
               <MenuItem>
-                <Link href="/setting" underline="none">
-                  about
-                </Link>
+                <Button
+                  // onClick={(e) => {
+                  //   pageChange(e);
+                  // }}
+                  to="/setting"
+                  LinkComponent={Link}
+                  name="/setting"
+                >
+                  setting
+                </Button>
               </MenuItem>
             </Menu>
             <IconButton sx={rightLink} color="inherit" onMouseOver={handleMenu}>
