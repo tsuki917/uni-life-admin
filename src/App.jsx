@@ -1,12 +1,22 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import Home from "./component/Home.jsx";
-const App = () => {
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home.jsx";
+import FirstSetting from "./components/FirstSetting.jsx";
+import Title from "./components/Title.jsx";
+import Subjects from "./components/SubjectComponents/Subjects.jsx";
+export default function App() {
   return (
-    <BrowserRouter>
-      <Home />
-    </BrowserRouter>
-  );
-};
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/*" element={<Title />} />
+        </Routes>
 
-export default App;
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/subjects" element={<Subjects />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
+}
