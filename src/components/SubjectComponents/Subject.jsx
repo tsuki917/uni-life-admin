@@ -6,7 +6,7 @@ export default function Subject({ data }) {
     <Link component={LinkRouter} to={"/subjects/subjectDetail"}>
       <ListItem sx={{ bgcolor: "#eeeef0", mb: 1 }}>
         <ListItemText
-          primary="Brunch this weekend?"
+          primary={data.name}
           secondary={
             <React.Fragment>
               <Typography

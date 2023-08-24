@@ -1,9 +1,6 @@
-
 import { auth, db } from "../../libs/fire";
-import { doc, setDoc } from "firebase/firestore";
 
 import React, { useEffect, useState } from "react";
-import db from "../../libs/fire.js";
 import { List } from "@mui/material";
 import {
   collection,
@@ -109,7 +106,6 @@ export default function Subjects() {
           );
         })}
       </List>
-
     </div>
   );
 }
