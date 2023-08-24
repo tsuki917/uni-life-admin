@@ -1,14 +1,36 @@
-import React, { useState } from "react";
+
 import { auth, db } from "../../libs/fire";
 import { doc, setDoc } from "firebase/firestore";
+
+import React, { useEffect, useState } from "react";
+import db from "../../libs/fire.js";
+import { List } from "@mui/material";
+import {
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+  getDoc,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
+import Subject from "./Subject.jsx";
+
 export default function Subjects() {
+  useEffect(() => {
+    const data = getSubjectDatas();
+    data.then((element) => {
+      console.log(element);
+      setSubjextsData(element);
+    });
+  }, []);
   /*
     type subjectData = {
         
     }
     
     */
-  const subjectsData = useState([]);
+  const [subjectsData, setSubjextsData] = useState([]);
 
   const [f_Xday, setF_Xday] = useState("");
   const [f_rate, setF_rate] = useState("0");
@@ -29,6 +51,7 @@ export default function Subjects() {
   return (
     <div>
       <h1>subject</h1>
+
       <div>中間試験</div>
 
       <label>
@@ -76,6 +99,27 @@ export default function Subjects() {
         value="追加"
         onClick={onAddEvent}
       />
+
+      <List sx={{ ml: 4 }}>
+        {subjectsData.map((subjectData, key) => {
+          return (
+            <div key={key}>
+              <Subject data={subjectData} />
+            </div>
+          );
+        })}
+      </List>
+
     </div>
   );
+}
+
+async function getSubjectDatas() {
+  const subjectsNewData = [];
+  const test = collection(db, "einstrom917@gmail.com");
+  const q = await getDocs(test);
+  q.forEach((ele) => {
+    subjectsNewData.push(ele.data());
+  });
+  return subjectsNewData;
 }

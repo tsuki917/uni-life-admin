@@ -12,7 +12,10 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import { Link, useNavigate } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
+import Home from "./Home";
+import { Assignment, LocalLibrary } from "@mui/icons-material";
 const rightLink = {
   fontSize: 16,
   color: "common.white",
@@ -81,6 +84,7 @@ export default function Title() {
                 fontSize: 12,
               }}
             >
+              <HomeIcon />
               home
             </ToggleButton>
             <ToggleButton
@@ -97,6 +101,7 @@ export default function Title() {
                 fontSize: 12,
               }}
             >
+              <LocalLibrary />
               subject
             </ToggleButton>
             <ToggleButton
@@ -113,6 +118,7 @@ export default function Title() {
                 fontSize: 12,
               }}
             >
+              <Assignment />
               task
             </ToggleButton>
           </ToggleButtonGroup>

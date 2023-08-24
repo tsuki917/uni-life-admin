@@ -1,4 +1,15 @@
-import React from "react";
+
+import React, { useState } from "react";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithRedirect,
+  getRedirectResult,
+  signInWithPopup,
+} from "firebase/auth";
+import "../libs/fire.js";
+import { useHistory } from "react-router-dom";
+
 import { Link } from "react-router-dom";
 
 export default function Home() {
