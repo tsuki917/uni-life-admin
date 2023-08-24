@@ -6,7 +6,7 @@ import {
   getRedirectResult,
   signInWithPopup,
 } from "firebase/auth";
-import "./fire";
+import "../libs/fire.js";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
