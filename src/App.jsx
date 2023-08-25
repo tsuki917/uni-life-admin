@@ -66,8 +66,7 @@ export default function App() {
           <Route path="/subjects/*" element={<SubjectDetail />} />
         </Routes>
       </BrowserRouter>
-      {loginButton}
-      <h2>{message}</h2>
+      {!auth.currentUser && loginButton}
     </div>
   );
 }
