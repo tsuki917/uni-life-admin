@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
-export default function FinalExam({ finalExamData }) {
+import { ChangeFinal } from "../../Form/ChangeFinal";
+export default function FinalExam({ finalExamData, name }) {
+  const [flag, setFlag] = useState(false);
+  const changeFlag = () => {
+    setFlag((prev) => !prev);
+  };
   return finalExamData === null ? (
     <div>loading</div>
   ) : (
@@ -24,6 +29,14 @@ export default function FinalExam({ finalExamData }) {
                 </Typography>
                 {/* content */}
                 {" — 成績" + finalExamData.score}
+                <button onClick={changeFlag}>変更</button>
+                {flag && (
+                  <ChangeFinal
+                    data={finalExamData}
+                    name={name}
+                    change={changeFlag}
+                  />
+                )}
               </React.Fragment>
             }
           />

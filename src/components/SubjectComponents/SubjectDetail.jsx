@@ -16,6 +16,7 @@ export default function SubjectDetail() {
   const [finalExamData, setFinalExamData] = useState(null);
   const [reportData, setReportData] = useState([]);
   const [reportRate, setReportRate] = useState(null);
+  const [name, setName] = useState("");
 
   const data = decodeURI(useLocation().pathname);
   const targetSubject = data.split("subjects/")[1];
@@ -30,6 +31,7 @@ export default function SubjectDetail() {
       setMiddleExamData(ele.middleExam);
       console.log(ele.middleExam);
       setFinalExamData(ele.finalExam);
+      setName(ele.name);
     });
   }, []);
 
@@ -48,10 +50,14 @@ export default function SubjectDetail() {
         <ArrowBackIcon />
       </Link>
       <h1>{targetSubject}</h1>
-      <Report reportData={reportData} reportRate={reportRate} />
-      <SmallExam smallExamData={smallExamData} smallExamRate={smallExamRate} />
-      <MiddleExam middleExamData={middleExamData} />
-      <FinalExam finalExamData={finalExamData} />
+      <Report reportData={reportData} reportRate={reportRate} name={name} />
+      <SmallExam
+        smallExamData={smallExamData}
+        smallExamRate={smallExamRate}
+        name={name}
+      />
+      <MiddleExam middleExamData={middleExamData} name={name} />
+      <FinalExam finalExamData={finalExamData} name={name} />
     </div>
   );
 }

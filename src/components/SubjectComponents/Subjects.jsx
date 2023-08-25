@@ -32,6 +32,7 @@ export default function Subjects() {
 
   return (
     <div>
+
       <h2>教科一覧</h2>
       <Box
         sx={{
@@ -47,6 +48,10 @@ export default function Subjects() {
           <AddIcon sx={{ pt: 1, pb: 1 }} />
         </Button>
       </Box>
+
+      <h1>subject</h1>
+
+
       <List sx={{ ml: 4 }}>
         {subjectsData.map((subjectData, key) => {
           return (
