@@ -8,14 +8,14 @@ export const ChangeSmall = ({ rate, data, index, name, change }) => {
   const [score, setScore] = useState(data[index].score);
   const onAddEvent = async () => {
     data[index] = {
-      XDay: day,
+      Xday: day,
       title: title,
       score: Number(score),
     };
     const event = {
-      reports: {
+      smallExam: {
         rate: rate,
-        reportArray: data,
+        smallExamArray: data,
       },
     };
     await updateDoc(doc(db, auth.currentUser.email, name), event);
