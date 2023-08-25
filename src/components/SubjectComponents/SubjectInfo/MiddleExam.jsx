@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
-export default function MiddleExam({ middleExamData }) {
+import { ChangeMiddle } from "../../Form/ChangeMiddle";
+export default function MiddleExam({ middleExamData, name }) {
+  const [flag, setFlag] = useState(false);
+  const changeFlag = () => {
+    setFlag((prev) => !prev);
+  };
   console.log(middleExamData);
   return middleExamData === null ? (
     <div>loading</div>
@@ -24,6 +29,14 @@ export default function MiddleExam({ middleExamData }) {
                   {"実施日 : " + middleExamData.Xday}
                 </Typography>
                 {" — 成績" + middleExamData.score}
+                <button onClick={changeFlag}>変更</button>
+                {flag && (
+                  <ChangeMiddle
+                    data={middleExamData}
+                    name={name}
+                    change={changeFlag}
+                  />
+                )}
               </React.Fragment>
             }
           />
