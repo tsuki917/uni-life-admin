@@ -57,7 +57,7 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/*" element={<Title />} />
+          <Route path="/*" element={<Title loginButton={loginButton} />} />
         </Routes>
 
         <Routes>
@@ -66,7 +66,6 @@ export default function App() {
           <Route path="/subjects/*" element={<SubjectDetail />} />
         </Routes>
       </BrowserRouter>
-      {!auth.currentUser && loginButton}
     </div>
   );
 }

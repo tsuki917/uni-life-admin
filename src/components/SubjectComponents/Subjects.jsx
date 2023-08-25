@@ -1,7 +1,8 @@
 import { auth, db } from "../../libs/fire";
 
 import React, { useEffect, useState } from "react";
-import { List } from "@mui/material";
+import { Box, List, Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import {
   collection,
   addDoc,
@@ -14,11 +15,12 @@ import {
 import Subject from "./Subject.jsx";
 
 export default function Subjects() {
+  const [subjectsData, setSubjectsData] = useState([]);
   useEffect(() => {
     const data = getSubjectDatas();
     data.then((element) => {
       console.log(element);
-      setSubjextsData(element);
+      setSubjectsData(element);
     });
   }, []);
   /*
@@ -27,11 +29,28 @@ export default function Subjects() {
     }
     
     */
-  const [subjectsData, setSubjextsData] = useState([]);
 
   return (
     <div>
+
+      <h2>教科一覧</h2>
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Button
+          sx={{ bgcolor: "#1976d2", color: "white", textAlign: "center" }}
+        >
+          <p>追加</p>
+          <AddIcon sx={{ pt: 1, pb: 1 }} />
+        </Button>
+      </Box>
+
       <h1>subject</h1>
+
 
       <List sx={{ ml: 4 }}>
         {subjectsData.map((subjectData, key) => {
