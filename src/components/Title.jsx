@@ -15,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 import Home from "./Home";
+import { auth } from "../libs/fire";
 import { Assignment, LocalLibrary } from "@mui/icons-material";
 const rightLink = {
   fontSize: 16,
@@ -22,7 +23,7 @@ const rightLink = {
   ml: 3,
 };
 
-export default function Title() {
+export default function Title({ loginButton }) {
   const navigation = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [toggleView, setToggleView] = useState("home");
@@ -165,6 +166,7 @@ export default function Title() {
                 </Button>
               </MenuItem>
             </Menu>
+            {auth.currentUser ? auth.currentUser.email : loginButton}
             <IconButton sx={rightLink} color="inherit" onMouseOver={handleMenu}>
               <MenuIcon />
             </IconButton>
