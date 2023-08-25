@@ -112,7 +112,7 @@ export default function Subjects() {
 
 async function getSubjectDatas() {
   const subjectsNewData = [];
-  const test = collection(db, "einstrom917@gmail.com");
+  const test = collection(db, auth.currentUser.email);
   const q = await getDocs(test);
   q.forEach((ele) => {
     subjectsNewData.push(ele.data());
