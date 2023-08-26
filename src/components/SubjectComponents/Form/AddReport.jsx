@@ -1,4 +1,4 @@
-import { auth, db } from "../../libs/fire";
+import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 

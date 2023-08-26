@@ -1,13 +1,26 @@
 import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
-import { ChangeSmall } from "../../Form/ChangeSmall";
-import { AddSmall } from "../../Form/AddSmall";
-export default function SmallExam({ smallExamData, smallExamRate, name, set }) {
+import { ChangeSmall } from "../Form/ChangeSmall";
+import { ChaSmaRate } from "../Form/ChaSmaRate";
+import { AddSmall } from "../Form/AddSmall";
+export default function SmallExam({
+  smallExamData,
+  smallExamRate,
+  name,
+  setData,
+  setRate,
+}) {
   return (
     <div>
       <h2>
         小テスト <span>成績配分 : {smallExamRate}%</span>
       </h2>
+      <ChaSmaRate
+        rate={smallExamRate}
+        data={smallExamData}
+        name={name}
+        set={setRate}
+      />
       <List sx={{ ml: 4 }}>
         {smallExamData.map((smallExamElement, key) => {
           return (
@@ -31,7 +44,7 @@ export default function SmallExam({ smallExamData, smallExamRate, name, set }) {
                       data={smallExamData}
                       index={key}
                       name={name}
-                      set={set}
+                      set={setData}
                     />
                   </React.Fragment>
                 }
@@ -43,7 +56,7 @@ export default function SmallExam({ smallExamData, smallExamRate, name, set }) {
           rate={smallExamRate}
           data={smallExamData}
           name={name}
-          set={set}
+          set={setData}
         />
       </List>
     </div>

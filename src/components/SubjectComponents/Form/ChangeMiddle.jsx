@@ -1,10 +1,9 @@
-import { auth, db } from "../../libs/fire";
+import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 
 export const ChangeMiddle = ({ data, name, set }) => {
   const [Xday, setXday] = useState(data.Xday);
-  const [rate, setRate] = useState(data.rate);
   const [score, setScore] = useState(data.score);
   const [flag, setFlag] = useState(false);
   const changeFlag = () => {
@@ -14,7 +13,7 @@ export const ChangeMiddle = ({ data, name, set }) => {
     const event = {
       middleExam: {
         Xday: Xday,
-        rate: Number(rate),
+        rate: data.rate,
         score: Number(score),
       },
     };
@@ -36,20 +35,6 @@ export const ChangeMiddle = ({ data, name, set }) => {
               name="inputTitle"
               onChange={(e) => {
                 setXday(e.target.value);
-              }}
-            />
-          </label>
-          <label>
-            割合
-            <input
-              //className=
-              type="number"
-              value={rate}
-              //name=
-              min="0"
-              max="100"
-              onChange={(e) => {
-                setRate(e.target.value);
               }}
             />
           </label>
