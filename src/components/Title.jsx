@@ -166,7 +166,11 @@ export default function Title({ loginButton }) {
                 </Button>
               </MenuItem>
             </Menu>
-            {auth.currentUser ? auth.currentUser.email : loginButton}
+            {auth.currentUser ? (
+              <Box sx={{ pt: 1, pb: 1 }}>{auth.currentUser.email}</Box>
+            ) : (
+              loginButton
+            )}
             <IconButton sx={rightLink} color="inherit" onMouseOver={handleMenu}>
               <MenuIcon />
             </IconButton>
