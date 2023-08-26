@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { ChangeReport } from "../../Form/ChangeReport";
+import { AddReport } from "../../Form/AddReport";
 
 export default function Report({ reportData, reportRate, name, set }) {
   return (
@@ -39,6 +40,7 @@ export default function Report({ reportData, reportRate, name, set }) {
             </ListItem>
           );
         })}
+        <AddReport rate={reportRate} data={reportData} name={name} set={set} />
       </List>
     </div>
   );
