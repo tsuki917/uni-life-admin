@@ -2,33 +2,33 @@ import { auth, db } from "../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 
-export const ChangeSmall = ({ rate, data, index, name, set }) => {
-  const [day, setDay] = useState(data[index].Xday);
-  const [title, setTitle] = useState(data[index].title);
-  const [score, setScore] = useState(data[index].score);
+export const AddSmall = ({ rate, data, name, set }) => {
+  const [day, setDay] = useState("");
+  const [title, setTitle] = useState("");
+  const [score, setScore] = useState(null);
   const [flag, setFlag] = useState(false);
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
   const onAddEvent = async () => {
-    data[index] = {
+    const event = {
       Xday: day,
       title: title,
       score: Number(score),
     };
-    const event = {
+    const all = {
       smallExam: {
         rate: rate,
-        smallExamArray: data,
+        smallExamArray: [...data, event],
       },
     };
-    await updateDoc(doc(db, auth.currentUser.email, name), event);
+    await updateDoc(doc(db, auth.currentUser.email, name), all);
     changeFlag();
-    set([...event.smallExam.smallExamArray]);
+    set([...all.smallExam.smallExamArray]);
   };
   return (
     <div>
-      <button onClick={changeFlag}>変更</button>
+      <button onClick={changeFlag}>新規追加</button>
       {flag && (
         <div>
           <label>

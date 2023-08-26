@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { ChangeSmall } from "../../Form/ChangeSmall";
+import { AddSmall } from "../../Form/AddSmall";
 export default function SmallExam({ smallExamData, smallExamRate, name, set }) {
   return (
     <div>
@@ -38,6 +39,12 @@ export default function SmallExam({ smallExamData, smallExamRate, name, set }) {
             </ListItem>
           );
         })}
+        <AddSmall
+          rate={smallExamRate}
+          data={smallExamData}
+          name={name}
+          set={set}
+        />
       </List>
     </div>
   );

@@ -1,6 +1,6 @@
 import { auth, db } from "../../libs/fire";
-import { doc, updateDoc, setDoc } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { doc, updateDoc } from "firebase/firestore";
+import React, { useState } from "react";
 
 export const ChangeReport = ({ rate, data, index, name, set }) => {
   const [day, setDay] = useState(data[index].deadlineDay);
