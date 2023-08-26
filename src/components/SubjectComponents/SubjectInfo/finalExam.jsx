@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemText, Typography, Modal } from "@mui/material";
 import { ChangeFinal } from "../../Form/ChangeFinal";
 export default function FinalExam({ finalExamData, name, set }) {
   return finalExamData === null ? (
@@ -25,6 +25,7 @@ export default function FinalExam({ finalExamData, name, set }) {
                 </Typography>
                 {/* content */}
                 {" — 成績" + finalExamData.score}
+
                 <ChangeFinal data={finalExamData} name={name} set={set} />
               </React.Fragment>
             }

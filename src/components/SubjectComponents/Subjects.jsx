@@ -1,7 +1,7 @@
 import { auth, db } from "../../libs/fire";
 
 import React, { useEffect, useState } from "react";
-import { Box, List, Button } from "@mui/material";
+import { Box, List, Button, Modal, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {
   collection,
@@ -13,9 +13,24 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import Subject from "./Subject.jsx";
-
+import AddSubject from "../Form/AddSubject";
+AddSubject;
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 export default function Subjects() {
   const [subjectsData, setSubjectsData] = useState([]);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   useEffect(() => {
     const data = getSubjectDatas();
     data.then((element) => {
@@ -32,7 +47,6 @@ export default function Subjects() {
 
   return (
     <div>
-
       <h2>教科一覧</h2>
       <Box
         sx={{
@@ -43,14 +57,22 @@ export default function Subjects() {
       >
         <Button
           sx={{ bgcolor: "#1976d2", color: "white", textAlign: "center" }}
+          onClick={handleOpen}
         >
           <p>追加</p>
           <AddIcon sx={{ pt: 1, pb: 1 }} />
         </Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <AddSubject close={setOpen} />
+          </Box>
+        </Modal>
       </Box>
-
-      <h1>subject</h1>
-
 
       <List sx={{ ml: 4 }}>
         {subjectsData.map((subjectData, key) => {
