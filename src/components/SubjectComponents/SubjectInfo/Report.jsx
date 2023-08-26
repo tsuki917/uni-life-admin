@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { ChangeReport } from "../../Form/ChangeReport";
 
-export default function Report({ reportData, reportRate, name }) {
-  const [flag, setFlag] = useState(false);
-  const changeFlag = () => {
-    setFlag((prev) => !prev);
-  };
+export default function Report({ reportData, reportRate, name, set }) {
   return (
     <div>
       <h2>
@@ -30,16 +26,13 @@ export default function Report({ reportData, reportRate, name }) {
                     </Typography>
                     {/* content */}
                     {" — 成績" + reportArrayData.score}
-                    <button onClick={changeFlag}>変更</button>
-                    {flag && (
-                      <ChangeReport
-                        rate={reportRate}
-                        data={reportData}
-                        index={key}
-                        name={name}
-                        change={changeFlag}
-                      />
-                    )}
+                    <ChangeReport
+                      rate={reportRate}
+                      data={reportData}
+                      index={key}
+                      name={name}
+                      set={set}
+                    />
                   </React.Fragment>
                 }
               />

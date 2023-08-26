@@ -50,14 +50,28 @@ export default function SubjectDetail() {
         <ArrowBackIcon />
       </Link>
       <h1>{targetSubject}</h1>
-      <Report reportData={reportData} reportRate={reportRate} name={name} />
+      <Report
+        reportData={reportData}
+        reportRate={reportRate}
+        name={name}
+        set={setReportData}
+      />
       <SmallExam
         smallExamData={smallExamData}
         smallExamRate={smallExamRate}
         name={name}
+        set={setSmallExamData}
       />
-      <MiddleExam middleExamData={middleExamData} name={name} />
-      <FinalExam finalExamData={finalExamData} name={name} />
+      <MiddleExam
+        middleExamData={middleExamData}
+        name={name}
+        set={setMiddleExamData}
+      />
+      <FinalExam
+        finalExamData={finalExamData}
+        name={name}
+        set={setFinalExamData}
+      />
     </div>
   );
 }

@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { ChangeSmall } from "../../Form/ChangeSmall";
-export default function SmallExam({ smallExamData, smallExamRate, name }) {
-  const [flag, setFlag] = useState(false);
-  const changeFlag = () => {
-    setFlag((prev) => !prev);
-  };
+export default function SmallExam({ smallExamData, smallExamRate, name, set }) {
   return (
     <div>
       <h2>
@@ -29,16 +25,13 @@ export default function SmallExam({ smallExamData, smallExamRate, name }) {
                     </Typography>
                     {/* content */}
                     {" — 成績" + smallExamElement.score}
-                    <button onClick={changeFlag}>変更</button>
-                    {flag && (
-                      <ChangeSmall
-                        rate={smallExamRate}
-                        data={smallExamData}
-                        index={key}
-                        name={name}
-                        change={changeFlag}
-                      />
-                    )}
+                    <ChangeSmall
+                      rate={smallExamRate}
+                      data={smallExamData}
+                      index={key}
+                      name={name}
+                      set={set}
+                    />
                   </React.Fragment>
                 }
               />
