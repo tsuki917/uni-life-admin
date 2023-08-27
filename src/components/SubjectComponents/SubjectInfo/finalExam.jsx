@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
-import { ChangeFinal } from "../../Form/ChangeFinal";
+import { ChangeFinal } from "../Form/ChangeFinal";
+import { ChaFinRate } from "../Form/ChaFinRate";
 export default function FinalExam({ finalExamData, name, set }) {
   return finalExamData === null ? (
     <div>loading</div>
@@ -9,6 +10,7 @@ export default function FinalExam({ finalExamData, name, set }) {
       <h2>
         期末試験 <span>成績配分 : {finalExamData.rate}%</span>
       </h2>
+      <ChaFinRate data={finalExamData} name={name} set={set} />
       <List sx={{ ml: 4 }}>
         <ListItem sx={{ bgcolor: "#eeeef0", mb: 1 }}>
           <ListItemText

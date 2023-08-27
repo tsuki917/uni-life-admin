@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
-import { ChangeMiddle } from "../../Form/ChangeMiddle";
+import { ChangeMiddle } from "../Form/ChangeMiddle";
+import { ChaMidRate } from "../Form/ChaMidRate";
 export default function MiddleExam({ middleExamData, name, set }) {
   console.log(middleExamData);
   return middleExamData === null ? (
@@ -10,6 +11,7 @@ export default function MiddleExam({ middleExamData, name, set }) {
       <h2>
         中間試験 <span>成績配分 : {middleExamData.rate}%</span>
       </h2>
+      <ChaMidRate data={middleExamData} name={name} set={set} />
       <List sx={{ ml: 4 }}>
         <ListItem sx={{ bgcolor: "#eeeef0", mb: 1 }}>
           <ListItemText

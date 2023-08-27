@@ -15,7 +15,7 @@ export default function SubjectDetail() {
   const [middleExamData, setMiddleExamData] = useState(null);
   const [finalExamData, setFinalExamData] = useState(null);
   const [reportData, setReportData] = useState([]);
-  const [reportRate, setReportRate] = useState(null);
+  const [reportRate, setReportRate] = useState(0);
   const [name, setName] = useState("");
 
   const data = decodeURI(useLocation().pathname);
@@ -54,13 +54,15 @@ export default function SubjectDetail() {
         reportData={reportData}
         reportRate={reportRate}
         name={name}
-        set={setReportData}
+        setData={setReportData}
+        setRate={setReportRate}
       />
       <SmallExam
         smallExamData={smallExamData}
         smallExamRate={smallExamRate}
         name={name}
-        set={setSmallExamData}
+        setData={setSmallExamData}
+        setRate={setSmallExamRate}
       />
       <MiddleExam
         middleExamData={middleExamData}

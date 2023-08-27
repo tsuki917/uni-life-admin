@@ -1,9 +1,9 @@
-import { auth, db } from "../../libs/fire";
+import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 
-export const ChangeReport = ({ rate, data, index, name, set }) => {
-  const [day, setDay] = useState(data[index].deadlineDay);
+export const ChangeSmall = ({ rate, data, index, name, set }) => {
+  const [day, setDay] = useState(data[index].Xday);
   const [title, setTitle] = useState(data[index].title);
   const [score, setScore] = useState(data[index].score);
   const [flag, setFlag] = useState(false);
@@ -12,19 +12,19 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
   };
   const onAddEvent = async () => {
     data[index] = {
-      deadlineDay: day,
+      Xday: day,
       title: title,
       score: Number(score),
     };
     const event = {
-      reports: {
+      smallExam: {
         rate: rate,
-        reportArray: data,
+        smallExamArray: data,
       },
     };
     await updateDoc(doc(db, auth.currentUser.email, name), event);
     changeFlag();
-    set([...event.reports.reportArray]);
+    set([...event.smallExam.smallExamArray]);
   };
   return (
     <div>
@@ -32,7 +32,7 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
       {flag && (
         <div>
           <label>
-            課題名
+            小テスト名
             <input
               //className=
               type="text"

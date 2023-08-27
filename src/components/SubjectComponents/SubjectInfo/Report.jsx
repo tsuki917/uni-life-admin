@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
-import { ChangeReport } from "../../Form/ChangeReport";
-import { AddReport } from "../../Form/AddReport";
+import { ChangeReport } from "../Form/ChangeReport";
+import { ChaRepRate } from "../Form/ChaRepRate";
+import { AddReport } from "../Form/AddReport";
 
-export default function Report({ reportData, reportRate, name, set }) {
+export default function Report({
+  reportData,
+  reportRate,
+  name,
+  setData,
+  setRate,
+}) {
   return (
     <div>
       <h2>
         課題 <span>成績配分 : {reportRate}%</span>
       </h2>
+      <ChaRepRate data={reportData} name={name} set={setRate} />
       <List sx={{ ml: 4 }}>
         {reportData.map((reportArrayData, key) => {
           return (
@@ -32,7 +40,7 @@ export default function Report({ reportData, reportRate, name, set }) {
                       data={reportData}
                       index={key}
                       name={name}
-                      set={set}
+                      set={setData}
                     />
                   </React.Fragment>
                 }
@@ -40,7 +48,12 @@ export default function Report({ reportData, reportRate, name, set }) {
             </ListItem>
           );
         })}
-        <AddReport rate={reportRate} data={reportData} name={name} set={set} />
+        <AddReport
+          rate={reportRate}
+          data={reportData}
+          name={name}
+          set={setData}
+        />
       </List>
     </div>
   );
