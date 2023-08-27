@@ -2,8 +2,8 @@ import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 
-export const ChaRepRate = ({ oldRate, data, name, set }) => {
-  const [rate, setRate] = useState(oldRate);
+export const ChaRepRate = ({ data, name, set }) => {
+  const [rate, setRate] = useState(0);
   const [flag, setFlag] = useState(false);
   const changeFlag = () => {
     setFlag((prev) => !prev);

@@ -15,12 +15,7 @@ export default function SmallExam({
       <h2>
         小テスト <span>成績配分 : {smallExamRate}%</span>
       </h2>
-      <ChaSmaRate
-        rate={smallExamRate}
-        data={smallExamData}
-        name={name}
-        set={setRate}
-      />
+      <ChaSmaRate data={smallExamData} name={name} set={setRate} />
       <List sx={{ ml: 4 }}>
         {smallExamData.map((smallExamElement, key) => {
           return (

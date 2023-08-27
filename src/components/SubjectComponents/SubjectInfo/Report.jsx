@@ -10,19 +10,13 @@ export default function Report({
   name,
   setData,
   setRate,
-  report,
 }) {
   return (
     <div>
       <h2>
         課題 <span>成績配分 : {reportRate}%</span>
       </h2>
-      <ChaRepRate
-        oldRate={reportRate}
-        data={reportData}
-        name={name}
-        set={setRate}
-      />
+      <ChaRepRate data={reportData} name={name} set={setRate} />
       <List sx={{ ml: 4 }}>
         {reportData.map((reportArrayData, key) => {
           return (

@@ -3,7 +3,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 
 export const ChaFinRate = ({ data, name, set }) => {
-  const [rate, setRate] = useState(data.rate);
+  const [rate, setRate] = useState(0);
   const [flag, setFlag] = useState(false);
   const changeFlag = () => {
     setFlag((prev) => !prev);
