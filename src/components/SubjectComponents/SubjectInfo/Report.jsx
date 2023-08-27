@@ -3,6 +3,7 @@ import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { ChangeReport } from "../Form/ChangeReport";
 import { ChaRepRate } from "../Form/ChaRepRate";
 import { AddReport } from "../Form/AddReport";
+import { DeleteReport } from "../Form/DeleteReport";
 
 export default function Report({
   reportData,
@@ -36,6 +37,13 @@ export default function Report({
                     {/* content */}
                     {" — 成績" + reportArrayData.score}
                     <ChangeReport
+                      rate={reportRate}
+                      data={reportData}
+                      index={key}
+                      name={name}
+                      set={setData}
+                    />
+                    <DeleteReport
                       rate={reportRate}
                       data={reportData}
                       index={key}
