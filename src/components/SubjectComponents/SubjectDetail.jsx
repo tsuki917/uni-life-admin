@@ -7,15 +7,19 @@ import FinalExam from "./SubjectInfo/finalExam";
 import MiddleExam from "./SubjectInfo/MiddleExam";
 import SmallExam from "./SubjectInfo/SmallExam";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link } from "@mui/material";
+import { Link, Button } from "@mui/material";
 import { Link as LinkRouter } from "react-router-dom";
 export default function SubjectDetail() {
   const [smallExamData, setSmallExamData] = useState([]);
-  const [smallExamRate, setSmallExamRate] = useState(null);
+  const [smallExamRate, setSmallExamRate] = useState(0);
   const [middleExamData, setMiddleExamData] = useState(null);
   const [finalExamData, setFinalExamData] = useState(null);
   const [reportData, setReportData] = useState([]);
   const [reportRate, setReportRate] = useState(0);
+
+  const [score, setScore] = useState(0);
+  const [scoreRate, setScoreRate] = useState(0);
+
   const [name, setName] = useState("");
 
   const data = decodeURI(useLocation().pathname);
@@ -35,14 +39,69 @@ export default function SubjectDetail() {
     });
   }, []);
 
+  useEffect(() => {
+    if (
+      smallExamData != null &&
+      middleExamData !== null &&
+      finalExamData !== null &&
+      reportData !== null
+    ) {
+      let scorePre = 0;
+      let maxScore = 0;
+      const middleExamPoint = middleExamData
+        ? middleExamData.score * middleExamData.rate * 0.01
+        : 0;
+      const middleMaxScore = middleExamData.score ? middleExamData.rate : 0;
+      const finalExamPoint = finalExamData
+        ? finalExamData.score * finalExamData.rate * 0.01
+        : 0;
+      const finalMaxScore = finalExamData.score ? finalExamData.rate : 0;
+      let smallExamPoint = 0;
+      if (smallExamData.length !== 0) {
+        smallExamData.forEach((ele) => {
+          smallExamPoint += ele.score / smallExamData.length;
+        });
+      }
+      smallExamPoint *= smallExamRate * 0.01;
+
+      const smallMaxScore = smallExamData.length > 0 ? smallExamRate : 0;
+
+      let reportPoint = 0;
+
+      reportData.forEach((ele) => {
+        reportPoint += ele.score / reportData.length;
+      });
+      reportPoint *= reportRate * 0.01;
+      const reportMaxScore = reportData.length > 0 ? reportRate : 0;
+      maxScore +=
+        middleMaxScore + finalMaxScore + reportMaxScore + smallMaxScore;
+      scorePre += middleExamPoint;
+      scorePre += finalExamPoint;
+      scorePre += smallExamPoint;
+      scorePre += reportPoint;
+      const scoreRatePre = Math.round((scorePre / maxScore) * 100 * 10) / 10;
+      scorePre = Math.round(scorePre * 10) / 10;
+      setScore(scorePre);
+      setScoreRate(scoreRatePre);
+      console.log(maxScore + "maxScore");
+      console.log(score);
+    }
+  }, [
+    smallExamData,
+    smallExamRate,
+    middleExamData,
+    finalExamData,
+    reportData,
+    reportRate,
+  ]);
   return reportData === undefined ? (
     <div>
       <p>Loding</p>
-      <button
+      <Button
         onClick={() => {
           console.log(reportData);
         }}
-      ></button>
+      ></Button>
     </div>
   ) : (
     <div>
@@ -50,6 +109,8 @@ export default function SubjectDetail() {
         <ArrowBackIcon />
       </Link>
       <h1>{targetSubject}</h1>
+      <h1>得点率:{scoreRate}%</h1>
+      <h1>得点:{score}</h1>
       <Report
         reportData={reportData}
         reportRate={reportRate}

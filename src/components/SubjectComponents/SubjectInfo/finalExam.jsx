@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { ChangeFinal } from "../Form/ChangeFinal";
 import { ChaFinRate } from "../Form/ChaFinRate";
+
 export default function FinalExam({ finalExamData, name, set }) {
   return finalExamData === null ? (
     <div>loading</div>
@@ -26,7 +27,8 @@ export default function FinalExam({ finalExamData, name, set }) {
                   {"実施日 : " + finalExamData.Xday}
                 </Typography>
                 {/* content */}
-                {" — 成績" + finalExamData.score}
+                {" — 成績" + finalExamData.score + "点"}
+
                 <ChangeFinal data={finalExamData} name={name} set={set} />
               </React.Fragment>
             }

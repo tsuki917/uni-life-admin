@@ -35,7 +35,7 @@ export default function Report({
                       {"期限 : " + reportArrayData.deadlineDay}
                     </Typography>
                     {/* content */}
-                    {" — 成績" + reportArrayData.score}
+                    {" — 成績" + reportArrayData.score + "点"}
                     <ChangeReport
                       rate={reportRate}
                       data={reportData}

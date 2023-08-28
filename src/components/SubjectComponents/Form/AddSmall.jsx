@@ -1,7 +1,18 @@
 import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-
+import { Button, Modal, Box } from "@mui/material";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "eeeef0",
+  border: "2px solid #000",
+  boxShadow: 5,
+  p: 4,
+};
 export const AddSmall = ({ rate, data, name, set }) => {
   const [day, setDay] = useState("");
   const [title, setTitle] = useState("");
@@ -28,9 +39,17 @@ export const AddSmall = ({ rate, data, name, set }) => {
   };
   return (
     <div>
-      <button onClick={changeFlag}>新規追加</button>
-      {flag && (
-        <div>
+      <Button onClick={changeFlag}>小テスト追加</Button>
+      <Modal open={flag} onClose={changeFlag}>
+        <Box
+          sx={{
+            ...style,
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
           <label>
             小テスト名
             <input
@@ -74,8 +93,8 @@ export const AddSmall = ({ rate, data, name, set }) => {
             value="確定"
             onClick={onAddEvent}
           />
-        </div>
-      )}
+        </Box>
+      </Modal>
     </div>
   );
 };
