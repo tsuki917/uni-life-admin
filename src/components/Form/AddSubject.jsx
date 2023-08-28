@@ -1,7 +1,20 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
+import { db, auth } from "../../libs/fire";
+import { setDoc, doc } from "firebase/firestore";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "eeeef0",
+  border: "2px solid #000",
+  boxShadow: 5,
+  p: 4,
+};
 
-export default function AddSubject({ close }) {
+export default function AddSubject({ close, setSubjectsData, subjectsData }) {
   const [subjectName, setSubjectname] = useState("");
   const [finalRate, setFinalRate] = useState(0);
   const [middleRate, setMiddleRate] = useState(0);
@@ -11,17 +24,61 @@ export default function AddSubject({ close }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     close(false);
-    console.log({
-      subjectName,
-      finalRate,
-      middleRate,
-      smallRate,
-      reportRate,
+  };
+
+  const addSubjectData = async (
+    subName,
+    smallRate,
+    middleRate,
+    finalRate,
+    reportRate
+  ) => {
+    const subDoc = doc(db, auth.currentUser.email, subName);
+    const subjectData = {
+      name: subName,
+      finalExam: {
+        rate: finalRate,
+        score: 0,
+        Xday: "",
+      },
+      middleExam: {
+        rate: middleRate,
+        score: 0,
+        Xday: "",
+      },
+      smallExam: {
+        rate: smallRate,
+        smallExamArray: [],
+      },
+      reports: {
+        rate: reportRate,
+        reportArray: [],
+      },
+    };
+    await setDoc(subDoc, subjectData);
+    const subjectsData_copy = [];
+    subjectsData.forEach((element) => {
+      subjectsData_copy.push(element);
     });
+    subjectsData_copy.push(subjectData);
+    setSubjectsData(() => subjectsData_copy);
+  };
+
+  const onAddEvent = () => {
+    console.log("add Event");
+    addSubjectData(subjectName, smallRate, middleRate, finalRate, reportRate);
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <Box
+        sx={{
+          ...style,
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
         <label>
           教科名
           <input
@@ -91,8 +148,11 @@ export default function AddSubject({ close }) {
           //className=
           type="submit"
           value="確定"
-        />
-      </form>
-    </div>
+          onClick={onAddEvent}
+        >
+          確定
+        </Button>
+      </Box>
+    </form>
   );
 }

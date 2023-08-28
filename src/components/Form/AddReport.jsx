@@ -40,7 +40,7 @@ export const AddReport = ({ rate, data, name, set }) => {
   };
   return (
     <div>
-      <Button onClick={changeFlag}>新規追加</Button>
+      <Button onClick={changeFlag}>課題追加</Button>
       <Modal open={flag} onClose={changeFlag}>
         <Box
           sx={{

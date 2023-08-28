@@ -14,7 +14,6 @@ import {
 } from "firebase/firestore";
 import Subject from "./Subject.jsx";
 import AddSubject from "../Form/AddSubject";
-AddSubject;
 const style = {
   position: "absolute",
   top: "50%",
@@ -56,11 +55,11 @@ export default function Subjects() {
         }}
       >
         <Button
-          sx={{ bgcolor: "#1976d2", color: "white", textAlign: "center" }}
+          sx={{ bgcolor: "#1976d2", color: "white", p: 0, mr: 2 }}
           onClick={handleOpen}
+          startIcon={<AddIcon />}
         >
-          <p>追加</p>
-          <AddIcon sx={{ pt: 1, pb: 1 }} />
+          追加
         </Button>
         <Modal
           open={open}
@@ -69,7 +68,11 @@ export default function Subjects() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <AddSubject close={setOpen} />
+            <AddSubject
+              close={setOpen}
+              setSubjectsData={setSubjectsData}
+              subjectsData={subjectsData}
+            />
           </Box>
         </Modal>
       </Box>

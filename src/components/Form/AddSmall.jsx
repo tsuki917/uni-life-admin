@@ -39,7 +39,7 @@ export const AddSmall = ({ rate, data, name, set }) => {
   };
   return (
     <div>
-      <Button onClick={changeFlag}>新規追加</Button>
+      <Button onClick={changeFlag}>小テスト追加</Button>
       <Modal open={flag} onClose={changeFlag}>
         <Box
           sx={{

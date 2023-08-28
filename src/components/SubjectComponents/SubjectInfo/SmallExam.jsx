@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemText, Box, Typography } from "@mui/material";
 import { ChangeSmall } from "../../Form/ChangeSmall";
 import { AddSmall } from "../../Form/AddSmall";
 export default function SmallExam({ smallExamData, smallExamRate, name, set }) {
@@ -8,6 +8,14 @@ export default function SmallExam({ smallExamData, smallExamRate, name, set }) {
       <h2>
         小テスト <span>成績配分 : {smallExamRate}%</span>
       </h2>
+      <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+        <AddSmall
+          rate={smallExamRate}
+          data={smallExamData}
+          name={name}
+          set={set}
+        />
+      </Box>
       <List sx={{ ml: 4 }}>
         {smallExamData.map((smallExamElement, key) => {
           return (
@@ -39,12 +47,6 @@ export default function SmallExam({ smallExamData, smallExamRate, name, set }) {
             </ListItem>
           );
         })}
-        <AddSmall
-          rate={smallExamRate}
-          data={smallExamData}
-          name={name}
-          set={set}
-        />
       </List>
     </div>
   );

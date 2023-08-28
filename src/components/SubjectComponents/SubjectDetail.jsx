@@ -12,16 +12,8 @@ import { Link as LinkRouter } from "react-router-dom";
 export default function SubjectDetail() {
   const [smallExamData, setSmallExamData] = useState([]);
   const [smallExamRate, setSmallExamRate] = useState(0);
-  const [middleExamData, setMiddleExamData] = useState({
-    Xday: "",
-    rate: 0,
-    score: 0,
-  });
-  const [finalExamData, setFinalExamData] = useState({
-    Xday: "",
-    rate: 0,
-    score: 0,
-  });
+  const [middleExamData, setMiddleExamData] = useState(null);
+  const [finalExamData, setFinalExamData] = useState(null);
   const [reportData, setReportData] = useState([]);
   const [reportRate, setReportRate] = useState(0);
   const [score, setScore] = useState(0);
@@ -46,44 +38,52 @@ export default function SubjectDetail() {
   }, []);
 
   useEffect(() => {
-    let scorePre = 0;
-    let maxScore = 0;
-    const middleExamPoint = middleExamData
-      ? middleExamData.score * middleExamData.rate * 0.01
-      : 0;
-    const middleMaxScore = middleExamData.score ? middleExamData.rate : 0;
-    const finalExamPoint = finalExamData
-      ? finalExamData.score * finalExamData.rate * 0.01
-      : 0;
-    const finalMaxScore = finalExamData.score ? finalExamData.rate : 0;
-    let smallExamPoint = 0;
-    if (smallExamData.length !== 0) {
-      smallExamData.forEach((ele) => {
-        smallExamPoint += ele.score / smallExamData.length;
+    if (
+      smallExamData != null &&
+      middleExamData !== null &&
+      finalExamData !== null &&
+      reportData !== null
+    ) {
+      let scorePre = 0;
+      let maxScore = 0;
+      const middleExamPoint = middleExamData
+        ? middleExamData.score * middleExamData.rate * 0.01
+        : 0;
+      const middleMaxScore = middleExamData.score ? middleExamData.rate : 0;
+      const finalExamPoint = finalExamData
+        ? finalExamData.score * finalExamData.rate * 0.01
+        : 0;
+      const finalMaxScore = finalExamData.score ? finalExamData.rate : 0;
+      let smallExamPoint = 0;
+      if (smallExamData.length !== 0) {
+        smallExamData.forEach((ele) => {
+          smallExamPoint += ele.score / smallExamData.length;
+        });
+      }
+      smallExamPoint *= smallExamRate * 0.01;
+
+      const smallMaxScore = smallExamData.length > 0 ? smallExamRate : 0;
+
+      let reportPoint = 0;
+
+      reportData.forEach((ele) => {
+        reportPoint += ele.score / reportData.length;
       });
+      reportPoint *= reportRate * 0.01;
+      const reportMaxScore = reportData.length > 0 ? reportRate : 0;
+      maxScore +=
+        middleMaxScore + finalMaxScore + reportMaxScore + smallMaxScore;
+      scorePre += middleExamPoint;
+      scorePre += finalExamPoint;
+      scorePre += smallExamPoint;
+      scorePre += reportPoint;
+      const scoreRatePre = Math.round((scorePre / maxScore) * 100 * 10) / 10;
+      scorePre = Math.round(scorePre * 10) / 10;
+      setScore(scorePre);
+      setScoreRate(scoreRatePre);
+      console.log(maxScore + "maxScore");
+      console.log(score);
     }
-    smallExamPoint *= smallExamRate * 0.01;
-
-    const smallMaxScore = smallExamData.length > 0 ? smallExamRate : 0;
-
-    let reportPoint = 0;
-
-    reportData.forEach((ele) => {
-      reportPoint += ele.score / reportData.length;
-    });
-    reportPoint *= reportRate * 0.01;
-    const reportMaxScore = reportData.length > 0 ? reportRate : 0;
-    maxScore += middleMaxScore + finalMaxScore + reportMaxScore + smallMaxScore;
-    scorePre += middleExamPoint;
-    scorePre += finalExamPoint;
-    scorePre += smallExamPoint;
-    scorePre += reportPoint;
-    const scoreRatePre = Math.round((scorePre / maxScore) * 100 * 10) / 10;
-    scorePre = Math.round(scorePre * 10) / 10;
-    setScore(scorePre);
-    setScoreRate(scoreRatePre);
-    console.log(maxScore + "maxScore");
-    console.log(score);
   }, [
     smallExamData,
     smallExamRate,
