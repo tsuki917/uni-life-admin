@@ -1,7 +1,8 @@
 import { auth, db } from "../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { Modal, Box } from "@mui/material";
+import { Modal, Box, Button } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 const style = {
   position: "absolute",
   top: "50%",
@@ -36,12 +37,29 @@ export const ChangeFinal = ({ data, name, set }) => {
   };
   return (
     <div>
-      <button onClick={changeFlag}>変更</button>
+      {!flag && (
+        <Button
+          variant="outlined"
+          sx={{ p: 0 }}
+          onClick={changeFlag}
+          startIcon={<EditIcon />}
+        >
+          編集
+        </Button>
+      )}
 
       <Modal open={flag} onClose={changeFlag}>
-        <Box sx={style}>
+        <Box
+          sx={{
+            ...style,
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
           <label>
-            実施日
+            実施日(yyyy/mm/dd)
             <input
               //className=
               type="text"

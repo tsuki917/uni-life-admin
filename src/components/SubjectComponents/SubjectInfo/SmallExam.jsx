@@ -25,7 +25,7 @@ export default function SmallExam({ smallExamData, smallExamRate, name, set }) {
                       {"実施日 : " + smallExamElement.Xday}
                     </Typography>
                     {/* content */}
-                    {" — 成績" + smallExamElement.score}
+                    {" — 成績" + smallExamElement.score + "点"}
                     <ChangeSmall
                       rate={smallExamRate}
                       data={smallExamData}

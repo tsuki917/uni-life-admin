@@ -24,7 +24,7 @@ export default function MiddleExam({ middleExamData, name, set }) {
                 >
                   {"実施日 : " + middleExamData.Xday}
                 </Typography>
-                {" — 成績" + middleExamData.score}
+                {" — 成績" + middleExamData.score + "点"}
                 <ChangeMiddle data={middleExamData} name={name} set={set} />
               </React.Fragment>
             }

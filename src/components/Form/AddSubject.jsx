@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "@mui/material";
 
 export default function AddSubject({ close }) {
   const [subjectName, setSubjectname] = useState("");
@@ -86,7 +87,7 @@ export default function AddSubject({ close }) {
             }}
           />
         </label>
-        <input
+        <Button
           //className=
           type="submit"
           value="確定"

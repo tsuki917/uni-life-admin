@@ -24,7 +24,7 @@ export default function FinalExam({ finalExamData, name, set }) {
                   {"実施日 : " + finalExamData.Xday}
                 </Typography>
                 {/* content */}
-                {" — 成績" + finalExamData.score}
+                {" — 成績" + finalExamData.score + "点"}
 
                 <ChangeFinal data={finalExamData} name={name} set={set} />
               </React.Fragment>

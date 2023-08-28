@@ -1,7 +1,19 @@
 import { auth, db } from "../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-
+import { Modal, Box, Button } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "eeeef0",
+  border: "2px solid #000",
+  boxShadow: 5,
+  p: 4,
+};
 export const ChangeReport = ({ rate, data, index, name, set }) => {
   const [day, setDay] = useState(data[index].deadlineDay);
   const [title, setTitle] = useState(data[index].title);
@@ -28,9 +40,26 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
   };
   return (
     <div>
-      <button onClick={changeFlag}>変更</button>
-      {flag && (
-        <div>
+      {!flag && (
+        <Button
+          variant="outlined"
+          onClick={changeFlag}
+          sx={{ p: 0 }}
+          startIcon={<EditIcon />}
+        >
+          編集
+        </Button>
+      )}
+      <Modal open={flag} onClose={changeFlag}>
+        <Box
+          sx={{
+            ...style,
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
           <label>
             課題名
             <input
@@ -44,7 +73,7 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
             />
           </label>
           <label>
-            期限
+            期限(yyyy/mm/dd)
             <input
               //className=
               type="text"
@@ -74,8 +103,8 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
             value="確定"
             onClick={onAddEvent}
           />
-        </div>
-      )}
+        </Box>
+      </Modal>
     </div>
   );
 };

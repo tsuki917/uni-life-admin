@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link as LinkRouter } from "react-router-dom";
 export default function Subject({ data }) {
   const [subjectEvo, setSubjectEvo] = useState(0);
+  const [subjectEvoRate, setSubjectEvoRate] = useState(0);
   console.log(data.name);
   useEffect(() => {
     let score = 0;
@@ -39,9 +40,10 @@ export default function Subject({ data }) {
     score += finalExamPoint;
     score += smallExamPoint;
     score += reportPoint;
-
+    const scoreRate = Math.round((score / maxScore) * 100 * 10) / 10;
     console.log(maxScore + "maxScore");
     console.log(score);
+    setSubjectEvoRate(scoreRate);
     setSubjectEvo(score);
   }, [data]);
 
@@ -61,7 +63,13 @@ export default function Subject({ data }) {
                 {data.name}
               </Typography>
               {/* content */}
-              {" — " + data.finalExam.score + "   現在の推定得点:" + subjectEvo}
+              {" — " +
+                "   現在の推定得点:" +
+                subjectEvo +
+                "点" +
+                "   現在の得点率:" +
+                subjectEvoRate +
+                "%"}
             </React.Fragment>
           }
         />
