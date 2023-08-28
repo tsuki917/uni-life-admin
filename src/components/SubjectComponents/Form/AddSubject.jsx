@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Box } from "@mui/material";
-import { db, auth } from "../../libs/fire";
+import { db, auth } from "../../../libs/fire.js";
 import { setDoc, doc } from "firebase/firestore";
 const style = {
   position: "absolute",

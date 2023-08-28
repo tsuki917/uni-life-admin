@@ -24,7 +24,7 @@ export default function SmallExam({
           rate={smallExamRate}
           data={smallExamData}
           name={name}
-          set={set}
+          set={setData}
         />
       </Box>
 

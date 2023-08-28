@@ -1,4 +1,4 @@
-import { auth, db } from "../../libs/fire";
+import { db, auth } from "../../libs/fire.js";
 
 import React, { useEffect, useState } from "react";
 import { Box, List, Button, Modal, Typography } from "@mui/material";
@@ -13,7 +13,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import Subject from "./Subject.jsx";
-import AddSubject from "../Form/AddSubject";
+import AddSubject from "../SubjectComponents/Form/AddSubject.jsx";
 const style = {
   position: "absolute",
   top: "50%",

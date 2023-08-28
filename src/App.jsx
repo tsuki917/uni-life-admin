@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home.jsx";
 import FirstSetting from "./components/FirstSetting.jsx";
 import Title from "./components/Title.jsx";
@@ -55,7 +55,7 @@ export default function App() {
   };
   return (
     <div>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/*" element={<Title loginButton={loginButton} />} />
         </Routes>
@@ -65,7 +65,7 @@ export default function App() {
           <Route path="/subjects" element={<Subjects />} />
           <Route path="/subjects/*" element={<SubjectDetail />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
