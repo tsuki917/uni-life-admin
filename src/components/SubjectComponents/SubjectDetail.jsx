@@ -6,6 +6,7 @@ import Report from "./SubjectInfo/Report";
 import FinalExam from "./SubjectInfo/finalExam";
 import MiddleExam from "./SubjectInfo/MiddleExam";
 import SmallExam from "./SubjectInfo/SmallExam";
+import { ChangeSubject } from "./Form/ChangeSubject";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, Button } from "@mui/material";
 import { Link as LinkRouter } from "react-router-dom";
@@ -16,11 +17,15 @@ export default function SubjectDetail() {
   const [finalExamData, setFinalExamData] = useState(null);
   const [reportData, setReportData] = useState([]);
   const [reportRate, setReportRate] = useState(0);
-
   const [score, setScore] = useState(0);
   const [scoreRate, setScoreRate] = useState(0);
-
   const [name, setName] = useState("");
+  const [all, setAll] = useState();
+  const [subjectName, setSubjectName] = useState("");
+  const [flag, setFlag] = useState(false);
+  const changeFlag = () => {
+    setFlag(() => true);
+  };
 
   const data = decodeURI(useLocation().pathname);
   const targetSubject = data.split("subjects/")[1];
@@ -36,6 +41,7 @@ export default function SubjectDetail() {
       console.log(ele.middleExam);
       setFinalExamData(ele.finalExam);
       setName(ele.name);
+      setAll(ele);
     });
   }, []);
 
@@ -108,9 +114,15 @@ export default function SubjectDetail() {
       <Link component={LinkRouter} to={"/subjects"}>
         <ArrowBackIcon />
       </Link>
-      <h1>{targetSubject}</h1>
+      <h1>{flag ? subjectName : targetSubject}</h1>
       <h1>得点率:{scoreRate}%</h1>
       <h1>得点:{score}</h1>
+      <ChangeSubject
+        all={all}
+        setAll={setAll}
+        setSubject={setSubjectName}
+        change={changeFlag}
+      />
       <Report
         reportData={reportData}
         reportRate={reportRate}
