@@ -80,9 +80,13 @@ export default function Subjects() {
       <List sx={{ ml: 4 }}>
         {subjectsData.map((subjectData, key) => {
           return (
-            <div key={key}>
-              <Subject data={subjectData} />
-            </div>
+            <Box key={key}>
+              <Subject
+                data={subjectData}
+                setSubjectsData={setSubjectsData}
+                subjectsData={subjectsData}
+              />
+            </Box>
           );
         })}
       </List>
