@@ -93,7 +93,8 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
     score += finalExamPoint;
     score += smallExamPoint;
     score += reportPoint;
-    const scoreRate = Math.round((score / maxScore) * 100 * 10) / 10;
+    const scoreRate =
+      maxScore !== 0 ? Math.round((score / maxScore) * 100 * 10) / 10 : 0;
     console.log(maxScore + "maxScore");
     console.log(score);
     setSubjectEvoRate(scoreRate);
