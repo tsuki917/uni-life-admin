@@ -57,11 +57,12 @@ export default function SubjectDetail() {
       const middleExamPoint = middleExamData
         ? middleExamData.score * middleExamData.rate * 0.01
         : 0;
-      const middleMaxScore = middleExamData.score ? middleExamData.rate : 0;
+      const middleMaxScore =
+        middleExamData.score !== 0 ? middleExamData.rate : 0;
       const finalExamPoint = finalExamData
         ? finalExamData.score * finalExamData.rate * 0.01
         : 0;
-      const finalMaxScore = finalExamData.score ? finalExamData.rate : 0;
+      const finalMaxScore = finalExamData.score !== 0 ? finalExamData.rate : 0;
       let smallExamPoint = 0;
       if (smallExamData.length !== 0) {
         smallExamData.forEach((ele) => {
@@ -79,17 +80,21 @@ export default function SubjectDetail() {
       });
       reportPoint *= reportRate * 0.01;
       const reportMaxScore = reportData.length > 0 ? reportRate : 0;
-      maxScore +=
-        middleMaxScore + finalMaxScore + reportMaxScore + smallMaxScore;
+      maxScore += parseFloat(middleMaxScore);
+      maxScore += parseFloat(finalMaxScore);
+      maxScore += parseFloat(reportMaxScore);
+      maxScore += parseFloat(smallMaxScore);
+
       scorePre += middleExamPoint;
       scorePre += finalExamPoint;
       scorePre += smallExamPoint;
       scorePre += reportPoint;
+      console.log(scorePre + ": scorePre");
       const scoreRatePre = Math.round((scorePre / maxScore) * 100 * 10) / 10;
       scorePre = Math.round(scorePre * 10) / 10;
       setScore(scorePre);
       setScoreRate(scoreRatePre);
-      console.log(maxScore + "maxScore");
+      console.log(maxScore + ":maxScore");
       console.log(score);
     }
   }, [
