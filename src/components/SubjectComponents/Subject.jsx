@@ -12,7 +12,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link as LinkRouter } from "react-router-dom";
 import { db, auth } from "../../libs/fire";
 import { deleteDoc, doc } from "firebase/firestore";
-import { Opacity } from "@mui/icons-material";
 const style = {
   position: "absolute",
   top: "50%",
@@ -146,7 +145,7 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
         sx={{
           flex: 1,
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           width: 1,
         }}
       >
@@ -203,7 +202,8 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
         </Link>
       </Box>
       <Button
-        sx={{ p: 0 }}
+        variant="outlined"
+        sx={{ p: 0, m: 0, ml: 1, borderColor: "red", color: "red" }}
         onClick={handleChangeFlag}
         startIcon={<DeleteIcon />}
       >

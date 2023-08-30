@@ -2,7 +2,7 @@ import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Modal, Box, Button } from "@mui/material";
-
+import AddIcon from "@mui/icons-material/Add";
 const style = {
   position: "absolute",
   top: "50%",
@@ -39,8 +39,15 @@ export const AddReport = ({ rate, data, name, set }) => {
     set([...all.reports.reportArray]);
   };
   return (
-    <div>
-      <Button onClick={changeFlag}>課題追加</Button>
+    <Box>
+      <Button
+        onClick={changeFlag}
+        variant="outlined"
+        sx={{ width: 1, textAlign: "center" }}
+        startIcon={<AddIcon />}
+      >
+        課題追加
+      </Button>
       <Modal open={flag} onClose={changeFlag}>
         <Box
           sx={{
@@ -96,6 +103,6 @@ export const AddReport = ({ rate, data, name, set }) => {
           />
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 };

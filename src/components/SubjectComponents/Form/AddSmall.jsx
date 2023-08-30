@@ -2,6 +2,7 @@ import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Button, Modal, Box } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 const style = {
   position: "absolute",
   top: "50%",
@@ -38,8 +39,15 @@ export const AddSmall = ({ rate, data, name, set }) => {
     set([...all.smallExam.smallExamArray]);
   };
   return (
-    <div>
-      <Button onClick={changeFlag}>小テスト追加</Button>
+    <Box>
+      <Button
+        onClick={changeFlag}
+        variant="outlined"
+        sx={{ width: 1, textAlign: "center" }}
+        startIcon={<AddIcon />}
+      >
+        小テスト追加
+      </Button>
       <Modal open={flag} onClose={changeFlag}>
         <Box
           sx={{
@@ -95,6 +103,6 @@ export const AddSmall = ({ rate, data, name, set }) => {
           />
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 };

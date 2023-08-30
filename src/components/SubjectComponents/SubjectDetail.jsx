@@ -8,7 +8,7 @@ import MiddleExam from "./SubjectInfo/MiddleExam";
 import SmallExam from "./SubjectInfo/SmallExam";
 import { ChangeSubject } from "./Form/ChangeSubject";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link, Button } from "@mui/material";
+import { Link, Button, Box } from "@mui/material";
 import { Link as LinkRouter } from "react-router-dom";
 export default function SubjectDetail() {
   const [smallExamData, setSmallExamData] = useState([]);
@@ -90,7 +90,8 @@ export default function SubjectDetail() {
       scorePre += smallExamPoint;
       scorePre += reportPoint;
       console.log(scorePre + ": scorePre");
-      const scoreRatePre = Math.round((scorePre / maxScore) * 100 * 10) / 10;
+      const scoreRatePre =
+        maxScore !== 0 ? Math.round((scorePre / maxScore) * 100 * 10) / 10 : 0;
       scorePre = Math.round(scorePre * 10) / 10;
       setScore(scorePre);
       setScoreRate(scoreRatePre);
@@ -119,15 +120,29 @@ export default function SubjectDetail() {
       <Link component={LinkRouter} to={"/subjects"}>
         <ArrowBackIcon />
       </Link>
-      <h1>{flag ? subjectName : targetSubject}</h1>
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "flex-start",
+          width: 1,
+          textAlign: "center",
+        }}
+      >
+        <Box>
+          <h1>{flag ? subjectName : targetSubject}</h1>
+        </Box>
+
+        <ChangeSubject
+          all={all}
+          setAll={setAll}
+          setSubject={setSubjectName}
+          change={changeFlag}
+        />
+      </Box>
       <h1>得点率:{scoreRate}%</h1>
       <h1>得点:{score}</h1>
-      <ChangeSubject
-        all={all}
-        setAll={setAll}
-        setSubject={setSubjectName}
-        change={changeFlag}
-      />
+
       <Report
         reportData={reportData}
         reportRate={reportRate}
