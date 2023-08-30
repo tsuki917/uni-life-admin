@@ -30,21 +30,23 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
     setFlag((prev) => !prev);
   };
   const onAddEvent = async () => {
-    const newData = [...data];
-    newData[index] = {
-      Xday: Xday.$d,
-      title: title,
-      score: Number(score),
-    };
-    const event = {
-      smallExam: {
-        rate: rate,
-        smallExamArray: newData,
-      },
-    };
-    await updateDoc(doc(db, auth.currentUser.email, name), event);
-    changeFlag();
-    set(event.smallExam.smallExamArray);
+    if (Xday && title && score !== null) {
+      const newData = [...data];
+      newData[index] = {
+        Xday: Xday.$d,
+        title: title,
+        score: Number(score),
+      };
+      const event = {
+        smallExam: {
+          rate: rate,
+          smallExamArray: newData,
+        },
+      };
+      await updateDoc(doc(db, auth.currentUser.email, name), event);
+      changeFlag();
+      set(event.smallExam.smallExamArray);
+    }
   };
   return (
     <div>

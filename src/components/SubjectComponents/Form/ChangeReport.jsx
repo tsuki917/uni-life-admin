@@ -30,21 +30,23 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
     setFlag((prev) => !prev);
   };
   const onAddEvent = async () => {
-    const newData = [...data];
-    newData[index] = {
-      deadlineDay: Xday.$d,
-      title: title,
-      score: Number(score),
-    };
-    const event = {
-      reports: {
-        rate: rate,
-        reportArray: newData,
-      },
-    };
-    await updateDoc(doc(db, auth.currentUser.email, name), event);
-    changeFlag();
-    set(event.reports.reportArray);
+    if (Xday && title && score !== null) {
+      const newData = [...data];
+      newData[index] = {
+        deadlineDay: Xday.$d,
+        title: title,
+        score: Number(score),
+      };
+      const event = {
+        reports: {
+          rate: rate,
+          reportArray: newData,
+        },
+      };
+      await updateDoc(doc(db, auth.currentUser.email, name), event);
+      changeFlag();
+      set(event.reports.reportArray);
+    }
   };
   return (
     <div>

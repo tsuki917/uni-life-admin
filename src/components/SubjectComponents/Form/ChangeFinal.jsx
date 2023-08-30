@@ -31,18 +31,22 @@ export const ChangeFinal = ({ data, name, set }) => {
     setFlag((prev) => !prev);
   };
   const onAddEvent = async () => {
-    const event = {
-      finalExam: {
-        Xday: Xday.$d,
-        rate: data.rate,
-        score: Number(score),
-      },
-    };
-    await updateDoc(doc(db, auth.currentUser.email, name), event);
-    changeFlag();
-    console.log(event.finalExam);
-    console.log("seconds" in event.finalExam.Xday);
-    set(event.finalExam);
+    if (Xday && score !== null) {
+      const event = {
+        finalExam: {
+          Xday: Xday.$d,
+          rate: data.rate,
+          score: Number(score),
+        },
+      };
+      await updateDoc(doc(db, auth.currentUser.email, name), event);
+      changeFlag();
+      console.log(event.finalExam);
+      console.log("seconds" in event.finalExam.Xday);
+      set(event.finalExam);
+    } else {
+      //エラー表示
+    }
   };
   return (
     <div>

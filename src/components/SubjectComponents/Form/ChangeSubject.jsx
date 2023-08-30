@@ -10,14 +10,16 @@ export const ChangeSubject = ({ all, setAll, setSubject, change }) => {
   };
 
   const onDeleteEvent = async () => {
-    const newData = { ...all };
-    newData.name = name;
-    await setDoc(doc(db, auth.currentUser.email, name), newData);
-    await deleteDoc(doc(db, auth.currentUser.email, all.name));
-    changeFlag();
-    setAll(newData);
-    setSubject(name);
-    change();
+    if (name) {
+      const newData = { ...all };
+      newData.name = name;
+      await setDoc(doc(db, auth.currentUser.email, name), newData);
+      await deleteDoc(doc(db, auth.currentUser.email, all.name));
+      changeFlag();
+      setAll(newData);
+      setSubject(name);
+      change();
+    }
   };
   return (
     <div>
