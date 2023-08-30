@@ -29,16 +29,20 @@ export const ChangeMiddle = ({ data, name, set }) => {
     setFlag((prev) => !prev);
   };
   const onAddEvent = async () => {
-    const event = {
-      middleExam: {
-        Xday: Xday.$d,
-        rate: data.rate,
-        score: Number(score),
-      },
-    };
-    await updateDoc(doc(db, auth.currentUser.email, name), event);
-    changeFlag();
-    set(event.middleExam);
+    if (Xday && score !== null) {
+      const event = {
+        middleExam: {
+          Xday: Xday.$d,
+          rate: data.rate,
+          score: Number(score),
+        },
+      };
+      await updateDoc(doc(db, auth.currentUser.email, name), event);
+      changeFlag();
+      set(event.middleExam);
+    } else {
+      //エラー表示
+    }
   };
   return (
     <div>

@@ -25,21 +25,24 @@ export const AddSmall = ({ rate, data, name, set }) => {
     setFlag((prev) => !prev);
   };
   const onAddEvent = async () => {
-    const event = {
-      Xday: Xday.$d,
-      title: title,
-      score: Number(score),
-    };
-    const all = {
-      smallExam: {
-        rate: rate,
-        smallExamArray: [...data, event],
-      },
-    };
-    await updateDoc(doc(db, auth.currentUser.email, name), all);
-    changeFlag();
-    //event.Xday = { seconds: Xday.$d / 1000, nanoseconds: 0 };
-    set([...data, event]);
+    if (Xday && title && score !== null) {
+      const event = {
+        Xday: Xday.$d,
+        title: title,
+        score: Number(score),
+      };
+      const all = {
+        smallExam: {
+          rate: rate,
+          smallExamArray: [...data, event],
+        },
+      };
+      await updateDoc(doc(db, auth.currentUser.email, name), all);
+      changeFlag();
+      set([...data, event]);
+    } else {
+      //エラー表示
+    }
   };
   return (
     <div>
@@ -71,7 +74,6 @@ export const AddSmall = ({ rate, data, name, set }) => {
               期限
               <DatePicker
                 //className=
-                //value={dayjs(Xday)}
                 inputFormat="yyyy/MM/dd"
                 onChange={(newDay) => {
                   console.log(newDay);
