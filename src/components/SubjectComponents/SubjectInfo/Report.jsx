@@ -4,6 +4,7 @@ import { ChangeReport } from "../Form/ChangeReport";
 import { ChaRepRate } from "../Form/ChaRepRate";
 import { AddReport } from "../Form/AddReport";
 import { DeleteReport } from "../Form/DeleteReport";
+import { IsFinishReport } from "../Form/IsFinishReport";
 
 export default function Report({
   reportData,
@@ -63,6 +64,13 @@ export default function Report({
                       {" — 成績" + reportArrayData.score + "点"}
                     </React.Fragment>
                   }
+                />
+                <IsFinishReport
+                  rate={reportRate}
+                  data={reportData}
+                  index={key}
+                  name={name}
+                  set={setData}
                 />
                 <ChangeReport
                   rate={reportRate}

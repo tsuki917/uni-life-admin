@@ -39,12 +39,12 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
       finalExam: {
         rate: finalRate,
         score: 0,
-        Xday: "",
+        Xday: new Date(),
       },
       middleExam: {
         rate: middleRate,
         score: 0,
-        Xday: "",
+        Xday: new Date(),
       },
       smallExam: {
         rate: smallRate,
