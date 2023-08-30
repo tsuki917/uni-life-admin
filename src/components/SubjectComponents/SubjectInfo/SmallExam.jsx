@@ -13,65 +13,81 @@ export default function SmallExam({
   setRate,
 }) {
   return (
-    <div>
-      <h2>
-        小テスト <span>成績配分 : {smallExamRate}%</span>
-      </h2>
-      <ChaSmaRate data={smallExamData} name={name} set={setRate} />
-
-      <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
-        <AddSmall
-          rate={smallExamRate}
-          data={smallExamData}
-          name={name}
-          set={setData}
-        />
+    <Box>
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "flex-start",
+          width: 1,
+          textAlign: "center",
+        }}
+      >
+        <h2>
+          小テスト <span>成績配分 : {smallExamRate}%</span>
+        </h2>
+        <ChaSmaRate data={smallExamData} name={name} set={setRate} />
       </Box>
 
       <List sx={{ ml: 4 }}>
         {smallExamData.map((smallExamElement, key) => {
           return (
-            <ListItem sx={{ bgcolor: "#eeeef0", mb: 1 }} key={key}>
-              <ListItemText
-                primary={smallExamElement.title}
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    >
-                      {"実施日 : " +
-                        ("seconds" in smallExamElement.Xday
-                          ? smallExamElement.Xday.toDate().toLocaleDateString()
-                          : new Date(
-                              smallExamElement.Xday
-                            ).toLocaleDateString())}
-                    </Typography>
-                    {/* content */}
-                    {" — 成績" + smallExamElement.score + "点"}
-                    <ChangeSmall
-                      rate={smallExamRate}
-                      data={smallExamData}
-                      index={key}
-                      name={name}
-                      set={setData}
-                    />
-                    <DeleteSmall
-                      rate={smallExamRate}
-                      data={smallExamData}
-                      index={key}
-                      name={name}
-                      set={setData}
-                    />
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
+            <Box
+              sx={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "space-between",
+                width: 1,
+              }}
+            >
+              <ListItem sx={{ bgcolor: "#eeeef0", mb: 1 }} key={key}>
+                <ListItemText
+                  primary={smallExamElement.title}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {"実施日 : " +
+                          ("seconds" in smallExamElement.Xday
+                            ? smallExamElement.Xday.toDate().toLocaleDateString()
+                            : new Date(
+                                smallExamElement.Xday
+                              ).toLocaleDateString())}
+                      </Typography>
+                      {/* content */}
+                      {" — 成績" + smallExamElement.score + "点"}
+                    </React.Fragment>
+                  }
+                />
+                <ChangeSmall
+                  rate={smallExamRate}
+                  data={smallExamData}
+                  index={key}
+                  name={name}
+                  set={setData}
+                />
+                <DeleteSmall
+                  rate={smallExamRate}
+                  data={smallExamData}
+                  index={key}
+                  name={name}
+                  set={setData}
+                />
+              </ListItem>
+            </Box>
           );
         })}
       </List>
-    </div>
+      <AddSmall
+        rate={smallExamRate}
+        data={smallExamData}
+        name={name}
+        set={setData}
+      />
+    </Box>
   );
 }

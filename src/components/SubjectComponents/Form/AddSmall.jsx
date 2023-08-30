@@ -2,6 +2,7 @@ import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Button, Modal, Box } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
@@ -45,8 +46,15 @@ export const AddSmall = ({ rate, data, name, set }) => {
     }
   };
   return (
-    <div>
-      <Button onClick={changeFlag}>小テスト追加</Button>
+    <Box>
+      <Button
+        onClick={changeFlag}
+        variant="outlined"
+        sx={{ width: 1, textAlign: "center" }}
+        startIcon={<AddIcon />}
+      >
+        小テスト追加
+      </Button>
       <Modal open={flag} onClose={changeFlag}>
         <Box
           sx={{
@@ -103,6 +111,6 @@ export const AddSmall = ({ rate, data, name, set }) => {
           />
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 };

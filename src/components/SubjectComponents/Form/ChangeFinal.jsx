@@ -50,13 +50,6 @@ export const ChangeFinal = ({ data, name, set }) => {
   };
   return (
     <div>
-      <button
-        onClick={() => {
-          console.log(score);
-        }}
-      >
-        test
-      </button>
       {!flag && (
         <Button
           variant="outlined"
