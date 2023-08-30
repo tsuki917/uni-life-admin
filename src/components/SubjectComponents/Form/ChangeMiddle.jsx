@@ -3,6 +3,9 @@ import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Modal, Box, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 const style = {
   position: "absolute",
   top: "50%",
@@ -15,16 +18,20 @@ const style = {
   p: 4,
 };
 export const ChangeMiddle = ({ data, name, set }) => {
-  const [Xday, setXday] = useState(data.Xday);
+  const [Xday, setXday] = useState();
   const [score, setScore] = useState(data.score);
   const [flag, setFlag] = useState(false);
+  if (Xday === undefined) {
+    // 前データの引継ぎ
+    setXday(dayjs(data.Xday.seconds * 1000));
+  }
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
   const onAddEvent = async () => {
     const event = {
       middleExam: {
-        Xday: Xday,
+        Xday: Xday.$d,
         rate: data.rate,
         score: Number(score),
       },
@@ -46,47 +53,48 @@ export const ChangeMiddle = ({ data, name, set }) => {
         </Button>
       )}
       <Modal open={flag} onClose={changeFlag}>
-        <Box
-          sx={{
-            ...style,
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-        >
-          <label>
-            実施日(yyyy/mm/dd)
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Box
+            sx={{
+              ...style,
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <label>
+              実施日(yyyy/mm/dd)
+              <DatePicker
+                //className=
+                value={Xday}
+                inputFormat="yyyy/MM/dd"
+                onChange={(newDay) => {
+                  setXday(newDay);
+                }}
+              />
+            </label>
+            <label>
+              点数
+              <input
+                //className=
+                type="number"
+                value={score}
+                //name=
+                min="0"
+                onChange={(e) => {
+                  setScore(e.target.value);
+                }}
+              />
+            </label>
             <input
               //className=
-              type="text"
-              value={Xday}
-              name="inputTitle"
-              onChange={(e) => {
-                setXday(e.target.value);
-              }}
+              type="button"
+              value="確定"
+              onClick={onAddEvent}
             />
-          </label>
-          <label>
-            点数
-            <input
-              //className=
-              type="number"
-              value={score}
-              //name=
-              min="0"
-              onChange={(e) => {
-                setScore(e.target.value);
-              }}
-            />
-          </label>
-          <input
-            //className=
-            type="button"
-            value="確定"
-            onClick={onAddEvent}
-          />
-        </Box>
+          </Box>
+        </LocalizationProvider>
       </Modal>
     </div>
   );

@@ -32,7 +32,14 @@ export default function Report({
                       variant="body2"
                       color="text.primary"
                     >
-                      {"期限 : " + reportArrayData.deadlineDay}
+                      {"期限 : " +
+                        ("seconds" in reportArrayData.deadlineDay
+                          ? reportArrayData.deadlineDay
+                              .toDate()
+                              .toLocaleDateString()
+                          : new Date(
+                              reportArrayData.deadlineDay
+                            ).toLocaleDateString())}
                     </Typography>
                     {/* content */}
                     {" — 成績" + reportArrayData.score + "点"}
