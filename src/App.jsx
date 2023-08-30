@@ -9,6 +9,7 @@ import SubjectDetail from "./components/SubjectComponents/SubjectDetail.jsx";
 
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import "./libs/fire.js";
+import Task from "./components/tasksComponent/Task.jsx";
 
 export default function App() {
   const provider = new GoogleAuthProvider();
@@ -64,6 +65,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/subjects" element={<Subjects />} />
           <Route path="/subjects/*" element={<SubjectDetail />} />
+          <Route path="/tasks" element={<Task />} />
         </Routes>
       </HashRouter>
     </div>
