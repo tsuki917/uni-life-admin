@@ -5,6 +5,7 @@ import { ChangeSmall } from "../Form/ChangeSmall";
 import { ChaSmaRate } from "../Form/ChaSmaRate";
 import { AddSmall } from "../Form/AddSmall";
 import { DeleteSmall } from "../Form/DeleteSmall";
+import { IsFinishSmall } from "../Form/IsFinishSmall";
 export default function SmallExam({
   smallExamData,
   smallExamRate,
@@ -62,6 +63,13 @@ export default function SmallExam({
                       {" — 成績" + smallExamElement.score + "点"}
                     </React.Fragment>
                   }
+                />
+                <IsFinishSmall
+                  rate={smallExamRate}
+                  data={smallExamData}
+                  index={key}
+                  name={name}
+                  set={setData}
                 />
                 <ChangeSmall
                   rate={smallExamRate}

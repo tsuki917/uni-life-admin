@@ -77,7 +77,6 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
                 //className=
                 type="text"
                 value={title}
-                //name=
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -101,7 +100,6 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
                 //className=
                 type="number"
                 value={score}
-                //name=
                 min="0"
                 onChange={(e) => {
                   setScore(e.target.value);
