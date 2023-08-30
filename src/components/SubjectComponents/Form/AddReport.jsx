@@ -2,6 +2,9 @@ import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Modal, Box, Button } from "@mui/material";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 const style = {
   position: "absolute",
@@ -15,7 +18,7 @@ const style = {
   p: 4,
 };
 export const AddReport = ({ rate, data, name, set }) => {
-  const [day, setDay] = useState("");
+  const [Xday, setXday] = useState();
   const [title, setTitle] = useState("");
   const [score, setScore] = useState(null);
   const [flag, setFlag] = useState(false);
@@ -24,7 +27,7 @@ export const AddReport = ({ rate, data, name, set }) => {
   };
   const onAddEvent = async () => {
     const event = {
-      deadlineDay: day,
+      deadlineDay: Xday.$d,
       title: title,
       score: Number(score),
     };
@@ -36,7 +39,8 @@ export const AddReport = ({ rate, data, name, set }) => {
     };
     await updateDoc(doc(db, auth.currentUser.email, name), all);
     changeFlag();
-    set([...all.reports.reportArray]);
+    event.deadlineDay = { seconds: Xday.$d / 1000, nanoseconds: 0 };
+    set([...data, event]);
   };
   return (
     <div>
@@ -63,18 +67,20 @@ export const AddReport = ({ rate, data, name, set }) => {
               }}
             />
           </label>
-          <label>
-            期限
-            <input
-              //className=
-              type="text"
-              value={day}
-              //name=
-              onChange={(e) => {
-                setDay(e.target.value);
-              }}
-            />
-          </label>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <label>
+              期限
+              <DatePicker
+                //className=
+                value={dayjs(Xday)}
+                inputFormat="yyyy/MM/dd"
+                onChange={(newDay) => {
+                  console.log(newDay);
+                  setXday(newDay);
+                }}
+              />
+            </label>
+          </LocalizationProvider>
           <label>
             成績
             <input
