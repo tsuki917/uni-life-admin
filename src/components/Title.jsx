@@ -106,10 +106,10 @@ export default function Title({ loginButton }) {
               subject
             </ToggleButton>
             <ToggleButton
-              value="task"
-              aria-label="task"
+              value="tasks"
+              aria-label="tasks"
               LinkComponent={Link}
-              to="/task"
+              to="/tasks"
               sx={{
                 bgcolor: "background.paper",
                 "&:hover": {
