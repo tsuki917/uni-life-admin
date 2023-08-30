@@ -26,6 +26,16 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
     // 前データの引継ぎ
     setXday(dayjs(data[index].deadlineDay.seconds * 1000));
   }
+  if (title !== data[index].title) {
+    setTitle(data[index].title);
+    setScore(data[index].score);
+    if ("seconds" in data[index].deadlineDay) {
+      setXday(dayjs(data[index].deadlineDay.seconds * 1000));
+    } else {
+      setXday(dayjs(data[index].deadlineDay));
+    }
+  }
+
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
@@ -37,6 +47,20 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
         title: title,
         score: Number(score),
       };
+      newData.sort((a, b) => {
+        let na, nb;
+        if ("seconds" in a.deadlineDay) {
+          na = a.deadlineDay.toDate();
+        } else {
+          na = new Date(a.deadlineDay);
+        }
+        if ("seconds" in b.deadlineDay) {
+          nb = b.deadlineDay.toDate();
+        } else {
+          nb = new Date(b.deadlineDay);
+        }
+        return na - nb;
+      });
       const event = {
         reports: {
           rate: rate,
