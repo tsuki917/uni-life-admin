@@ -3,7 +3,6 @@ import { List, ListItem, ListItemText, Typography, Box } from "@mui/material";
 import { ChangeMiddle } from "../Form/ChangeMiddle";
 import { ChaMidRate } from "../Form/ChaMidRate";
 export default function MiddleExam({ middleExamData, name, set }) {
-  console.log(middleExamData);
   return middleExamData === null ? (
     <div>loading</div>
   ) : (
@@ -41,7 +40,10 @@ export default function MiddleExam({ middleExamData, name, set }) {
                     variant="body2"
                     color="text.primary"
                   >
-                    {"実施日 : " + middleExamData.Xday}
+                    {"実施日 : " +
+                      ("seconds" in middleExamData.Xday
+                        ? middleExamData.Xday.toDate().toLocaleDateString()
+                        : new Date(middleExamData.Xday).toLocaleDateString())}
                   </Typography>
                   {" — 成績" + middleExamData.score + "点"}
                 </React.Fragment>

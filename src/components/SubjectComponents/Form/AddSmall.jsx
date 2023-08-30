@@ -3,6 +3,9 @@ import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Button, Modal, Box } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 const style = {
   position: "absolute",
   top: "50%",
@@ -15,7 +18,7 @@ const style = {
   p: 4,
 };
 export const AddSmall = ({ rate, data, name, set }) => {
-  const [day, setDay] = useState("");
+  const [Xday, setXday] = useState();
   const [title, setTitle] = useState("");
   const [score, setScore] = useState(null);
   const [flag, setFlag] = useState(false);
@@ -23,20 +26,24 @@ export const AddSmall = ({ rate, data, name, set }) => {
     setFlag((prev) => !prev);
   };
   const onAddEvent = async () => {
-    const event = {
-      Xday: day,
-      title: title,
-      score: Number(score),
-    };
-    const all = {
-      smallExam: {
-        rate: rate,
-        smallExamArray: [...data, event],
-      },
-    };
-    await updateDoc(doc(db, auth.currentUser.email, name), all);
-    changeFlag();
-    set([...all.smallExam.smallExamArray]);
+    if (Xday && title && score !== null) {
+      const event = {
+        Xday: Xday.$d,
+        title: title,
+        score: Number(score),
+      };
+      const all = {
+        smallExam: {
+          rate: rate,
+          smallExamArray: [...data, event],
+        },
+      };
+      await updateDoc(doc(db, auth.currentUser.email, name), all);
+      changeFlag();
+      set([...data, event]);
+    } else {
+      //エラー表示
+    }
   };
   return (
     <Box>
@@ -70,18 +77,19 @@ export const AddSmall = ({ rate, data, name, set }) => {
               }}
             />
           </label>
-          <label>
-            期限
-            <input
-              //className=
-              type="text"
-              value={day}
-              //name=
-              onChange={(e) => {
-                setDay(e.target.value);
-              }}
-            />
-          </label>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <label>
+              期限
+              <DatePicker
+                //className=
+                inputFormat="yyyy/MM/dd"
+                onChange={(newDay) => {
+                  console.log(newDay);
+                  setXday(newDay);
+                }}
+              />
+            </label>
+          </LocalizationProvider>
           <label>
             成績
             <input

@@ -51,7 +51,12 @@ export default function SmallExam({
                         variant="body2"
                         color="text.primary"
                       >
-                        {"実施日 : " + smallExamElement.Xday}
+                        {"実施日 : " +
+                          ("seconds" in smallExamElement.Xday
+                            ? smallExamElement.Xday.toDate().toLocaleDateString()
+                            : new Date(
+                                smallExamElement.Xday
+                              ).toLocaleDateString())}
                       </Typography>
                       {/* content */}
                       {" — 成績" + smallExamElement.score + "点"}

@@ -41,7 +41,10 @@ export default function FinalExam({ finalExamData, name, set }) {
                     variant="body2"
                     color="text.primary"
                   >
-                    {"実施日 : " + finalExamData.Xday}
+                    {"実施日 : " +
+                      ("seconds" in finalExamData.Xday
+                        ? finalExamData.Xday.toDate().toLocaleDateString()
+                        : new Date(finalExamData.Xday).toLocaleDateString())}
                   </Typography>
                   {/* content */}
                   {" — 成績" + finalExamData.score + "点"}
