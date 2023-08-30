@@ -22,16 +22,24 @@ export const IsFinishSmall = ({ rate, data, index, name, set }) => {
     set(event.smallExam.smallExamArray);
   };
   return (
-    <div>
-      <label>
-        完了
-        <input
-          //className=
-          type="checkbox"
-          checked={isFinished}
-          onChange={onAddEvent}
-        />
-      </label>
-    </div>
+    <Box>
+      {isFinished ? (
+        <Button
+          variant="outlined"
+          sx={{ color: "#269746", borderColor: "#269746", p: 0, mr: 1 }}
+          onClick={onAddEvent}
+        >
+          完了済
+        </Button>
+      ) : (
+        <Button
+          variant="outlined"
+          sx={{ color: "#cd3131", borderColor: "#cd3131", p: 0, mr: 1 }}
+          onClick={onAddEvent}
+        >
+          未完了
+        </Button>
+      )}
+    </Box>
   );
 };
