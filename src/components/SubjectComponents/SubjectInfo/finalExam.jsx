@@ -42,7 +42,9 @@ export default function FinalExam({ finalExamData, name, set }) {
                     color="text.primary"
                   >
                     {"実施日 : " +
-                      ("seconds" in finalExamData.Xday
+                      (finalExamData.Xday === "未入力"
+                        ? "未入力"
+                        : "seconds" in finalExamData.Xday
                         ? finalExamData.Xday.toDate().toLocaleDateString()
                         : new Date(finalExamData.Xday).toLocaleDateString())}
                   </Typography>

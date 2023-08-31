@@ -28,7 +28,7 @@ export const ChaRepRate = ({ data, name, set }) => {
     };
     await updateDoc(doc(db, auth.currentUser.email, name), event);
     changeFlag();
-    set(rate);
+    set(Number(rate));
   };
   return (
     <Box
