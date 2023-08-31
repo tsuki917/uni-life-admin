@@ -26,6 +26,15 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
     // 前データの引継ぎ
     setXday(dayjs(data[index].Xday.seconds * 1000));
   }
+  if (title !== data[index].title) {
+    setTitle(data[index].title);
+    setScore(data[index].score);
+    if ("seconds" in data[index].Xday) {
+      setXday(dayjs(data[index].Xday.seconds * 1000));
+    } else {
+      setXday(dayjs(data[index].Xday));
+    }
+  }
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
@@ -37,6 +46,20 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
         title: title,
         score: Number(score),
       };
+      newData.sort((a, b) => {
+        let na, nb;
+        if ("seconds" in a.Xday) {
+          na = a.Xday.toDate();
+        } else {
+          na = new Date(a.Xday);
+        }
+        if ("seconds" in b.Xday) {
+          nb = b.Xday.toDate();
+        } else {
+          nb = new Date(b.Xday);
+        }
+        return na - nb;
+      });
       const event = {
         smallExam: {
           rate: rate,
