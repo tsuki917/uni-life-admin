@@ -47,7 +47,23 @@ export default function MiddleExam({ middleExamData, name, set }) {
                         ? middleExamData.Xday.toDate().toLocaleDateString()
                         : new Date(middleExamData.Xday).toLocaleDateString())}
                   </Typography>
-                  {" — 成績" + middleExamData.score + "点"}
+                  {(() => {
+                    if (middleExamData.Xday === "未入力") {
+                      return " — 未実施";
+                    } else if ("seconds" in middleExamData.Xday) {
+                      if (new Date() < middleExamData.Xday.toDate()) {
+                        return " — 未実施";
+                      } else {
+                        return " — 成績" + middleExamData.score + "点";
+                      }
+                    } else {
+                      if (new Date() < new Date(middleExamData.Xday)) {
+                        return " — 未実施";
+                      } else {
+                        return " — 成績" + middleExamData.score + "点";
+                      }
+                    }
+                  })()}
                 </React.Fragment>
               }
             />

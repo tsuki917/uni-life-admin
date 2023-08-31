@@ -34,21 +34,37 @@ export const AddSmall = ({ rate, data, name, set }) => {
     setScore(null);
   }
   const onAddEvent = async () => {
-    if (Xday && title && score !== null) {
+    if (Xday && title) {
       const event = {
         Xday: Xday.$d,
         title: title,
         score: Number(score),
+        isFinished: false,
       };
+      const newData = [...data, event];
+      newData.sort((a, b) => {
+        let na, nb;
+        if ("seconds" in a.Xday) {
+          na = a.Xday.toDate();
+        } else {
+          na = new Date(a.Xday);
+        }
+        if ("seconds" in b.Xday) {
+          nb = b.Xday.toDate();
+        } else {
+          nb = new Date(b.Xday);
+        }
+        return na - nb;
+      });
       const all = {
         smallExam: {
           rate: rate,
-          smallExamArray: [...data, event],
+          smallExamArray: newData,
         },
       };
       await updateDoc(doc(db, auth.currentUser.email, name), all);
       changeFlag();
-      set([...data, event]);
+      set(newData);
       setMessage("");
       setTake(false);
     } else {

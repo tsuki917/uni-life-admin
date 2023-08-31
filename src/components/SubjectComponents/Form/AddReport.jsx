@@ -35,21 +35,37 @@ export const AddReport = ({ rate, data, name, set }) => {
     setScore(null);
   }
   const onAddEvent = async () => {
-    if (Xday && title && score !== null) {
+    if (Xday && title) {
       const event = {
         deadlineDay: Xday.$d,
         title: title,
         score: Number(score),
+        isFinished: false,
       };
+      const newData = [...data, event];
+      newData.sort((a, b) => {
+        let na, nb;
+        if ("seconds" in a.deadlineDay) {
+          na = a.deadlineDay.toDate();
+        } else {
+          na = new Date(a.deadlineDay);
+        }
+        if ("seconds" in b.deadlineDay) {
+          nb = b.deadlineDay.toDate();
+        } else {
+          nb = new Date(b.deadlineDay);
+        }
+        return na - nb;
+      });
       const all = {
         reports: {
           rate: rate,
-          reportArray: [...data, event],
+          reportArray: newData,
         },
       };
       await updateDoc(doc(db, auth.currentUser.email, name), all);
       changeFlag();
-      set([...data, event]);
+      set(newData);
       setMessage("");
       setTake(false);
     } else {

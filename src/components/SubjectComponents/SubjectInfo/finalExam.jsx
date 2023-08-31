@@ -49,7 +49,23 @@ export default function FinalExam({ finalExamData, name, set }) {
                         : new Date(finalExamData.Xday).toLocaleDateString())}
                   </Typography>
                   {/* content */}
-                  {" — 成績" + finalExamData.score + "点"}
+                  {(() => {
+                    if (finalExamData.Xday === "未入力") {
+                      return " — 未実施";
+                    } else if ("seconds" in finalExamData.Xday) {
+                      if (new Date() < finalExamData.Xday.toDate()) {
+                        return " — 未実施";
+                      } else {
+                        return " — 成績" + finalExamData.score + "点";
+                      }
+                    } else {
+                      if (new Date() < new Date(finalExamData.Xday)) {
+                        return " — 未実施";
+                      } else {
+                        return " — 成績" + finalExamData.score + "点";
+                      }
+                    }
+                  })()}
                 </React.Fragment>
               }
             />

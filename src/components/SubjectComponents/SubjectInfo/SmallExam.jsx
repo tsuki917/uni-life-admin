@@ -60,7 +60,9 @@ export default function SmallExam({
                               ).toLocaleDateString())}
                       </Typography>
                       {/* content */}
-                      {" — 成績" + smallExamElement.score + "点"}
+                      {smallExamElement.isFinished
+                        ? " — 成績" + smallExamElement.score + "点"
+                        : " — 未実施"}
                     </React.Fragment>
                   }
                 />
