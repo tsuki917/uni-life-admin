@@ -61,7 +61,9 @@ export default function Report({
                               ).toLocaleDateString())}
                       </Typography>
                       {/* content */}
-                      {" — 成績" + reportArrayData.score + "点"}
+                      {reportArrayData.isFinished
+                        ? " — 成績" + reportArrayData.score + "点"
+                        : " — 未完了"}
                     </React.Fragment>
                   }
                 />

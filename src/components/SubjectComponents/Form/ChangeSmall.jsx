@@ -49,6 +49,7 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
         Xday: Xday.$d,
         title: title,
         score: Number(score),
+        isFinished: data[index].isFinished,
       };
       newData.sort((a, b) => {
         let na, nb;

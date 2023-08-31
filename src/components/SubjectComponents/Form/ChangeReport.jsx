@@ -44,12 +44,13 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
     setFlag((prev) => !prev);
   };
   const onAddEvent = async () => {
-    if (Xday && title && score !== null) {
+    if (Xday && title) {
       const newData = [...data];
       newData[index] = {
         deadlineDay: Xday.$d,
         title: title,
         score: Number(score),
+        isFinished: data[index].isFinished,
       };
       newData.sort((a, b) => {
         let na, nb;
