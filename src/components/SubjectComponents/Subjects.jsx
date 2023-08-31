@@ -46,7 +46,9 @@ export default function Subjects() {
 
   return (
     <div>
-      <h2>教科一覧</h2>
+      <Box sx={{ ml: 6 }}>
+        <h2>教科一覧</h2>
+      </Box>
       <Box
         sx={{
           flex: 1,
@@ -55,7 +57,7 @@ export default function Subjects() {
         }}
       >
         <Button
-          sx={{ bgcolor: "#1976d2", color: "white", p: 0, mr: 2 }}
+          sx={{ bgcolor: "#1976d2", color: "white", p: 0, mr: 6 }}
           onClick={handleOpen}
           startIcon={<AddIcon />}
         >
@@ -77,7 +79,7 @@ export default function Subjects() {
         </Modal>
       </Box>
 
-      <List sx={{ ml: 4 }}>
+      <List sx={{ ml: 6, mr: 6 }}>
         {subjectsData.map((subjectData, key) => {
           return (
             <Box key={key}>
