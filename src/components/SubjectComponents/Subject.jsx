@@ -103,19 +103,19 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
   useEffect(() => {
     if (subjectEvoRate >= 90) {
       setEvoAL("A");
-      setEvoColor({ color: "#CC0000" });
+      setEvoColor({ color: "#229342" });
     } else if (subjectEvoRate >= 80) {
       setEvoAL("B");
-      setEvoColor({ color: "#FF9872" });
+      setEvoColor({ color: "#4e59e0" });
     } else if (subjectEvoRate >= 70) {
       setEvoAL("C");
-      setEvoColor({ color: "#B8860B" });
+      setEvoColor({ color: "#1f1f1f" });
     } else if (subjectEvoRate >= 60) {
       setEvoAL("D");
-      setEvoColor({ color: "#005FFF" });
+      setEvoColor({ color: "#FF9872" });
     } else if (subjectEvoRate < 60) {
       setEvoAL("E");
-      setEvoColor({ color: "#555555" });
+      setEvoColor({ color: "#e53f32" });
     } else {
       setEvoAL("推定不可");
     }
@@ -195,7 +195,10 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
               <span>最重要項目:{maxRateName}</span>
 
               <span>
-                推定評価:<span style={EvoColor}>{EvoAL}</span>
+                推定評価:
+                <span style={EvoColor}>
+                  <strong>{EvoAL}</strong>
+                </span>
               </span>
             </Box>
           </Box>
@@ -211,19 +214,45 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
       </Button>
       <Modal open={modalFlag} onClose={handleChangeFlag}>
         <Box sx={style}>
-          <h1>本当に削除しますか？</h1>
+          <Box sx={{ textAlign: "center" }}>
+            <h1>本当に削除しますか？</h1>
+          </Box>
           <Box
             sx={{
               flex: 1,
               display: "flex",
-              justifyContent: "flex-start",
+              justifyContent: "space-around",
               flexDirection: "row",
               p: 0,
               m: 0,
             }}
           >
-            <Button onClick={deleteSubject}>はい</Button>
-            <Button onClick={handleChangeFlag}>いいえ</Button>
+            <Box
+              sx={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "row",
+                alignItems: "center",
+                m: 2,
+                width: 1,
+              }}
+            >
+              <Button
+                variant="outlined"
+                onClick={deleteSubject}
+                sx={{ width: "50%" }}
+              >
+                はい
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={handleChangeFlag}
+                sx={{ width: "50%" }}
+              >
+                いいえ
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Modal>

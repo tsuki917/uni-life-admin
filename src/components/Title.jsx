@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   AppBar,
@@ -25,26 +25,15 @@ const rightLink = {
 
 export default function Title({ loginButton }) {
   const navigation = useNavigate();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [toggleView, setToggleView] = useState("home");
+  const [toggleView, setToggleView] = useState("");
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const pageChange = (e) => {
-    const { name } = e.target;
-    navigation(name);
-  };
+  useEffect(() => {}, []);
   const handleToggleChange = (e, newView) => {
     setToggleView(newView);
   };
   return (
     <div>
-      <AppBar position="fixed">
+      <AppBar position="fixed" sx={{ ml: 1, mr: 1 }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Button
             variant="h6"
@@ -52,12 +41,12 @@ export default function Title({ loginButton }) {
             color="inherit"
             sx={{ fontSize: 24 }}
             LinkComponent={Link}
-            to="/"
+            to=""
             // onClick={(e) => {
             //   pageChange(e);
             // }}
           >
-            Adminater
+            GPAJourney
           </Button>
           <ToggleButtonGroup
             exclusive
@@ -71,23 +60,6 @@ export default function Title({ loginButton }) {
               },
             }}
           >
-            <ToggleButton
-              value="home"
-              aria-label="home"
-              LinkComponent={Link}
-              to="/"
-              sx={{
-                bgcolor: "background.paper",
-                "&:hover": {
-                  bgcolor: "#d9d9db", // ホバー時の背景色も指定（必要に応じて）
-                },
-                ml: 4,
-                fontSize: 12,
-              }}
-            >
-              <HomeIcon />
-              home
-            </ToggleButton>
             <ToggleButton
               value="subject"
               aria-label="subject"
@@ -120,60 +92,16 @@ export default function Title({ loginButton }) {
               }}
             >
               <Assignment />
-              task
+              　task　
             </ToggleButton>
           </ToggleButtonGroup>
 
           <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
-            <Menu
-              id="menu-app-bar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "center",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "center",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-              MenuListProps={{ onMouseLeave: handleClose }}
-            >
-              <MenuItem>
-                <Button
-                  name="/"
-                  to="/"
-                  LinkComponent={Link}
-                  // onClick={(e) => {
-                  //   pageChange(e);
-                  // }}
-                >
-                  home
-                </Button>
-              </MenuItem>
-              <MenuItem>
-                <Button
-                  // onClick={(e) => {
-                  //   pageChange(e);
-                  // }}
-                  to="/setting"
-                  LinkComponent={Link}
-                  name="/setting"
-                >
-                  setting
-                </Button>
-              </MenuItem>
-            </Menu>
             {auth.currentUser ? (
               <Box sx={{ pt: 1, pb: 1 }}>{auth.currentUser.email}</Box>
             ) : (
               loginButton
             )}
-            <IconButton sx={rightLink} color="inherit" onMouseOver={handleMenu}>
-              <MenuIcon />
-            </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
