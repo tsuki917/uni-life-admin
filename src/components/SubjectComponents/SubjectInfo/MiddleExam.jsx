@@ -41,7 +41,9 @@ export default function MiddleExam({ middleExamData, name, set }) {
                     color="text.primary"
                   >
                     {"実施日 : " +
-                      ("seconds" in middleExamData.Xday
+                      (middleExamData.Xday === "未入力"
+                        ? "未入力"
+                        : "seconds" in middleExamData.Xday
                         ? middleExamData.Xday.toDate().toLocaleDateString()
                         : new Date(middleExamData.Xday).toLocaleDateString())}
                   </Typography>

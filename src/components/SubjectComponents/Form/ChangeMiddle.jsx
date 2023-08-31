@@ -21,7 +21,7 @@ export const ChangeMiddle = ({ data, name, set }) => {
   const [Xday, setXday] = useState();
   const [score, setScore] = useState(data.score);
   const [flag, setFlag] = useState(false);
-  if (Xday === undefined) {
+  if (Xday === undefined && data.Xday !== "未入力") {
     // 前データの引継ぎ
     setXday(dayjs(data.Xday.seconds * 1000));
   }

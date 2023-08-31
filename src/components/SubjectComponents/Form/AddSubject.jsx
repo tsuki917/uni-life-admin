@@ -39,12 +39,12 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
       finalExam: {
         rate: finalRate,
         score: 0,
-        Xday: new Date(),
+        Xday: "未入力",
       },
       middleExam: {
         rate: middleRate,
         score: 0,
-        Xday: new Date(),
+        Xday: "未入力",
       },
       smallExam: {
         rate: smallRate,
@@ -66,7 +66,15 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
 
   const onAddEvent = () => {
     console.log("add Event");
-    addSubjectData(subjectName, smallRate, middleRate, finalRate, reportRate);
+    if (!subjectsData.find((sub) => sub.name === subjectName)) {
+      addSubjectData(
+        subjectName,
+        Number(smallRate),
+        Number(middleRate),
+        Number(finalRate),
+        Number(reportRate)
+      );
+    }
   };
   return (
     <form onSubmit={handleSubmit}>

@@ -142,7 +142,24 @@ export default function SubjectDetail() {
       </Box>
       <h1>得点率:{scoreRate}%</h1>
       <h1>得点:{score}</h1>
-
+      {finalExamData !== null &&
+        middleExamData !== null &&
+        reportRate !== null &&
+        smallExamRate !== null &&
+        reportRate +
+          smallExamRate +
+          middleExamData.rate +
+          finalExamData.rate !==
+          100 && (
+          <p style={{ color: "red" }}>
+            割合の合計が100%ではありません（現在
+            {reportRate +
+              smallExamRate +
+              middleExamData.rate +
+              finalExamData.rate}
+            ％）
+          </p>
+        )}
       <Report
         reportData={reportData}
         reportRate={reportRate}
