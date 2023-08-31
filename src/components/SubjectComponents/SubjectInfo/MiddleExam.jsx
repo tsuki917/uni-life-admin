@@ -20,7 +20,7 @@ export default function MiddleExam({ middleExamData, name, set }) {
         </h2>
         <ChaMidRate data={middleExamData} name={name} set={set} />
       </Box>
-      <List sx={{ ml: 4 }}>
+      <List>
         <Box
           sx={{
             flex: 1,

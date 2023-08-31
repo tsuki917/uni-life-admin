@@ -29,7 +29,7 @@ export default function Report({
         </h2>
         <ChaRepRate data={reportData} name={name} set={setRate} />
       </Box>
-      <List sx={{ ml: 4 }}>
+      <List>
         {reportData.map((reportArrayData, key) => {
           return (
             <Box

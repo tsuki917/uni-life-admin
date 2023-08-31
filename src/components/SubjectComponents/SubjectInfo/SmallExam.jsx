@@ -24,13 +24,13 @@ export default function SmallExam({
           textAlign: "center",
         }}
       >
-        <h2>
+        <h3>
           小テスト <span>成績配分 : {smallExamRate}%</span>
-        </h2>
+        </h3>
         <ChaSmaRate data={smallExamData} name={name} set={setRate} />
       </Box>
 
-      <List sx={{ ml: 4 }}>
+      <List>
         {smallExamData.map((smallExamElement, key) => {
           return (
             <Box
