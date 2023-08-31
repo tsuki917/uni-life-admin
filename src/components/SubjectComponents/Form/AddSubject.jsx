@@ -21,10 +21,7 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
   const [smallRate, setsmallRate] = useState(0);
   const [reportRate, setReportRate] = useState(0);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    close(false);
-  };
+  const handleSubmit = (e) => {};
 
   const addSubjectData = async (
     subName,
@@ -64,7 +61,7 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
     setSubjectsData(() => subjectsData_copy);
   };
 
-  const onAddEvent = () => {
+  const onAddEvent = (e) => {
     console.log("add Event");
     if (!subjectsData.find((sub) => sub.name === subjectName)) {
       addSubjectData(
@@ -74,10 +71,12 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
         Number(finalRate),
         Number(reportRate)
       );
+      close(false);
     }
+    e.preventDefault();
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => onAddEvent(e)}>
       <Box
         sx={{
           ...style,
@@ -156,7 +155,6 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
           //className=
           type="submit"
           value="確定"
-          onClick={onAddEvent}
         >
           確定
         </Button>

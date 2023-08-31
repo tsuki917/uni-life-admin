@@ -146,17 +146,17 @@ export default function SubjectDetail() {
         middleExamData !== null &&
         reportRate !== null &&
         smallExamRate !== null &&
-        reportRate +
-          smallExamRate +
-          middleExamData.rate +
-          finalExamData.rate !==
+        parseInt(reportRate) +
+          parseInt(smallExamRate) +
+          parseInt(middleExamData.rate) +
+          parseInt(finalExamData.rate) !==
           100 && (
           <p style={{ color: "red" }}>
             割合の合計が100%ではありません（現在
-            {reportRate +
-              smallExamRate +
-              middleExamData.rate +
-              finalExamData.rate}
+            {parseInt(reportRate) +
+              parseInt(smallExamRate) +
+              parseInt(middleExamData.rate) +
+              parseInt(finalExamData.rate)}
             ％）
           </p>
         )}
