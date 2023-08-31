@@ -21,7 +21,7 @@ export default function FinalExam({ finalExamData, name, set }) {
         </h2>
         <ChaFinRate data={finalExamData} name={name} set={set} />
       </Box>
-      <List sx={{ ml: 4 }}>
+      <List>
         <Box
           sx={{
             flex: 1,

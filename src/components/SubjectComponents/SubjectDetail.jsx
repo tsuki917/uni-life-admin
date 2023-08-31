@@ -116,7 +116,7 @@ export default function SubjectDetail() {
       ></Button>
     </div>
   ) : (
-    <div>
+    <Box sx={{ mx: 6 }}>
       <Link component={LinkRouter} to={"/subjects"}>
         <ArrowBackIcon />
       </Link>
@@ -139,9 +139,18 @@ export default function SubjectDetail() {
           setSubject={setSubjectName}
           change={changeFlag}
         />
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          <h3 style={{ marginRight: "10px" }}>得点率:{scoreRate}%</h3>
+          <h3>得点:{score}</h3>
+        </Box>
       </Box>
-      <h1>得点率:{scoreRate}%</h1>
-      <h1>得点:{score}</h1>
       {finalExamData !== null &&
         middleExamData !== null &&
         reportRate !== null &&
@@ -184,7 +193,7 @@ export default function SubjectDetail() {
         name={name}
         set={setFinalExamData}
       />
-    </div>
+    </Box>
   );
 }
 
