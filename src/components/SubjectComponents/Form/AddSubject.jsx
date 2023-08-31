@@ -20,7 +20,7 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
   const [middleRate, setMiddleRate] = useState(0);
   const [smallRate, setsmallRate] = useState(0);
   const [reportRate, setReportRate] = useState(0);
-
+  const [message, setMessage] = useState();
   const handleSubmit = (e) => {};
 
   const addSubjectData = async (
@@ -62,18 +62,29 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
   };
 
   const onAddEvent = (e) => {
-    console.log("add Event");
-    if (!subjectsData.find((sub) => sub.name === subjectName)) {
-      addSubjectData(
-        subjectName,
-        Number(smallRate),
-        Number(middleRate),
-        Number(finalRate),
-        Number(reportRate)
-      );
-      close(false);
+    if (subjectName) {
+      console.log("add Event");
+      if (!subjectsData.find((sub) => sub.name === subjectName)) {
+        addSubjectData(
+          subjectName,
+          Number(smallRate),
+          Number(middleRate),
+          Number(finalRate),
+          Number(reportRate)
+        );
+        close(false);
+      } else {
+        setMessage(
+          <p style={{ color: "red" }}>既に存在する教科名は追加できません</p>
+        );
+      }
+
+      e.preventDefault();
+    } else {
+      //エラー表示
+      setMessage(<p style={{ color: "red" }}>教科名が未入力です</p>);
     }
-    e.preventDefault();
+    // setMessage("");
   };
   return (
     <form onSubmit={(e) => onAddEvent(e)}>
@@ -86,13 +97,12 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
           flexDirection: "column",
         }}
       >
+        {message}
         <label>
           教科名
           <input
-            //className=
             type="text"
             value={subjectName}
-            //name=
             onChange={(e) => {
               setSubjectname(e.target.value);
             }}
@@ -101,10 +111,8 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
         <label>
           課題割合
           <input
-            //className=
             type="number"
             value={reportRate}
-            //name=
             min="0"
             max="100"
             onChange={(e) => {
@@ -115,11 +123,10 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
         <label>
           小テスト割合
           <input
-            //className=
             type="number"
             value={smallRate}
-            //name=
             min="0"
+            max="100"
             onChange={(e) => {
               setsmallRate(e.target.value);
             }}
@@ -128,11 +135,10 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
         <label>
           中間試験割合
           <input
-            //className=
             type="number"
             value={middleRate}
-            //name=
             min="0"
+            max="100"
             onChange={(e) => {
               setMiddleRate(e.target.value);
             }}
@@ -141,21 +147,16 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
         <label>
           期末試験割合
           <input
-            //className=
             type="number"
             value={finalRate}
-            //name=
             min="0"
+            max="100"
             onChange={(e) => {
               setFinalRate(e.target.value);
             }}
           />
         </label>
-        <Button
-          //className=
-          type="submit"
-          value="確定"
-        >
+        <Button type="submit" value="確定">
           確定
         </Button>
       </Box>
