@@ -21,6 +21,7 @@ export const ChangeMiddle = ({ data, name, set }) => {
   const [Xday, setXday] = useState();
   const [score, setScore] = useState(data.score);
   const [flag, setFlag] = useState(false);
+  const [message, setMessage] = useState();
   if (Xday === undefined && data.Xday !== "未入力") {
     // 前データの引継ぎ
     setXday(dayjs(data.Xday.seconds * 1000));
@@ -40,8 +41,10 @@ export const ChangeMiddle = ({ data, name, set }) => {
       await updateDoc(doc(db, auth.currentUser.email, name), event);
       changeFlag();
       set(event.middleExam);
+      setMessage("");
     } else {
       //エラー表示
+      setMessage(<p style={{ color: "red" }}>未入力の項目があります</p>);
     }
   };
   return (
@@ -67,6 +70,7 @@ export const ChangeMiddle = ({ data, name, set }) => {
               flexDirection: "column",
             }}
           >
+            {message}
             <label>
               実施日(yyyy/mm/dd)
               <DatePicker

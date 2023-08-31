@@ -22,9 +22,17 @@ export const AddSmall = ({ rate, data, name, set }) => {
   const [title, setTitle] = useState("");
   const [score, setScore] = useState(null);
   const [flag, setFlag] = useState(false);
+  const [message, setMessage] = useState();
+  const [take, setTake] = useState(false); // 初期設定
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
+  if (!take) {
+    setTake(true);
+    setXday();
+    setTitle("");
+    setScore(null);
+  }
   const onAddEvent = async () => {
     if (Xday && title && score !== null) {
       const event = {
@@ -41,8 +49,11 @@ export const AddSmall = ({ rate, data, name, set }) => {
       await updateDoc(doc(db, auth.currentUser.email, name), all);
       changeFlag();
       set([...data, event]);
+      setMessage("");
+      setTake(false);
     } else {
       //エラー表示
+      setMessage(<p style={{ color: "red" }}>未入力の項目があります</p>);
     }
   };
   return (
@@ -65,6 +76,7 @@ export const AddSmall = ({ rate, data, name, set }) => {
             flexDirection: "column",
           }}
         >
+          {message}
           <label>
             小テスト名
             <input

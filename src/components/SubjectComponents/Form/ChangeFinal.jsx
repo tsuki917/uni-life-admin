@@ -22,6 +22,7 @@ export const ChangeFinal = ({ data, name, set }) => {
   const [Xday, setXday] = useState();
   const [score, setScore] = useState(data.score);
   const [flag, setFlag] = useState(false);
+  const [message, setMessage] = useState();
   if (Xday === undefined && data.Xday !== "未入力") {
     // 前データの引継ぎ
     //Dateのタイムスタンプはミリ秒単位, Firestoreのタイムスタンプは秒単位？
@@ -44,8 +45,10 @@ export const ChangeFinal = ({ data, name, set }) => {
       console.log(event.finalExam);
       console.log("seconds" in event.finalExam.Xday);
       set(event.finalExam);
+      setMessage("");
     } else {
       //エラー表示
+      setMessage(<p style={{ color: "red" }}>未入力の項目があります</p>);
     }
   };
   return (
@@ -72,6 +75,7 @@ export const ChangeFinal = ({ data, name, set }) => {
               flexDirection: "column",
             }}
           >
+            {message}
             <label>
               実施日(yyyy/mm/dd)
               <DatePicker

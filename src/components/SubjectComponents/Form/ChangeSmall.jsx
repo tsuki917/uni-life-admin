@@ -22,13 +22,17 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
   const [title, setTitle] = useState(data[index].title);
   const [score, setScore] = useState(data[index].score);
   const [flag, setFlag] = useState(false);
+  const [take, setTake] = useState(false);
+  const [message, setMessage] = useState();
   if (Xday === undefined) {
     // 前データの引継ぎ
     setXday(dayjs(data[index].Xday.seconds * 1000));
   }
-  if (title !== data[index].title) {
+  if (!take) {
+    setTake(true);
     setTitle(data[index].title);
     setScore(data[index].score);
+
     if ("seconds" in data[index].Xday) {
       setXday(dayjs(data[index].Xday.seconds * 1000));
     } else {
@@ -69,6 +73,10 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
       await updateDoc(doc(db, auth.currentUser.email, name), event);
       changeFlag();
       set(event.smallExam.smallExamArray);
+      setMessage("");
+      setTake(false);
+      setMessage(<p style={{ color: "red" }}>未入力の項目があります</p>);
+    } else {
     }
   };
   return (
@@ -94,6 +102,7 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
               flexDirection: "column",
             }}
           >
+            {message}
             <label>
               小テスト名
               <input

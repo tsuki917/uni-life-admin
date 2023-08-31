@@ -22,13 +22,17 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
   const [title, setTitle] = useState(data[index].title);
   const [score, setScore] = useState(data[index].score);
   const [flag, setFlag] = useState(false);
+  const [take, setTake] = useState(false); // 初期設定
+  const [message, setMessage] = useState();
   if (Xday === undefined) {
     // 前データの引継ぎ
     setXday(dayjs(data[index].deadlineDay.seconds * 1000));
   }
-  if (title !== data[index].title) {
+  if (!take) {
+    setTake(true);
     setTitle(data[index].title);
     setScore(data[index].score);
+
     if ("seconds" in data[index].deadlineDay) {
       setXday(dayjs(data[index].deadlineDay.seconds * 1000));
     } else {
@@ -70,6 +74,10 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
       await updateDoc(doc(db, auth.currentUser.email, name), event);
       changeFlag();
       set(event.reports.reportArray);
+      setMessage("");
+      setTake(false);
+    } else {
+      setMessage(<p style={{ color: "red" }}>未入力の項目があります</p>);
     }
   };
   return (
@@ -95,6 +103,7 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
               flexDirection: "column",
             }}
           >
+            {message}
             <label>
               課題名
               <input
