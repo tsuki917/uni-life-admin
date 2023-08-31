@@ -78,13 +78,10 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
           <p style={{ color: "red" }}>既に存在する教科名は追加できません</p>
         );
       }
-
-      e.preventDefault();
     } else {
-      //エラー表示
       setMessage(<p style={{ color: "red" }}>教科名が未入力です</p>);
     }
-    // setMessage("");
+    e.preventDefault();
   };
   return (
     <form onSubmit={(e) => onAddEvent(e)}>

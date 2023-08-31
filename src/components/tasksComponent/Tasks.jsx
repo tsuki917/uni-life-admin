@@ -5,31 +5,32 @@ import { collection, getDocs } from "firebase/firestore";
 import Task from "./Task";
 export default function Tasks() {
   const [reportsState, setReportsState] = useState([]);
+  if (auth.currentUser !== null) {
+    useEffect(() => {
+      const data = getAllReportData();
+      data.then((ele) => {
+        console.log(ele);
+        setReportsState(ele);
+      });
+    }, []);
 
-  useEffect(() => {
-    const data = getAllReportData();
-    data.then((ele) => {
-      console.log(ele);
-      setReportsState(ele);
-    });
-  }, []);
+    return (
+      <Box sx={{ mr: 6, ml: 6 }}>
+        <h3>直近の課題</h3>
+        <List>
+          {reportsState.map((reportData, key) => {
+            return (
+              <Box key={key}>
+                <Task reportsData={reportData} />
+              </Box>
+            );
+          })}
+        </List>
 
-  return (
-    <Box sx={{ mr: 6, ml: 6 }}>
-      <h3>直近の課題</h3>
-      <List>
-        {reportsState.map((reportData, key) => {
-          return (
-            <Box key={key}>
-              <Task reportsData={reportData} />
-            </Box>
-          );
-        })}
-      </List>
-
-      <Button onClick={getAllReportData}>report</Button>
-    </Box>
-  );
+        <Button onClick={getAllReportData}>report</Button>
+      </Box>
+    );
+  }
 }
 
 async function getAllReportData() {

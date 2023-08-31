@@ -48,53 +48,57 @@ export default function Title({ loginButton }) {
           >
             GPAJourney
           </Button>
-          <ToggleButtonGroup
-            exclusive
-            color="primary"
-            value={toggleView}
-            onChange={handleToggleChange}
-            sx={{
-              "& .MuiToggleButton-root.Mui-selected": {
-                backgroundColor: "#d9d9db", // 選択されているアイテムの背景色を指定
-                color: "black", // 選択されているアイテムのテキスト色を指定
-              },
-            }}
-          >
-            <ToggleButton
-              value="subject"
-              aria-label="subject"
-              LinkComponent={Link}
-              to="/subjects"
+          {auth.currentUser !== null ? (
+            <ToggleButtonGroup
+              exclusive
+              color="primary"
+              value={toggleView}
+              onChange={handleToggleChange}
               sx={{
-                bgcolor: "background.paper",
-                "&:hover": {
-                  bgcolor: "#d9d9db", // ホバー時の背景色も指定（必要に応じて）
+                "& .MuiToggleButton-root.Mui-selected": {
+                  backgroundColor: "#d9d9db", // 選択されているアイテムの背景色を指定
+                  color: "black", // 選択されているアイテムのテキスト色を指定
                 },
-                ml: 4,
-                fontSize: 12,
               }}
             >
-              <LocalLibrary />
-              subject
-            </ToggleButton>
-            <ToggleButton
-              value="tasks"
-              aria-label="tasks"
-              LinkComponent={Link}
-              to="/tasks"
-              sx={{
-                bgcolor: "background.paper",
-                "&:hover": {
-                  bgcolor: "#d9d9db", // ホバー時の背景色も指定（必要に応じて）
-                },
-                ml: 4,
-                fontSize: 12,
-              }}
-            >
-              <Assignment />
-              　task　
-            </ToggleButton>
-          </ToggleButtonGroup>
+              <ToggleButton
+                value="subject"
+                aria-label="subject"
+                LinkComponent={Link}
+                to="/subjects"
+                sx={{
+                  bgcolor: "background.paper",
+                  "&:hover": {
+                    bgcolor: "#d9d9db", // ホバー時の背景色も指定（必要に応じて）
+                  },
+                  ml: 4,
+                  fontSize: 12,
+                }}
+              >
+                <LocalLibrary />
+                subject
+              </ToggleButton>
+              <ToggleButton
+                value="tasks"
+                aria-label="tasks"
+                LinkComponent={Link}
+                to="/tasks"
+                sx={{
+                  bgcolor: "background.paper",
+                  "&:hover": {
+                    bgcolor: "#d9d9db", // ホバー時の背景色も指定（必要に応じて）
+                  },
+                  ml: 4,
+                  fontSize: 12,
+                }}
+              >
+                <Assignment />
+                　task　
+              </ToggleButton>
+            </ToggleButtonGroup>
+          ) : (
+            ""
+          )}
 
           <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
             {auth.currentUser ? (
