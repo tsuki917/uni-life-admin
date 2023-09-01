@@ -100,9 +100,24 @@ export default function Title({ loginButton }) {
             ""
           )}
 
-          <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "flex-start",
+            }}
+          >
             {auth.currentUser ? (
-              <Box sx={{ pt: 1, pb: 1 }}>{auth.currentUser.email}</Box>
+              <Box sx={{ pt: 1, pb: 1 }}>
+                {auth.currentUser.email}
+                <img
+                  src={auth.currentUser.photoURL}
+                  alt="アイコン"
+                  width="30"
+                  height="30"
+                ></img>
+              </Box>
             ) : (
               loginButton
             )}
