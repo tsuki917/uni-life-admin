@@ -42,7 +42,7 @@ export default function Tasks() {
           }}
         >
           <h1>直近のイベント</h1>
-          <Box sx={{ width: "20%" }}>
+          <Box sx={{ width: "30%" }}>
             <FormControl sx={{ mt: 2, width: "40%" }}>
               <InputLabel id="isFinished-simple-select-label"></InputLabel>
               <Select
