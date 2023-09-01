@@ -23,7 +23,7 @@ const rightLink = {
   ml: 3,
 };
 
-export default function Title({ loginButton }) {
+export default function Title({ login }) {
   const navigation = useNavigate();
   const [toggleView, setToggleView] = useState("");
 
@@ -31,6 +31,12 @@ export default function Title({ loginButton }) {
   const handleToggleChange = (e, newView) => {
     setToggleView(newView);
   };
+
+  const loginDeal = () => {
+    login();
+    navigation("../subjects");
+  };
+
   return (
     <div>
       <AppBar position="fixed" sx={{ ml: 1, mr: 1 }}>
@@ -122,16 +128,24 @@ export default function Title({ loginButton }) {
                 }}
               >
                 {auth.currentUser.email}
-                <img
-                  src={auth.currentUser.photoURL}
-                  alt="アイコン"
-                  style={{ marginLeft: 10, borderRadius: 30 }}
-                  width="30"
-                  height="30"
-                ></img>
+                <Button onClick={login}>
+                  <img
+                    src={auth.currentUser.photoURL}
+                    alt="アイコン"
+                    style={{ marginLeft: 10, borderRadius: 30 }}
+                    width="30"
+                    height="30"
+                  ></img>
+                </Button>
               </Box>
             ) : (
-              loginButton
+              <Button
+                onClick={loginDeal}
+                variant="outlined"
+                sx={{ color: "white", borderColor: "white" }}
+              >
+                ログイン
+              </Button>
             )}
           </Box>
         </Toolbar>
