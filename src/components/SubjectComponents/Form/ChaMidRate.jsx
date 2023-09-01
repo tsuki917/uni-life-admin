@@ -1,7 +1,7 @@
 import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { Box, Button, Modal } from "@mui/material";
+import { Box, Button, Modal, TextField } from "@mui/material";
 const style = {
   position: "absolute",
   top: "40%",
@@ -12,6 +12,9 @@ const style = {
   border: "2px solid #000",
   boxShadow: 5,
   p: 4,
+  display: "flex",
+  alignItems: "baseline",
+  marginRight: 10,
 };
 export const ChaMidRate = ({ data, name, set }) => {
   const [rate, setRate] = useState(0);
@@ -46,19 +49,25 @@ export const ChaMidRate = ({ data, name, set }) => {
       </Button>
       <Modal open={flag} onClose={changeFlag}>
         <Box sx={style}>
-          <label>
-            中間割合
-            <input
-              type="number"
-              value={rate}
-              min="0"
-              max="100"
-              onChange={(e) => {
-                setRate(e.target.value);
-              }}
-            />
-          </label>
-          <Button onClick={onAddEvent}>割合変更</Button>
+          <TextField
+            label="中間割合"
+            variant="outlined"
+            type="number"
+            value={rate}
+            min="0"
+            max="100"
+            margin="normal"
+            onChange={(e) => {
+              setRate(e.target.value);
+            }}
+          />
+          <Button
+            variant="outlined"
+            onClick={onAddEvent}
+            style={{ marginLeft: 20 }}
+          >
+            変更
+          </Button>
         </Box>
       </Modal>
     </Box>

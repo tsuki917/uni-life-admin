@@ -4,33 +4,31 @@ import { db, auth } from "../../libs/fire";
 import { collection, getDocs } from "firebase/firestore";
 import Task from "./Task";
 export default function Tasks() {
-
   const [recentsData, setRecentData] = useState([]);
   if (auth.currentUser !== null) {
     useEffect(() => {
-    const data = getRecentEventData();
-    data.then((ele) => {
-      console.log(ele);
-      setRecentData(ele);
-    });
-  }, []);
+      const data = getRecentEventData();
+      data.then((ele) => {
+        console.log(ele);
+        setRecentData(ele);
+      });
+    }, []);
 
-  return (
-    <Box sx={{ mr: 6, ml: 6 }}>
-      <h1>直近の課題</h1>
-      <List>
-        {recentsData.map((recentData, key) => {
-          return (
-            <Box key={key}>
-              <Task eventsData={recentData} />
-            </Box>
-          );
-        })}
-      </List>
-    </Box>
-  );
+    return (
+      <Box sx={{ mr: 6, ml: 6 }}>
+        <h1>直近の課題</h1>
+        <List>
+          {recentsData.map((recentData, key) => {
+            return (
+              <Box key={key}>
+                <Task eventsData={recentData} />
+              </Box>
+            );
+          })}
+        </List>
+      </Box>
+    );
   }
-
 }
 
 async function getRecentEventData() {

@@ -1,7 +1,7 @@
 import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { Modal, Box, Button } from "@mui/material";
+import { Modal, Box, Button, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -94,50 +94,43 @@ export const AddReport = ({ rate, data, name, set }) => {
           }}
         >
           {message}
-          <label>
-            課題名
-            <input
-              //className=
-              type="text"
-              value={title}
-              //name=
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            />
-          </label>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <label>
-              期限
-              <DatePicker
-                //className=
-                inputFormat="yyyy/MM/dd"
-                onChange={(newDay) => {
-                  console.log(newDay);
-                  setXday(newDay);
-                }}
-              />
-            </label>
-          </LocalizationProvider>
-          <label>
-            成績
-            <input
-              //className=
-              type="number"
-              value={score}
-              //name=
-              min="0"
-              onChange={(e) => {
-                setScore(e.target.value);
-              }}
-            />
-          </label>
-          <input
-            //className=
-            type="button"
-            value="確定"
-            onClick={onAddEvent}
+          <TextField
+            required
+            label="課題名"
+            variant="outlined"
+            maxlength="100"
+            value={title}
+            margin="normal"
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
           />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              required
+              label="期限"
+              inputFormat="yyyy/MM/dd"
+              margin="normal"
+              onChange={(newDay) => {
+                setXday(newDay);
+              }}
+            />
+          </LocalizationProvider>
+          <TextField
+            label="成績(0~100)"
+            variant="outlined"
+            type="number"
+            value={score}
+            min="0"
+            max="100"
+            margin="normal"
+            onChange={(e) => {
+              setScore(e.target.value);
+            }}
+          />
+          <Button variant="outlined" onClick={onAddEvent}>
+            追加
+          </Button>
         </Box>
       </Modal>
     </Box>

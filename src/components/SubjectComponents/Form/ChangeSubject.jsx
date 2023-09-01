@@ -1,7 +1,13 @@
 import { auth, db } from "../../../libs/fire";
-import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  setDoc,
+  getDocs,
+} from "firebase/firestore";
 import React, { useState } from "react";
-import { Button, Modal, Box } from "@mui/material";
+import { Button, Modal, Box, TextField } from "@mui/material";
 const style = {
   position: "absolute",
   top: "40%",
@@ -12,26 +18,46 @@ const style = {
   border: "2px solid #000",
   boxShadow: 5,
   p: 4,
+  display: "flex",
+  alignItems: "baseline",
+  marginRight: 10,
 };
 export const ChangeSubject = ({ all, setAll, setSubject, change }) => {
   const [name, setName] = useState("");
   const [flag, setFlag] = useState(false);
+  const [message, setMessage] = useState();
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
 
-  const onDeleteEvent = async () => {
+  const onAddEvent = async () => {
     if (name) {
-      const newData = { ...all };
-      newData.name = name;
-      await setDoc(doc(db, auth.currentUser.email, name), newData);
-      await deleteDoc(doc(db, auth.currentUser.email, all.name));
-      changeFlag();
-      setAll(newData);
-      setSubject(name);
-      change();
+      const subjectsNewData = [];
+      const test = collection(db, auth.currentUser.email);
+      const q = await getDocs(test);
+      console.log(q);
+      q.forEach((ele) => {
+        subjectsNewData.push(ele.data());
+      });
+      if (!subjectsNewData.find((sub) => sub.name === name)) {
+        const newData = { ...all };
+        newData.name = name;
+        await setDoc(doc(db, auth.currentUser.email, name), newData);
+        await deleteDoc(doc(db, auth.currentUser.email, all.name));
+        changeFlag();
+        setAll(newData);
+        setSubject(name);
+        change();
+      } else {
+        setMessage(
+          <p style={{ color: "red" }}>既に存在する教科名には変更できません</p>
+        );
+      }
+    } else {
+      setMessage(<p style={{ color: "red" }}>教科名が未入力です</p>);
     }
   };
+
   return (
     <Box>
       <Box
@@ -53,24 +79,25 @@ export const ChangeSubject = ({ all, setAll, setSubject, change }) => {
       </Box>
       <Modal open={flag} onClose={changeFlag}>
         <Box sx={style}>
-          <label>
-            教科名
-            <input
-              //className=
-              type="text"
-              value={name}
-              //name=
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-          </label>
-          <input
-            //className=
-            type="button"
-            value="確定"
-            onClick={onDeleteEvent}
+          {message}
+          <TextField
+            required
+            label="教科名"
+            variant="outlined"
+            maxlength="100"
+            value={name}
+            margin="normal"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
+          <Button
+            variant="outlined"
+            onClick={onAddEvent}
+            style={{ marginLeft: 20 }}
+          >
+            変更
+          </Button>
         </Box>
       </Modal>
     </Box>
