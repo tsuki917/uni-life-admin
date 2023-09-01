@@ -4,9 +4,10 @@ import { db, auth } from "../../libs/fire";
 import { collection, getDocs } from "firebase/firestore";
 import Task from "./Task";
 export default function Tasks() {
-  const [recentsData, setRecentData] = useState([]);
 
-  useEffect(() => {
+  const [recentsData, setRecentData] = useState([]);
+  if (auth.currentUser !== null) {
+    useEffect(() => {
     const data = getRecentEventData();
     data.then((ele) => {
       console.log(ele);
@@ -28,6 +29,8 @@ export default function Tasks() {
       </List>
     </Box>
   );
+  }
+
 }
 
 async function getRecentEventData() {

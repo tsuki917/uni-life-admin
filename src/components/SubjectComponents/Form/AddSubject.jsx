@@ -79,11 +79,9 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
         );
       }
     } else {
-      //エラー表示
       setMessage(<p style={{ color: "red" }}>教科名が未入力です</p>);
     }
     e.preventDefault();
-    // setMessage("");
   };
   return (
     <form onSubmit={(e) => onAddEvent(e)}>
