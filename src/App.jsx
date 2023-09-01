@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home.jsx";
-import FirstSetting from "./components/FirstSetting.jsx";
 import Title from "./components/Title.jsx";
 import Subjects from "./components/SubjectComponents/Subjects.jsx";
 
