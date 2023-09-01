@@ -109,11 +109,23 @@ export default function Title({ loginButton }) {
             }}
           >
             {auth.currentUser ? (
-              <Box sx={{ pt: 1, pb: 1 }}>
+              <Box
+                sx={{
+                  pt: 1,
+                  pb: 1,
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  borderRadius: "3",
+                  width: 1,
+                }}
+              >
                 {auth.currentUser.email}
                 <img
                   src={auth.currentUser.photoURL}
                   alt="アイコン"
+                  style={{ marginLeft: 10, borderRadius: 30 }}
                   width="30"
                   height="30"
                 ></img>
