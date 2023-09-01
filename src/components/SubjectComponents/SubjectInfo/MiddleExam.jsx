@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography, Box } from "@mui/material";
 import { ChangeMiddle } from "../Form/ChangeMiddle";
 import { ChaMidRate } from "../Form/ChaMidRate";
+import IsFinishMiddle from "../Form/IsFinishMiddle";
 export default function MiddleExam({ middleExamData, name, set }) {
   return middleExamData === null ? (
     <div>loading</div>
@@ -49,24 +50,17 @@ export default function MiddleExam({ middleExamData, name, set }) {
                   </Typography>
                   {(() => {
                     if (middleExamData.Xday === "未入力") {
-                      return " — 未実施";
-                    } else if ("seconds" in middleExamData.Xday) {
-                      if (new Date() < middleExamData.Xday.toDate()) {
-                        return " — 未実施";
-                      } else {
-                        return " — 成績" + middleExamData.score + "点";
-                      }
-                    } else {
-                      if (new Date() < new Date(middleExamData.Xday)) {
-                        return " — 未実施";
-                      } else {
-                        return " — 成績" + middleExamData.score + "点";
-                      }
+                      return " — 未入力";
+                    } else if (middleExamData.isFinished) {
+                      return " — 成績" + middleExamData.score + "点";
+                    } else if (!middleExamData.isFinished) {
+                      return " — 成績" + "未実施";
                     }
                   })()}
                 </React.Fragment>
               }
             />
+            <IsFinishMiddle data={middleExamData} name={name} set={set} />
             <ChangeMiddle data={middleExamData} name={name} set={set} />
           </ListItem>
         </Box>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { List, ListItem, ListItemText, Typography, Box } from "@mui/material";
 import { ChangeFinal } from "../Form/ChangeFinal";
 import { ChaFinRate } from "../Form/ChaFinRate";
+import IsFinishFinal from "../Form/IsFinishFinal";
 
 export default function FinalExam({ finalExamData, name, set }) {
   return finalExamData === null ? (
@@ -52,23 +53,16 @@ export default function FinalExam({ finalExamData, name, set }) {
                   {(() => {
                     if (finalExamData.Xday === "未入力") {
                       return " — 未実施";
-                    } else if ("seconds" in finalExamData.Xday) {
-                      if (new Date() < finalExamData.Xday.toDate()) {
-                        return " — 未実施";
-                      } else {
-                        return " — 成績" + finalExamData.score + "点";
-                      }
-                    } else {
-                      if (new Date() < new Date(finalExamData.Xday)) {
-                        return " — 未実施";
-                      } else {
-                        return " — 成績" + finalExamData.score + "点";
-                      }
+                    } else if (finalExamData.isFinished) {
+                      return " — 成績" + finalExamData.score + "点";
+                    } else if (!finalExamData.isFinished) {
+                      return " - 未実施";
                     }
                   })()}
                 </React.Fragment>
               }
             />
+            <IsFinishFinal data={finalExamData} name={name} set={set} />
             <ChangeFinal data={finalExamData} name={name} set={set} />
           </ListItem>
         </Box>
