@@ -16,14 +16,7 @@ export default function App() {
   const auth = getAuth();
   const [message, setMessage] = useState("");
   const mess = "";
-  const loginButton = (
-    <input
-      //className={}
-      type="button"
-      value="ログイン"
-      onClick={() => login()}
-    />
-  );
+
   const login = () => {
     // ポップアップによるログイン
     signInWithPopup(auth, provider)
@@ -58,7 +51,7 @@ export default function App() {
     <div>
       <HashRouter>
         <Routes>
-          <Route path="/*" element={<Title loginButton={loginButton} />} />
+          <Route path="/*" element={<Title login={login} />} />
         </Routes>
         <Routes>
           <Route path="/" element={<Home />} />
