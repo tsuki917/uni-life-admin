@@ -1,25 +1,24 @@
-import { auth, db } from "../../../libs/fire";
-import { doc, updateDoc } from "firebase/firestore";
-import React, { useState } from "react";
-import { Modal, Box, Button } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import React from "react";
+import { useState } from "react";
+import { updateDoc, doc } from "firebase/firestore";
+import { Box, Button } from "@mui/material";
+import { db, auth } from "../../../libs/fire";
 
-export const IsFinishSmall = ({ rate, data, index, name, set }) => {
-  const [isFinished, setIsFinished] = useState(data[index].isFinished);
+export default function IsFinishFinal({ data, name, set }) {
+  const [isFinished, setIsFinished] = useState(data.isFinished);
 
   const onAddEvent = async () => {
-    const newData = [...data];
-    newData[index].isFinished = !isFinished;
     setIsFinished((prev) => !prev);
     const event = {
-      smallExam: {
-        rate: rate,
-        smallExamArray: newData,
+      finalExam: {
+        score: data.score,
+        Xday: data.Xday,
+        isFinished: !data.isFinished,
+        rate: data.rate,
       },
     };
-    console.log(newData);
     await updateDoc(doc(db, auth.currentUser.email, name), event);
-    set(event.smallExam.smallExamArray);
+    set(event.finalExam);
   };
   return (
     <Box>
@@ -42,4 +41,4 @@ export const IsFinishSmall = ({ rate, data, index, name, set }) => {
       )}
     </Box>
   );
-};
+}

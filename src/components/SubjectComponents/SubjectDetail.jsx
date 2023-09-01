@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { auth, db } from "../../libs/fire";
 import { doc, getDoc } from "firebase/firestore";
 import Report from "./SubjectInfo/Report";
-import FinalExam from "./SubjectInfo/finalExam";
+import FinalExam from "./SubjectInfo/FinalExam";
 import MiddleExam from "./SubjectInfo/MiddleExam";
 import SmallExam from "./SubjectInfo/SmallExam";
 import { ChangeSubject } from "./Form/ChangeSubject";
