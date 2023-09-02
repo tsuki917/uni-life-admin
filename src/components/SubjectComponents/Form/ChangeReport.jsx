@@ -109,7 +109,7 @@ export const ChangeReport = ({ rate, data, index, name, set }) => {
               required
               label="課題名"
               variant="outlined"
-              maxlength="100"
+              maxLength="100"
               value={title}
               margin="normal"
               onChange={(e) => {

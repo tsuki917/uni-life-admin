@@ -24,9 +24,9 @@ export default function SmallExam({
           textAlign: "center",
         }}
       >
-        <h3>
+        <h2>
           小テスト <span>成績配分 : {smallExamRate}%</span>
-        </h3>
+        </h2>
         <ChaSmaRate data={smallExamData} name={name} set={setRate} />
       </Box>
 

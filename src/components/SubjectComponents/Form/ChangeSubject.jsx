@@ -84,7 +84,7 @@ export const ChangeSubject = ({ all, setAll, setSubject, change }) => {
             required
             label="教科名"
             variant="outlined"
-            maxlength="100"
+            maxLength="100"
             value={name}
             margin="normal"
             onChange={(e) => {

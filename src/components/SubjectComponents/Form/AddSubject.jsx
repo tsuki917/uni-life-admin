@@ -101,7 +101,7 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
           required
           label="教科名"
           variant="outlined"
-          maxlength="100"
+          maxLength="100"
           value={subjectName}
           margin="normal"
           onChange={(e) => {
