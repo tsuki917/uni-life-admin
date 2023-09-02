@@ -57,6 +57,14 @@ export default function MiddleExam({ middleExamData, name, set }) {
                       return " — 成績" + "未実施";
                     }
                   })()}
+                  <div
+                    style={{
+                      whiteSpace: "pre-wrap",
+                      overflowWrap: "break-word",
+                    }}
+                  >
+                    {middleExamData.title}
+                  </div>
                 </React.Fragment>
               }
             />

@@ -98,7 +98,7 @@ export const ChangeMiddle = ({ data, name, set }) => {
             <TextField
               label="メモ（任意）"
               variant="outlined"
-              maxlength="100"
+              maxLength="100"
               value={title}
               margin="normal"
               onChange={(e) => {

@@ -15,6 +15,7 @@ export default function IsFinishMiddle({ data, name, set }) {
         Xday: data.Xday,
         isFinished: !data.isFinished,
         rate: data.rate,
+        title: data.title,
       },
     };
     await updateDoc(doc(db, auth.currentUser.email, name), event);

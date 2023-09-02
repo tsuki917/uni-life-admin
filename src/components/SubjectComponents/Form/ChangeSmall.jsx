@@ -108,7 +108,7 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
               required
               label="小テスト名"
               variant="outlined"
-              maxlength="100"
+              maxLength="100"
               value={title}
               margin="normal"
               onChange={(e) => {
