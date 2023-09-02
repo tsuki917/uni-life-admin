@@ -105,7 +105,9 @@ export default function SubjectDetail() {
       scorePre += smallExamPoint;
       scorePre += reportPoint;
       const scoreRatePre =
-        maxScore !== 0 ? Math.round((scorePre / maxScore) * 100 * 10) / 10 : 0;
+        maxScore !== 0
+          ? Math.round((scorePre / maxScore) * 100 * 10) / 10
+          : "-";
       scorePre = Math.round(scorePre * 10) / 10;
       setScore(scorePre);
       setScoreRate(scoreRatePre);
