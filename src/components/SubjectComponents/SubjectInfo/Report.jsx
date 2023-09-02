@@ -63,7 +63,7 @@ export default function Report({
                       {/* content */}
                       {reportArrayData.isFinished
                         ? " — 成績" + reportArrayData.score + "点"
-                        : " — 未完了"}
+                        : " — 成績 未完了"}
                     </React.Fragment>
                   }
                 />
