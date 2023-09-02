@@ -12,19 +12,21 @@ import { db, auth } from "../../libs/fire";
 import { collection, getDocs } from "firebase/firestore";
 import Task from "./Task";
 export default function Tasks() {
-
   const [filterOption, setFilterOption] = useState(7);
   const [conIsFinished, setConIsFinished] = useState("all");
-
+  const [isReport, setIsReport] = useState(false);
   const [recentsData, setRecentData] = useState([]);
   if (auth.currentUser !== null) {
     useEffect(() => {
       console.log("conIsFinish" + conIsFinished);
-      const data = getRecentEventData(filterOption, conIsFinished);
+      const data = getRecentEventData(filterOption, conIsFinished, isReport);
       data.then((ele) => {
         setRecentData(ele);
       });
-    }, [filterOption, conIsFinished]);
+    }, [filterOption, conIsFinished, isReport]);
+    const handleChangeIsReport = (event) => {
+      setIsReport(event.target.value);
+    };
     const handleChangeDay = (event) => {
       setFilterOption(event.target.value);
     };
@@ -43,8 +45,21 @@ export default function Tasks() {
           }}
         >
           <h1>直近のイベント</h1>
-          <Box sx={{ width: "30%" }}>
-            <FormControl sx={{ mt: 2, width: "40%" }}>
+          <Box sx={{ width: "50%" }}>
+            <FormControl sx={{ mt: 2, width: "30%" }}>
+              <InputLabel id="isReport-simple-select-label"></InputLabel>
+              <Select
+                labelId="isReport-simple-select-label"
+                id="demo-simple-select"
+                value={isReport}
+                label=""
+                onChange={handleChangeIsReport}
+              >
+                <MenuItem value={false}>すべてのイベント</MenuItem>
+                <MenuItem value={true}>課題のみ</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl sx={{ mt: 2, width: "30%" }}>
               <InputLabel id="isFinished-simple-select-label"></InputLabel>
               <Select
                 labelId="isFinished-simple-select-label"
@@ -58,7 +73,7 @@ export default function Tasks() {
                 <MenuItem value={"only-false"}>未完了のみ</MenuItem>
               </Select>
             </FormControl>
-            <FormControl sx={{ width: "40%", mt: 2 }}>
+            <FormControl sx={{ width: "30%", mt: 2 }}>
               <InputLabel id="day-simple-select-label"></InputLabel>
               <Select
                 labelId="day-simple-select-label"
@@ -92,7 +107,7 @@ export default function Tasks() {
   }
 }
 
-async function getRecentEventData(filterOption, isFinishedCon) {
+async function getRecentEventData(filterOption, isFinishedCon, isReport) {
   const eventsData = [];
   const userCollenction = collection(db, auth.currentUser.email);
   const q = await getDocs(userCollenction);
@@ -110,36 +125,38 @@ async function getRecentEventData(filterOption, isFinishedCon) {
         eventsData.push(pushData);
       }
     });
-    subjectData.smallExam.smallExamArray.forEach((smallExamData) => {
-      const pushData = {
-        subjectName: subjectData.name,
-        smallExamData: smallExamData,
-        distDay: getDaysRemaining(smallExamData.Xday),
-      };
-      if (pushData.distDay < filterOption && pushData.distDay > -1) {
-        eventsData.push(pushData);
-      }
-    });
+    if (!isReport) {
+      subjectData.smallExam.smallExamArray.forEach((smallExamData) => {
+        const pushData = {
+          subjectName: subjectData.name,
+          smallExamData: smallExamData,
+          distDay: getDaysRemaining(smallExamData.Xday),
+        };
+        if (pushData.distDay < filterOption && pushData.distDay > -1) {
+          eventsData.push(pushData);
+        }
+      });
 
-    if (
-      getDaysRemaining(subjectData.middleExam.Xday) < filterOption &&
-      getDaysRemaining(subjectData.middleExam.Xday) > -1
-    ) {
-      eventsData.push({
-        subjectName: subjectData.name,
-        middleExamData: subjectData.middleExam,
-        distDay: getDaysRemaining(subjectData.middleExam.Xday),
-      });
-    }
-    if (
-      getDaysRemaining(subjectData.finalExam.Xday) < filterOption &&
-      getDaysRemaining(subjectData.finalExam.Xday) > -1
-    ) {
-      eventsData.push({
-        subjectName: subjectData.name,
-        finalExamData: subjectData.finalExam,
-        distDay: getDaysRemaining(subjectData.finalExam.Xday),
-      });
+      if (
+        getDaysRemaining(subjectData.middleExam.Xday) < filterOption &&
+        getDaysRemaining(subjectData.middleExam.Xday) > -1
+      ) {
+        eventsData.push({
+          subjectName: subjectData.name,
+          middleExamData: subjectData.middleExam,
+          distDay: getDaysRemaining(subjectData.middleExam.Xday),
+        });
+      }
+      if (
+        getDaysRemaining(subjectData.finalExam.Xday) < filterOption &&
+        getDaysRemaining(subjectData.finalExam.Xday) > -1
+      ) {
+        eventsData.push({
+          subjectName: subjectData.name,
+          finalExamData: subjectData.finalExam,
+          distDay: getDaysRemaining(subjectData.finalExam.Xday),
+        });
+      }
     }
   });
   eventsData.sort((a, b) => {
