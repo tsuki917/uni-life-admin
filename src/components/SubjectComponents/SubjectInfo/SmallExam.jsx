@@ -62,7 +62,7 @@ export default function SmallExam({
                       {/* content */}
                       {smallExamElement.isFinished
                         ? " — 成績" + smallExamElement.score + "点"
-                        : " — 未実施"}
+                        : " — 成績 未実施"}
                     </React.Fragment>
                   }
                 />
