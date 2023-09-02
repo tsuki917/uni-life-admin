@@ -12,6 +12,7 @@ import { db, auth } from "../../libs/fire";
 import { collection, getDocs } from "firebase/firestore";
 import Task from "./Task";
 export default function Tasks() {
+
   const [filterOption, setFilterOption] = useState(7);
   const [conIsFinished, setConIsFinished] = useState("all");
 
@@ -76,6 +77,7 @@ export default function Tasks() {
             </FormControl>
           </Box>
         </Box>
+
         <List>
           {recentsData.map((recentData, key) => {
             return (

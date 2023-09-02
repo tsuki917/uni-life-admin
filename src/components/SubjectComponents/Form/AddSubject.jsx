@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Box } from "@mui/material";
+import { Button, Box, TextField } from "@mui/material";
 import { db, auth } from "../../../libs/fire.js";
 import { setDoc, doc } from "firebase/firestore";
 const style = {
@@ -37,11 +37,13 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
         rate: finalRate,
         score: 0,
         Xday: "未入力",
+        title: "",
       },
       middleExam: {
         rate: middleRate,
         score: 0,
         Xday: "未入力",
+        title: "",
       },
       smallExam: {
         rate: smallRate,
@@ -95,66 +97,67 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
         }}
       >
         {message}
-        <label>
-          教科名
-          <input
-            type="text"
-            value={subjectName}
-            onChange={(e) => {
-              setSubjectname(e.target.value);
-            }}
-          />
-        </label>
-        <label>
-          課題割合
-          <input
-            type="number"
-            value={reportRate}
-            min="0"
-            max="100"
-            onChange={(e) => {
-              setReportRate(e.target.value);
-            }}
-          />
-        </label>
-        <label>
-          小テスト割合
-          <input
-            type="number"
-            value={smallRate}
-            min="0"
-            max="100"
-            onChange={(e) => {
-              setsmallRate(e.target.value);
-            }}
-          />
-        </label>
-        <label>
-          中間試験割合
-          <input
-            type="number"
-            value={middleRate}
-            min="0"
-            max="100"
-            onChange={(e) => {
-              setMiddleRate(e.target.value);
-            }}
-          />
-        </label>
-        <label>
-          期末試験割合
-          <input
-            type="number"
-            value={finalRate}
-            min="0"
-            max="100"
-            onChange={(e) => {
-              setFinalRate(e.target.value);
-            }}
-          />
-        </label>
-        <Button type="submit" value="確定">
-          確定
+        <TextField
+          required
+          label="教科名"
+          variant="outlined"
+          maxlength="100"
+          value={subjectName}
+          margin="normal"
+          onChange={(e) => {
+            setSubjectname(e.target.value);
+          }}
+        />
+        <TextField
+          label="課題割合"
+          variant="outlined"
+          type="number"
+          value={reportRate}
+          min="0"
+          max="100"
+          margin="normal"
+          onChange={(e) => {
+            setReportRate(e.target.value);
+          }}
+        />
+        <TextField
+          label="小テスト割合"
+          variant="outlined"
+          type="number"
+          value={smallRate}
+          min="0"
+          max="100"
+          margin="normal"
+          onChange={(e) => {
+            setsmallRate(e.target.value);
+          }}
+        />
+        <TextField
+          label="中間試験割合"
+          variant="outlined"
+          type="number"
+          value={middleRate}
+          min="0"
+          max="100"
+          margin="normal"
+          onChange={(e) => {
+            setMiddleRate(e.target.value);
+          }}
+        />
+        <TextField
+          label="期末試験割合"
+          variant="outlined"
+          type="number"
+          value={finalRate}
+          min="0"
+          max="100"
+          margin="normal"
+          onChange={(e) => {
+            setFinalRate(e.target.value);
+          }}
+        />
+        <Button type="submit" variant="outlined">
+          追加
         </Button>
       </Box>
     </form>

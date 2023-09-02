@@ -1,7 +1,7 @@
 import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { Modal, Box, Button } from "@mui/material";
+import { Modal, Box, Button, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -21,6 +21,7 @@ const style = {
 export const ChangeFinal = ({ data, name, set }) => {
   const [Xday, setXday] = useState();
   const [score, setScore] = useState(data.score);
+  const [title, setTitle] = useState(data.title);
   const [flag, setFlag] = useState(false);
   const [message, setMessage] = useState();
   if (Xday === undefined && data.Xday !== "未入力") {
@@ -32,23 +33,22 @@ export const ChangeFinal = ({ data, name, set }) => {
     setFlag((prev) => !prev);
   };
   const onAddEvent = async () => {
-    if (Xday && score !== null) {
+    if (Xday) {
       const event = {
         finalExam: {
           Xday: Xday.$d,
           rate: data.rate,
           score: Number(score),
+          title: title,
         },
       };
       await updateDoc(doc(db, auth.currentUser.email, name), event);
       changeFlag();
-      console.log(event.finalExam);
-      console.log("seconds" in event.finalExam.Xday);
       set(event.finalExam);
       setMessage("");
     } else {
       //エラー表示
-      setMessage(<p style={{ color: "red" }}>未入力の項目があります</p>);
+      setMessage(<p style={{ color: "red" }}>日付が未入力です</p>);
     }
   };
   return (
@@ -76,36 +76,44 @@ export const ChangeFinal = ({ data, name, set }) => {
             }}
           >
             {message}
-            <label>
-              実施日(yyyy/mm/dd)
-              <DatePicker
-                //className=
-                value={Xday}
-                inputFormat="yyyy/MM/dd"
-                onChange={(newDay) => {
-                  setXday(newDay);
-                }}
-              />
-            </label>
-            <label>
-              点数
-              <input
-                //className=
-                type="number"
-                value={score}
-                //name=
-                min="0"
-                onChange={(e) => {
-                  setScore(e.target.value);
-                }}
-              />
-            </label>
-            <input
+
+            <DatePicker
               //className=
-              type="button"
-              value="確定"
-              onClick={onAddEvent}
+              label="実施日"
+              value={Xday}
+              inputFormat="yyyy/MM/dd"
+              margin="normal"
+              onChange={(newDay) => {
+                setXday(newDay);
+              }}
             />
+
+            <TextField
+              label="点数(0~100)"
+              variant="outlined"
+              type="number"
+              value={score}
+              min="0"
+              max="100"
+              margin="normal"
+              onChange={(e) => {
+                setScore(e.target.value);
+              }}
+            />
+
+            <TextField
+              label="メモ（任意）"
+              variant="outlined"
+              maxlength="100"
+              value={title}
+              margin="normal"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
+            <Button variant="outlined" onClick={onAddEvent}>
+              変更
+            </Button>
           </Box>
         </LocalizationProvider>
       </Modal>

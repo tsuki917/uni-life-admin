@@ -33,7 +33,7 @@ export default function FinalExam({ finalExamData, name, set }) {
         >
           <ListItem sx={{ bgcolor: "#eeeef0", mb: 1 }}>
             <ListItemText
-              primary={"期末試験"}
+              primary={"期末試験　　" + finalExamData.title}
               secondary={
                 <React.Fragment>
                   <Typography
