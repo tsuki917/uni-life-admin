@@ -54,7 +54,15 @@ export default function Subjects() {
           }}
         >
           <Button
-            sx={{ bgcolor: "#1976d2", color: "white", p: 0, mr: 6 }}
+            sx={{
+              bgcolor: "#1976d2",
+              color: "white",
+              p: 0,
+              mr: 6,
+              "&:hover": {
+                backgroundColor: "#6d90b2",
+              },
+            }}
             onClick={handleOpen}
             startIcon={<AddIcon />}
           >

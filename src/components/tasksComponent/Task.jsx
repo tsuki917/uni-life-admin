@@ -46,7 +46,7 @@ export default function Task({ eventsData }) {
             }}
           >
             <span>
-              {"期限 : " +
+              {"期限日 : " +
                 ("seconds" in eventsData.reportData.deadlineDay
                   ? eventsData.reportData.deadlineDay
                       .toDate()
@@ -124,7 +124,7 @@ export default function Task({ eventsData }) {
             }}
           >
             <span>
-              {"期限 : " +
+              {"実施日 : " +
                 ("seconds" in eventsData.smallExamData.Xday
                   ? eventsData.smallExamData.Xday.toDate().toLocaleDateString()
                   : new Date(
@@ -200,7 +200,7 @@ export default function Task({ eventsData }) {
             }}
           >
             <span>
-              {"期限 : " +
+              {"実施日 : " +
                 ("seconds" in eventsData.middleExamData.Xday
                   ? eventsData.middleExamData.Xday.toDate().toLocaleDateString()
                   : new Date(
@@ -276,7 +276,7 @@ export default function Task({ eventsData }) {
             }}
           >
             <span>
-              {"期限 : " +
+              {"実施日 : " +
                 ("seconds" in eventsData.finalExamData.Xday
                   ? eventsData.finalExamData.Xday.toDate().toLocaleDateString()
                   : new Date(
