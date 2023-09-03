@@ -110,7 +110,7 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
       maxScore !== 0 ? Math.round((score / maxScore) * 100 * 10) / 10 : "-";
 
     setSubjectEvoRate(scoreRate);
-    setSubjectEvo(score);
+    setSubjectEvo(Math.round(score * 10) / 10);
   }, [data]);
 
   useEffect(() => {

@@ -76,8 +76,8 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
       set(event.smallExam.smallExamArray);
       setMessage("");
       setTake(false);
-      setMessage(<p style={{ color: "red" }}>小テスト名が未入力です</p>);
     } else {
+      setMessage(<p style={{ color: "red" }}>小テスト名が未入力です</p>);
     }
   };
   return (
