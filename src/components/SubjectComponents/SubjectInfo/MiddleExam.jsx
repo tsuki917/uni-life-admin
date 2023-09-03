@@ -32,7 +32,7 @@ export default function MiddleExam({ middleExamData, name, set }) {
         >
           <ListItem sx={{ bgcolor: "#eeeef0", mb: 1 }}>
             <ListItemText
-              primary={"中間試験　　" + middleExamData.title}
+              primary={"中間試験"}
               secondary={
                 <React.Fragment>
                   <Typography

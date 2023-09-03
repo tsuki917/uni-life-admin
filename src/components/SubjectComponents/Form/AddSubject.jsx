@@ -37,6 +37,7 @@ export default function AddSubject({ close, setSubjectsData, subjectsData }) {
         rate: finalRate,
         score: 0,
         Xday: "未入力",
+        isFinished: false,
         title: "",
       },
       middleExam: {

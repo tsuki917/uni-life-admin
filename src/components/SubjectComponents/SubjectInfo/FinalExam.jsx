@@ -56,7 +56,7 @@ export default function FinalExam({ finalExamData, name, set }) {
                     } else if (finalExamData.isFinished) {
                       return " — 成績" + finalExamData.score + "点";
                     } else if (!finalExamData.isFinished) {
-                      return " - 未実施";
+                      return " — 未実施";
                     }
                   })()}
                   <div

@@ -23,6 +23,7 @@ export default function SubjectDetail() {
   const [all, setAll] = useState();
   const [subjectName, setSubjectName] = useState("");
   const [flag, setFlag] = useState(false);
+  const [max, setMax] = useState();
   const changeFlag = () => {
     setFlag(() => true);
   };
@@ -74,12 +75,18 @@ export default function SubjectDetail() {
       console.log(smallIsFinishedLength);
       if (smallIsFinishedLength > 0) {
         smallExamData.forEach((ele) => {
-          smallExamPoint += ele.score / smallIsFinishedLength;
+          if (ele.isFinished) {
+            smallExamPoint += ele.score / smallIsFinishedLength;
+          }
         });
+        smallExamPoint *=
+          (smallExamRate * 0.01 * smallIsFinishedLength) / smallExamData.length;
       }
-      smallExamPoint *= smallExamRate * 0.01;
 
-      const smallMaxScore = smallIsFinishedLength > 0 ? smallExamRate : 0;
+      const smallMaxScore =
+        smallIsFinishedLength > 0
+          ? (smallExamRate * smallIsFinishedLength) / smallExamData.length
+          : 0;
 
       let reportPoint = 0;
       let reportIsFinishedLength = 0;
@@ -90,16 +97,26 @@ export default function SubjectDetail() {
       });
       if (reportIsFinishedLength > 0) {
         reportData.forEach((ele) => {
-          reportPoint += ele.score / reportData.length;
+          if (ele.isFinished) {
+            reportPoint += ele.score / reportIsFinishedLength;
+          }
         });
+        reportPoint *=
+          (reportRate * 0.01 * reportIsFinishedLength) / reportData.length;
       }
-      reportPoint *= reportRate * 0.01;
-      const reportMaxScore = reportIsFinishedLength > 0 ? reportRate : 0;
+
+      const reportMaxScore =
+        reportIsFinishedLength > 0
+          ? (reportRate * reportIsFinishedLength) / reportData.length
+          : 0;
       maxScore += parseFloat(middleMaxScore);
       maxScore += parseFloat(finalMaxScore);
       maxScore += parseFloat(reportMaxScore);
       maxScore += parseFloat(smallMaxScore);
 
+      console.log(smallExamPoint);
+      console.log(smallIsFinishedLength);
+      console.log(smallExamData.length);
       scorePre += middleExamPoint;
       scorePre += finalExamPoint;
       scorePre += smallExamPoint;
@@ -111,6 +128,7 @@ export default function SubjectDetail() {
       scorePre = Math.round(scorePre * 10) / 10;
       setScore(scorePre);
       setScoreRate(scoreRatePre);
+      setMax(maxScore);
     }
   }, [
     smallExamData,
@@ -120,6 +138,147 @@ export default function SubjectDetail() {
     reportData,
     reportRate,
   ]);
+  const judge = () => {
+    if (scoreRate >= 90) {
+      return (
+        <div>
+          推定評価:<span style={{ color: "#229342" }}>A</span>
+        </div>
+      );
+    } else if (scoreRate >= 80) {
+      return (
+        <div>
+          推定評価:<span style={{ color: "#4e59e0" }}>B</span>
+        </div>
+      );
+    } else if (scoreRate >= 70) {
+      return (
+        <div>
+          推定評価:
+          <span style={{ color: "#1f1f1f" }}>C</span>
+        </div>
+      );
+    } else if (scoreRate >= 60) {
+      return (
+        <div>
+          推定評価:<span style={{ color: "#FF9872" }}>D</span>
+        </div>
+      );
+    } else if (scoreRate < 60) {
+      return (
+        <div>
+          推定評価:<span style={{ color: "#e53f32" }}>E</span>
+        </div>
+      );
+    } else {
+      return "推定評価:推定不可";
+    }
+  };
+  const future = () => {
+    if (max < 100) {
+      if (scoreRate >= 90) {
+        const result = (90 - scoreRate * max * 0.01) / (1 - max * 0.01);
+        if (result > 0) {
+          return (
+            <div>
+              残りの評価対象の得点率が
+              {Math.round((90 - scoreRate * max * 0.01) / (1 - max * 0.01))}
+              %以上で<span style={{ color: "#229342" }}>A</span>評価
+            </div>
+          );
+        } else {
+          return "評価の変動はありません";
+        }
+      } else if (scoreRate >= 80) {
+        const result = (90 - scoreRate * max * 0.01) / (1 - max * 0.01);
+        if (result <= 100) {
+          return (
+            <div>
+              残りの評価対象の得点率が
+              {Math.round(result)}
+              %以上で<span style={{ color: "#229342" }}>A</span>評価
+            </div>
+          );
+        } else {
+          const result = (80 - scoreRate * max * 0.01) / (1 - max * 0.01);
+          if (result > 0) {
+            return (
+              <div>
+                残りの評価対象の得点率が
+                {Math.round(result)}
+                %以上で<span style={{ color: "#4e59e0" }}>B</span>評価
+              </div>
+            );
+          } else {
+            return "評価の変動はありません";
+          }
+        }
+      } else if (scoreRate >= 70) {
+        const result = (80 - scoreRate * max * 0.01) / (1 - max * 0.01);
+        if (result <= 100) {
+          return (
+            <div>
+              残りの評価対象の得点率が
+              {Math.round(result)}
+              %以上で<span style={{ color: "#4e59e0" }}>B</span>評価
+            </div>
+          );
+        } else {
+          const result = (70 - scoreRate * max * 0.01) / (1 - max * 0.01);
+          if (result > 0) {
+            return (
+              <div>
+                残りの評価対象の得点率が
+                {Math.round(result)}
+                %以上で<span style={{ color: "#1f1f1f" }}>C</span>評価
+              </div>
+            );
+          } else {
+            return "評価の変動はありません";
+          }
+        }
+      } else if (scoreRate >= 60) {
+        const result = (70 - scoreRate * max * 0.01) / (1 - max * 0.01);
+        if (result <= 100) {
+          return (
+            <div>
+              残りの評価対象の得点率が
+              {Math.round(result)}
+              %以上で<span style={{ color: "#1f1f1f" }}>C</span>評価
+            </div>
+          );
+        } else {
+          const result = (60 - scoreRate * max * 0.01) / (1 - max * 0.01);
+          if (result > 0) {
+            return (
+              <div>
+                残りの評価対象の得点率が
+                {Math.round(result)}
+                %以上で<span style={{ color: "#FF9872" }}>D</span>評価
+              </div>
+            );
+          } else {
+            return "評価の変動はありません";
+          }
+        }
+      } else if (scoreRate < 60) {
+        const result = (60 - scoreRate * max * 0.01) / (1 - max * 0.01);
+        if (result <= 100) {
+          return (
+            <div>
+              残りの評価対象の得点率が
+              {Math.round(result)}%以上で
+              <span style={{ color: "#FF9872" }}>D</span>評価
+            </div>
+          );
+        } else {
+          return "評価の変動はありません";
+        }
+      }
+    } else {
+      return "評価の変動はありません";
+    }
+  };
   return reportData === undefined ? (
     <div>
       <p>Loding</p>
@@ -138,7 +297,7 @@ export default function SubjectDetail() {
         sx={{
           flex: 1,
           display: "flex",
-          justifyContent: "flex-start",
+          justifyContent: "space-between",
           width: 1,
           textAlign: "center",
         }}
@@ -146,23 +305,27 @@ export default function SubjectDetail() {
         <Box>
           <h1>{flag ? subjectName : targetSubject}</h1>
         </Box>
-
         <ChangeSubject
           all={all}
           setAll={setAll}
           setSubject={setSubjectName}
           change={changeFlag}
         />
+
         <Box
           sx={{
             flex: 1,
             display: "flex",
             justifyContent: "flex-end",
             alignItems: "center",
+            flexWrap: "wrap",
+            width: "30%",
           }}
         >
-          <h3 style={{ marginRight: "10px" }}>得点率:{scoreRate}%</h3>
-          <h3>得点:{score}</h3>
+          <h3 style={{ width: "30%" }}>得点率:{scoreRate}%</h3>
+          <h3 style={{ width: "20%" }}>得点:{score}</h3>
+          <h3 style={{ width: "30%" }}>{judge()}</h3>
+          <h3 style={{ width: "80%" }}>{future()}</h3>
         </Box>
       </Box>
       {finalExamData !== null &&
