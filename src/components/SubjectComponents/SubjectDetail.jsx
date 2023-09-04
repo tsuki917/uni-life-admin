@@ -295,39 +295,56 @@ export default function SubjectDetail() {
       </Link>
       <Box
         sx={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "space-between",
-          width: 1,
-          textAlign: "center",
+          border: 3,
+          borderColor: "primary.main",
+          borderRadius: "16px",
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginLeft: 10,
+          }}
+        >
           <h1>{flag ? subjectName : targetSubject}</h1>
-        </Box>
-        <ChangeSubject
-          all={all}
-          setAll={setAll}
-          setSubject={setSubjectName}
-          change={changeFlag}
-        />
 
+          <ChangeSubject
+            all={all}
+            setAll={setAll}
+            setSubject={setSubjectName}
+            change={changeFlag}
+          />
+        </Box>
+        {/* <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            justifyContent: "space-between",
+            width: 1,
+            textAlign: "center",
+          }}
+        > */}
         <Box
           sx={{
             flex: 1,
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: "center",
+            //justifyContent: "flex-end",
             alignItems: "center",
             flexWrap: "wrap",
-            width: "30%",
+            //width: "80%",
           }}
         >
-          <h3 style={{ width: "30%" }}>得点率:{scoreRate}%</h3>
-          <h3 style={{ width: "20%" }}>得点:{score}</h3>
-          <h3 style={{ width: "30%" }}>{judge()}</h3>
-          <h3 style={{ width: "80%" }}>{future()}</h3>
+          <h3 style={{ marginLeft: 20, marginRight: 20 }}>
+            得点率:{scoreRate}%
+          </h3>
+          <h3 style={{ marginLeft: 20, marginRight: 20 }}>得点:{score}</h3>
+          <h3 style={{ marginLeft: 20, marginRight: 20 }}>{judge()}</h3>
+          <h3 style={{ marginLeft: 20, marginRight: 20 }}>{future()}</h3>
         </Box>
       </Box>
+
       {finalExamData !== null &&
         middleExamData !== null &&
         reportRate !== null &&

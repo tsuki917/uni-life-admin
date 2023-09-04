@@ -39,6 +39,7 @@ export const ChangeFinal = ({ data, name, set }) => {
           Xday: Xday.$d,
           rate: data.rate,
           score: Number(score),
+          isFinished: data.isFinished,
           title: title,
         },
       };
