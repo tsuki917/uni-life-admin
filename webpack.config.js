@@ -3,8 +3,8 @@ const path = require("path");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 const env = dotenv.config().parsed;
-console.log(env);
-console.log(process.env);
+
+console.log(process.env.REACT_APP_API_KEY);
 module.exports = {
   entry: "./index.js",
   mode: "development",
