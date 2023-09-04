@@ -1,13 +1,14 @@
 import { auth, db } from "../../../libs/fire";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  setDoc,
+  getDocs,
+} from "firebase/firestore";
 import React, { useState } from "react";
-import { Modal, Box, Button, TextField } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
+import { Button, Modal, Box, TextField } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
-
 const style = {
   position: "absolute",
   top: "40%",
@@ -18,6 +19,9 @@ const style = {
   border: "2px solid #000",
   boxShadow: 5,
   p: 4,
+  display: "flex",
+  alignItems: "baseline",
+  marginRight: 10,
 };
 const phonestyle = {
   position: "absolute",
@@ -29,183 +33,134 @@ const phonestyle = {
   border: "2px solid #000",
   boxShadow: 5,
   p: 4,
+  display: "flex",
+  alignItems: "baseline",
+  marginRight: 10,
 };
-export const ChangeMiddle = ({ data, name, set }) => {
-  const [Xday, setXday] = useState();
-  const [score, setScore] = useState(data.score);
-  const [title, setTitle] = useState(data.title);
+export const ChangeSubject = ({ all, setAll, setSubject, change }) => {
+  const [name, setName] = useState("");
   const [flag, setFlag] = useState(false);
   const [message, setMessage] = useState();
   const isSmallScreen = useMediaQuery("(max-width:400px)");
-
-  if (Xday === undefined && data.Xday !== "未入力") {
-    // 前データの引継ぎ
-    setXday(dayjs(data.Xday.seconds * 1000));
-  }
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
+
   const onAddEvent = async () => {
-    if (Xday) {
-      const event = {
-        middleExam: {
-          Xday: Xday.$d,
-          rate: data.rate,
-          score: Number(score),
-          title: title,
-          isFinished: data.isFinished,
-        },
-      };
-      await updateDoc(doc(db, auth.currentUser.email, name), event);
-      changeFlag();
-      set(event.middleExam);
-      setMessage("");
+    if (name) {
+      const subjectsNewData = [];
+      const test = collection(db, auth.currentUser.email);
+      const q = await getDocs(test);
+      console.log(q);
+      q.forEach((ele) => {
+        subjectsNewData.push(ele.data());
+      });
+      if (!subjectsNewData.find((sub) => sub.name === name)) {
+        const newData = { ...all };
+        newData.name = name;
+        await setDoc(doc(db, auth.currentUser.email, name), newData);
+        await deleteDoc(doc(db, auth.currentUser.email, all.name));
+        changeFlag();
+        setAll(newData);
+        setSubject(name);
+        change();
+      } else {
+        setMessage(
+          <p style={{ color: "red" }}>既に存在する教科名には変更できません</p>
+        );
+      }
     } else {
-      //エラー表示
-      setMessage(<p style={{ color: "red" }}>日付が未入力です</p>);
+      setMessage(<p style={{ color: "red" }}>教科名が未入力です</p>);
     }
   };
   return (
     <div>
       {isSmallScreen ? (
-        <div>
-          {!flag && (
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "flex-start",
+              flexDirection: "column",
+            }}
+          >
             <Button
-              variant="outlined"
-              sx={{ p: 0 }}
+              sx={{ mt: 3, mb: 3, ml: 1 }}
               onClick={changeFlag}
-              startIcon={<EditIcon />}
+              variant="outlined"
             >
-              編集
+              教科名変更
             </Button>
-          )}
-
+          </Box>
           <Modal open={flag} onClose={changeFlag}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <Box
-                sx={{
-                  ...phonestyle,
-                  flex: 1,
-                  display: "flex",
-                  justifyContent: "center",
-                  flexDirection: "column",
+            <Box sx={phonestyle}>
+              {message}
+              <TextField
+                required
+                label="教科名"
+                variant="outlined"
+                maxLength="100"
+                value={name}
+                margin="normal"
+                onChange={(e) => {
+                  setName(e.target.value);
                 }}
+              />
+              <Button
+                variant="outlined"
+                onClick={onAddEvent}
+                style={{ marginLeft: 20 }}
               >
-                {message}
-
-                <DatePicker
-                  //className=
-                  label="実施日"
-                  value={Xday}
-                  inputFormat="yyyy/MM/dd"
-                  margin="normal"
-                  onChange={(newDay) => {
-                    setXday(newDay);
-                  }}
-                />
-
-                <TextField
-                  label="点数(0~100)"
-                  variant="outlined"
-                  type="number"
-                  value={score}
-                  min="0"
-                  max="100"
-                  margin="normal"
-                  sx={{ marginBottom: 0 }}
-                  onChange={(e) => {
-                    setScore(e.target.value);
-                  }}
-                />
-
-                <TextField
-                  label="メモ（任意）"
-                  variant="outlined"
-                  maxLength="100"
-                  value={title}
-                  margin="normal"
-                  onChange={(e) => {
-                    setTitle(e.target.value);
-                  }}
-                />
-                <Button
-                  variant="outlined"
-                  sx={{ marginTop: 2 }}
-                  onClick={onAddEvent}
-                >
-                  変更
-                </Button>
-              </Box>
-            </LocalizationProvider>
+                変更
+              </Button>
+            </Box>
           </Modal>
-        </div>
+        </Box>
       ) : (
-        <div>
-          {!flag && (
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "flex-start",
+              flexDirection: "column",
+            }}
+          >
             <Button
-              variant="outlined"
-              sx={{ p: 0 }}
+              sx={{ mt: 3, mb: 3, ml: 1 }}
               onClick={changeFlag}
-              startIcon={<EditIcon />}
+              variant="outlined"
             >
-              編集
+              教科名変更
             </Button>
-          )}
-
+          </Box>
           <Modal open={flag} onClose={changeFlag}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <Box
-                sx={{
-                  ...style,
-                  flex: 1,
-                  display: "flex",
-                  justifyContent: "center",
-                  flexDirection: "column",
+            <Box sx={style}>
+              {message}
+              <TextField
+                required
+                label="教科名"
+                variant="outlined"
+                maxLength="100"
+                value={name}
+                margin="normal"
+                onChange={(e) => {
+                  setName(e.target.value);
                 }}
+              />
+              <Button
+                variant="outlined"
+                onClick={onAddEvent}
+                style={{ marginLeft: 20 }}
               >
-                {message}
-
-                <DatePicker
-                  //className=
-                  label="実施日"
-                  value={Xday}
-                  inputFormat="yyyy/MM/dd"
-                  margin="normal"
-                  onChange={(newDay) => {
-                    setXday(newDay);
-                  }}
-                />
-
-                <TextField
-                  label="点数(0~100)"
-                  variant="outlined"
-                  type="number"
-                  value={score}
-                  min="0"
-                  max="100"
-                  margin="normal"
-                  onChange={(e) => {
-                    setScore(e.target.value);
-                  }}
-                />
-
-                <TextField
-                  label="メモ（任意）"
-                  variant="outlined"
-                  maxLength="100"
-                  value={title}
-                  margin="normal"
-                  onChange={(e) => {
-                    setTitle(e.target.value);
-                  }}
-                />
-                <Button variant="outlined" onClick={onAddEvent}>
-                  変更
-                </Button>
-              </Box>
-            </LocalizationProvider>
+                変更
+              </Button>
+            </Box>
           </Modal>
-        </div>
+        </Box>
       )}
     </div>
   );

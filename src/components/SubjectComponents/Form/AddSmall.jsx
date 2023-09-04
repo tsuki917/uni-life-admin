@@ -1,13 +1,12 @@
 import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { Modal, Box, Button, TextField } from "@mui/material";
+import { Button, Modal, Box, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useMediaQuery } from "@mui/material";
-
 const style = {
   position: "absolute",
   top: "40%",
@@ -30,7 +29,7 @@ const phonestyle = {
   boxShadow: 5,
   p: 4,
 };
-export const AddReport = ({ rate, data, name, set }) => {
+export const AddSmall = ({ rate, data, name, set }) => {
   const [Xday, setXday] = useState();
   const [title, setTitle] = useState("");
   const [score, setScore] = useState(null);
@@ -50,7 +49,7 @@ export const AddReport = ({ rate, data, name, set }) => {
   const onAddEvent = async () => {
     if (Xday && title) {
       const event = {
-        deadlineDay: Xday.$d,
+        Xday: Xday.$d,
         title: title,
         score: Number(score),
         isFinished: false,
@@ -58,22 +57,22 @@ export const AddReport = ({ rate, data, name, set }) => {
       const newData = [...data, event];
       newData.sort((a, b) => {
         let na, nb;
-        if ("seconds" in a.deadlineDay) {
-          na = a.deadlineDay.toDate();
+        if ("seconds" in a.Xday) {
+          na = a.Xday.toDate();
         } else {
-          na = new Date(a.deadlineDay);
+          na = new Date(a.Xday);
         }
-        if ("seconds" in b.deadlineDay) {
-          nb = b.deadlineDay.toDate();
+        if ("seconds" in b.Xday) {
+          nb = b.Xday.toDate();
         } else {
-          nb = new Date(b.deadlineDay);
+          nb = new Date(b.Xday);
         }
         return na - nb;
       });
       const all = {
-        reports: {
+        smallExam: {
           rate: rate,
-          reportArray: newData,
+          smallExamArray: newData,
         },
       };
       await updateDoc(doc(db, auth.currentUser.email, name), all);
@@ -96,7 +95,7 @@ export const AddReport = ({ rate, data, name, set }) => {
             sx={{ width: 1, textAlign: "center" }}
             startIcon={<AddIcon />}
           >
-            課題追加
+            小テスト追加
           </Button>
           <Modal open={flag} onClose={changeFlag}>
             <Box
@@ -111,7 +110,7 @@ export const AddReport = ({ rate, data, name, set }) => {
               {message}
               <TextField
                 required
-                label="課題名"
+                label="小テスト名"
                 variant="outlined"
                 maxLength="100"
                 value={title}
@@ -162,12 +161,12 @@ export const AddReport = ({ rate, data, name, set }) => {
             sx={{ width: 1, textAlign: "center" }}
             startIcon={<AddIcon />}
           >
-            課題追加
+            小テスト追加
           </Button>
           <Modal open={flag} onClose={changeFlag}>
             <Box
               sx={{
-                ...phonestyle,
+                ...style,
                 flex: 1,
                 display: "flex",
                 justifyContent: "center",
@@ -177,7 +176,7 @@ export const AddReport = ({ rate, data, name, set }) => {
               {message}
               <TextField
                 required
-                label="課題名"
+                label="小テスト名"
                 variant="outlined"
                 maxLength="100"
                 value={title}

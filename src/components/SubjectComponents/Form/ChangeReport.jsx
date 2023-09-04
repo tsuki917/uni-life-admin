@@ -30,39 +30,69 @@ const phonestyle = {
   boxShadow: 5,
   p: 4,
 };
-export const ChangeMiddle = ({ data, name, set }) => {
+export const ChangeReport = ({ rate, data, index, name, set }) => {
   const [Xday, setXday] = useState();
-  const [score, setScore] = useState(data.score);
-  const [title, setTitle] = useState(data.title);
+  const [title, setTitle] = useState(data[index].title);
+  const [score, setScore] = useState(data[index].score);
   const [flag, setFlag] = useState(false);
+  const [take, setTake] = useState(false); // 初期設定
   const [message, setMessage] = useState();
   const isSmallScreen = useMediaQuery("(max-width:400px)");
-
-  if (Xday === undefined && data.Xday !== "未入力") {
+  if (Xday === undefined) {
     // 前データの引継ぎ
-    setXday(dayjs(data.Xday.seconds * 1000));
+    setXday(dayjs(data[index].deadlineDay.seconds * 1000));
   }
+  if (!take) {
+    setTake(true);
+    setTitle(data[index].title);
+    setScore(data[index].score);
+
+    if ("seconds" in data[index].deadlineDay) {
+      setXday(dayjs(data[index].deadlineDay.seconds * 1000));
+    } else {
+      setXday(dayjs(data[index].deadlineDay));
+    }
+  }
+
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
   const onAddEvent = async () => {
-    if (Xday) {
+    if (title) {
+      const newData = [...data];
+      newData[index] = {
+        deadlineDay: Xday.$d,
+        title: title,
+        score: Number(score),
+        isFinished: data[index].isFinished,
+      };
+      newData.sort((a, b) => {
+        let na, nb;
+        if ("seconds" in a.deadlineDay) {
+          na = a.deadlineDay.toDate();
+        } else {
+          na = new Date(a.deadlineDay);
+        }
+        if ("seconds" in b.deadlineDay) {
+          nb = b.deadlineDay.toDate();
+        } else {
+          nb = new Date(b.deadlineDay);
+        }
+        return na - nb;
+      });
       const event = {
-        middleExam: {
-          Xday: Xday.$d,
-          rate: data.rate,
-          score: Number(score),
-          title: title,
-          isFinished: data.isFinished,
+        reports: {
+          rate: rate,
+          reportArray: newData,
         },
       };
       await updateDoc(doc(db, auth.currentUser.email, name), event);
       changeFlag();
-      set(event.middleExam);
+      set(event.reports.reportArray);
       setMessage("");
+      setTake(false);
     } else {
-      //エラー表示
-      setMessage(<p style={{ color: "red" }}>日付が未入力です</p>);
+      setMessage(<p style={{ color: "red" }}>課題名が未入力です</p>);
     }
   };
   return (
@@ -72,14 +102,13 @@ export const ChangeMiddle = ({ data, name, set }) => {
           {!flag && (
             <Button
               variant="outlined"
-              sx={{ p: 0 }}
               onClick={changeFlag}
+              sx={{ p: 0 }}
               startIcon={<EditIcon />}
             >
               編集
             </Button>
           )}
-
           <Modal open={flag} onClose={changeFlag}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <Box
@@ -92,10 +121,20 @@ export const ChangeMiddle = ({ data, name, set }) => {
                 }}
               >
                 {message}
-
+                <TextField
+                  required
+                  label="課題名"
+                  variant="outlined"
+                  maxLength="100"
+                  value={title}
+                  margin="normal"
+                  sx={{ marginBottom: 2 }}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
+                />
                 <DatePicker
-                  //className=
-                  label="実施日"
+                  label="期限"
                   value={Xday}
                   inputFormat="yyyy/MM/dd"
                   margin="normal"
@@ -103,29 +142,16 @@ export const ChangeMiddle = ({ data, name, set }) => {
                     setXday(newDay);
                   }}
                 />
-
                 <TextField
-                  label="点数(0~100)"
+                  label="成績(0~100)"
                   variant="outlined"
                   type="number"
                   value={score}
                   min="0"
                   max="100"
                   margin="normal"
-                  sx={{ marginBottom: 0 }}
                   onChange={(e) => {
                     setScore(e.target.value);
-                  }}
-                />
-
-                <TextField
-                  label="メモ（任意）"
-                  variant="outlined"
-                  maxLength="100"
-                  value={title}
-                  margin="normal"
-                  onChange={(e) => {
-                    setTitle(e.target.value);
                   }}
                 />
                 <Button
@@ -144,14 +170,13 @@ export const ChangeMiddle = ({ data, name, set }) => {
           {!flag && (
             <Button
               variant="outlined"
-              sx={{ p: 0 }}
               onClick={changeFlag}
+              sx={{ p: 0 }}
               startIcon={<EditIcon />}
             >
               編集
             </Button>
           )}
-
           <Modal open={flag} onClose={changeFlag}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <Box
@@ -164,10 +189,19 @@ export const ChangeMiddle = ({ data, name, set }) => {
                 }}
               >
                 {message}
-
+                <TextField
+                  required
+                  label="課題名"
+                  variant="outlined"
+                  maxLength="100"
+                  value={title}
+                  margin="normal"
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
+                />
                 <DatePicker
-                  //className=
-                  label="実施日"
+                  label="期限"
                   value={Xday}
                   inputFormat="yyyy/MM/dd"
                   margin="normal"
@@ -175,9 +209,8 @@ export const ChangeMiddle = ({ data, name, set }) => {
                     setXday(newDay);
                   }}
                 />
-
                 <TextField
-                  label="点数(0~100)"
+                  label="成績(0~100)"
                   variant="outlined"
                   type="number"
                   value={score}
@@ -186,17 +219,6 @@ export const ChangeMiddle = ({ data, name, set }) => {
                   margin="normal"
                   onChange={(e) => {
                     setScore(e.target.value);
-                  }}
-                />
-
-                <TextField
-                  label="メモ（任意）"
-                  variant="outlined"
-                  maxLength="100"
-                  value={title}
-                  margin="normal"
-                  onChange={(e) => {
-                    setTitle(e.target.value);
                   }}
                 />
                 <Button variant="outlined" onClick={onAddEvent}>
