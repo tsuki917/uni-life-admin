@@ -17,6 +17,7 @@ export const IsFinishReport = ({ rate, data, index, name, set }) => {
         reportArray: newData,
       },
     };
+    console.log(newData);
     await updateDoc(doc(db, auth.currentUser.email, name), event);
     set(event.reports.reportArray);
   };

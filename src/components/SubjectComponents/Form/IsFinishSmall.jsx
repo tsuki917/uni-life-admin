@@ -17,6 +17,7 @@ export const IsFinishSmall = ({ rate, data, index, name, set }) => {
         smallExamArray: newData,
       },
     };
+    console.log(newData);
     await updateDoc(doc(db, auth.currentUser.email, name), event);
     set(event.smallExam.smallExamArray);
   };
