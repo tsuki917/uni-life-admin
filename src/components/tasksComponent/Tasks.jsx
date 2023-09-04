@@ -10,12 +10,16 @@ import {
 } from "@mui/material";
 import { db, auth } from "../../libs/fire";
 import { collection, getDocs } from "firebase/firestore";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Task from "./Task";
 export default function Tasks() {
   const [filterOption, setFilterOption] = useState(7);
   const [conIsFinished, setConIsFinished] = useState("all");
   const [isReport, setIsReport] = useState(false);
   const [recentsData, setRecentData] = useState([]);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   if (auth.currentUser !== null) {
     useEffect(() => {
       console.log("conIsFinish" + conIsFinished);
@@ -35,73 +39,152 @@ export default function Tasks() {
     };
 
     return (
-      <Box sx={{ mr: 6, ml: 6 }}>
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "space-between",
-            alignContent: "center",
-          }}
-        >
-          <h1>直近のイベント</h1>
-          <Box sx={{ width: "50%" }}>
-            <FormControl sx={{ mt: 2, width: "30%" }}>
-              <InputLabel id="isReport-simple-select-label"></InputLabel>
-              <Select
-                labelId="isReport-simple-select-label"
-                id="demo-simple-select"
-                value={isReport}
-                label=""
-                onChange={handleChangeIsReport}
-              >
-                <MenuItem value={false}>すべてのイベント</MenuItem>
-                <MenuItem value={true}>課題のみ</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl sx={{ mt: 2, width: "30%" }}>
-              <InputLabel id="isFinished-simple-select-label"></InputLabel>
-              <Select
-                labelId="isFinished-simple-select-label"
-                id="demo-simple-select"
-                value={conIsFinished}
-                label=""
-                onChange={handleChangeIsFinished}
-              >
-                <MenuItem value={"all"}>すべて</MenuItem>
-                <MenuItem value={"only-true"}>完了済のみ</MenuItem>
-                <MenuItem value={"only-false"}>未完了のみ</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl sx={{ width: "30%", mt: 2 }}>
-              <InputLabel id="day-simple-select-label"></InputLabel>
-              <Select
-                labelId="day-simple-select-label"
-                id="demo-simple-select"
-                value={filterOption}
-                label=""
-                onChange={handleChangeDay}
-              >
-                <MenuItem value={1}>1日後以内</MenuItem>
-                <MenuItem value={3}>3日後以内</MenuItem>
-                <MenuItem value={7}>1週間以内</MenuItem>
-                <MenuItem value={14}>2週間以内</MenuItem>
-                <MenuItem value={21}>3週間以内</MenuItem>
-                <MenuItem value={30}>約1か月以内</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </Box>
-
-        <List>
-          {recentsData.map((recentData, key) => {
-            return (
-              <Box key={key}>
-                <Task eventsData={recentData} />
+      <Box>
+        {isMobile ? (
+          <Box sx={{ mr: 0, ml: 0 }}>
+            <h2>直近のイベント</h2>
+            <Box
+              sx={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "space-between",
+                alignContent: "center",
+              }}
+            >
+              <Box sx={{ width: "100%" }}>
+                <FormControl sx={{ mt: 2, width: "33%" }}>
+                  <InputLabel id="isReport-simple-select-label"></InputLabel>
+                  <Select
+                    labelId="isReport-simple-select-label"
+                    id="demo-simple-select"
+                    value={isReport}
+                    label=""
+                    onChange={handleChangeIsReport}
+                  >
+                    <MenuItem value={false}>すべてのイベント</MenuItem>
+                    <MenuItem value={true}>課題のみ</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ mt: 2, width: "33%", fontSize: 4 }}>
+                  <InputLabel id="isFinished-simple-select-label"></InputLabel>
+                  <Select
+                    labelId="isFinished-simple-select-label"
+                    id="demo-simple-select"
+                    value={conIsFinished}
+                    label=""
+                    onChange={handleChangeIsFinished}
+                  >
+                    <MenuItem value={"all"} sx={{ fontSize: 3 }}>
+                      すべて
+                    </MenuItem>
+                    <MenuItem value={"only-true"} sx={{ fontSize: 3 }}>
+                      完了済のみ
+                    </MenuItem>
+                    <MenuItem value={"only-false"} sx={{ fontSize: 3 }}>
+                      未完了のみ
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ width: "33%", mt: 2 }}>
+                  <InputLabel id="day-simple-select-label"></InputLabel>
+                  <Select
+                    labelId="day-simple-select-label"
+                    id="demo-simple-select"
+                    value={filterOption}
+                    label=""
+                    onChange={handleChangeDay}
+                  >
+                    <MenuItem value={1}>1日後以内</MenuItem>
+                    <MenuItem value={3}>3日後以内</MenuItem>
+                    <MenuItem value={7}>1週間以内</MenuItem>
+                    <MenuItem value={14}>2週間以内</MenuItem>
+                    <MenuItem value={21}>3週間以内</MenuItem>
+                    <MenuItem value={30}>約1か月以内</MenuItem>
+                  </Select>
+                </FormControl>
               </Box>
-            );
-          })}
-        </List>
+            </Box>
+
+            <List>
+              {recentsData.map((recentData, key) => {
+                return (
+                  <Box key={key}>
+                    <Task eventsData={recentData} />
+                  </Box>
+                );
+              })}
+            </List>
+          </Box>
+        ) : (
+          <Box sx={{ mr: 6, ml: 6 }}>
+            <Box
+              sx={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "space-between",
+                alignContent: "center",
+              }}
+            >
+              <h1>直近のイベント</h1>
+              <Box sx={{ width: "50%" }}>
+                <FormControl sx={{ mt: 2, width: "30%" }}>
+                  <InputLabel id="isReport-simple-select-label"></InputLabel>
+                  <Select
+                    labelId="isReport-simple-select-label"
+                    id="demo-simple-select"
+                    value={isReport}
+                    label=""
+                    onChange={handleChangeIsReport}
+                  >
+                    <MenuItem value={false}>すべてのイベント</MenuItem>
+                    <MenuItem value={true}>課題のみ</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ mt: 2, width: "30%" }}>
+                  <InputLabel id="isFinished-simple-select-label"></InputLabel>
+                  <Select
+                    labelId="isFinished-simple-select-label"
+                    id="demo-simple-select"
+                    value={conIsFinished}
+                    label=""
+                    onChange={handleChangeIsFinished}
+                  >
+                    <MenuItem value={"all"}>すべて</MenuItem>
+                    <MenuItem value={"only-true"}>完了済のみ</MenuItem>
+                    <MenuItem value={"only-false"}>未完了のみ</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ width: "30%", mt: 2 }}>
+                  <InputLabel id="day-simple-select-label"></InputLabel>
+                  <Select
+                    labelId="day-simple-select-label"
+                    id="demo-simple-select"
+                    value={filterOption}
+                    label=""
+                    onChange={handleChangeDay}
+                  >
+                    <MenuItem value={1}>1日後以内</MenuItem>
+                    <MenuItem value={3}>3日後以内</MenuItem>
+                    <MenuItem value={7}>1週間以内</MenuItem>
+                    <MenuItem value={14}>2週間以内</MenuItem>
+                    <MenuItem value={21}>3週間以内</MenuItem>
+                    <MenuItem value={30}>約1か月以内</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </Box>
+
+            <List>
+              {recentsData.map((recentData, key) => {
+                return (
+                  <Box key={key}>
+                    <Task eventsData={recentData} />
+                  </Box>
+                );
+              })}
+            </List>
+          </Box>
+        )}
       </Box>
     );
   }
