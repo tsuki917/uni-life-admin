@@ -4,6 +4,7 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+console.log(process.env);
 const {
   REACT_APP_API_KEY,
   REACT_APP_AUTH_DOMAIN,
