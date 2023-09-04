@@ -39,8 +39,8 @@ module.exports = {
       // eslint-disable-next-line no-undef
       template: path.join(__dirname, "public", "index.html"),
     }),
-    // new webpack.DefinePlugin({
-    //   "process.env": process.env,
-    // }),
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(process.env),
+    }),
   ],
 };
