@@ -38,6 +38,7 @@ export const ChangeMiddle = ({ data, name, set }) => {
           rate: data.rate,
           score: Number(score),
           title: title,
+          isFinished: data.isFinished,
         },
       };
       await updateDoc(doc(db, auth.currentUser.email, name), event);

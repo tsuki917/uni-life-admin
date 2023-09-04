@@ -75,14 +75,22 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
     });
     if (smallIsFinishedLength > 0) {
       data.smallExam.smallExamArray.forEach((ele) => {
-        smallExamPoint += ele.score / smallIsFinishedLength;
+        if (ele.isFinished) {
+          smallExamPoint += ele.score / smallIsFinishedLength;
+        }
       });
     }
     if (smallIsFinishedLength > 0) {
-      smallExamPoint *= data.smallExam.rate * 0.01;
+      smallExamPoint *=
+        (data.smallExam.rate * 0.01 * smallIsFinishedLength) /
+        data.smallExam.smallExamArray.length;
     }
 
-    const smallMaxScore = smallIsFinishedLength > 0 ? data.smallExam.rate : 0;
+    const smallMaxScore =
+      smallIsFinishedLength > 0
+        ? (data.smallExam.rate * smallIsFinishedLength) /
+          data.smallExam.smallExamArray.length
+        : 0;
 
     let reportPoint = 0;
     let reportIsFinishedLength = 0;
@@ -93,11 +101,19 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
     });
     if (reportIsFinishedLength > 0) {
       data.reports.reportArray.forEach((ele) => {
-        reportPoint += ele.score / reportIsFinishedLength;
+        if (ele.isFinished) {
+          reportPoint += ele.score / reportIsFinishedLength;
+        }
       });
     }
-    reportPoint *= data.reports.rate * 0.01;
-    const reportMaxScore = reportIsFinishedLength > 0 ? data.reports.rate : 0;
+    reportPoint *=
+      (data.reports.rate * 0.01 * reportIsFinishedLength) /
+      data.reports.reportArray.length;
+    const reportMaxScore =
+      reportIsFinishedLength > 0
+        ? (data.reports.rate * reportIsFinishedLength) /
+          data.reports.reportArray.length
+        : 0;
     maxScore += parseFloat(middleMaxScore);
     maxScore += parseFloat(finalMaxScore);
     maxScore += parseFloat(reportMaxScore);
