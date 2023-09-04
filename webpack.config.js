@@ -7,6 +7,7 @@ const env = dotenv.config().parsed;
 module.exports = {
   entry: "./index.js",
   mode: "development",
+
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "index_bundle.js",
@@ -49,7 +50,7 @@ module.exports = {
       template: path.join(__dirname, "public", "index.html"),
     }),
     new webpack.DefinePlugin({
-      "process.env": JSON.stringify(env),
+      "process.env": JSON.stringify(process.env),
     }),
   ],
 };
