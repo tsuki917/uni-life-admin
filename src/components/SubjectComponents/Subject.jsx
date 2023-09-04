@@ -56,34 +56,64 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
       setMaxRateName("小テスト");
     }
 
-    const middleExamPoint = data.middleExam
+    const middleExamPoint = data.middleExam.isFinished
       ? data.middleExam.score * data.middleExam.rate * 0.01
       : 0;
-    const middleMaxScore =
-      data.middleExam.score !== 0 ? data.middleExam.rate : 0;
-    const finalExamPoint = data.finalExam
+    const middleMaxScore = data.middleExam.isFinished
+      ? data.middleExam.rate
+      : 0;
+    const finalExamPoint = data.finalExam.isFinished
       ? data.finalExam.score * data.finalExam.rate * 0.01
       : 0;
-    const finalMaxScore = data.finalExam.score !== 0 ? data.finalExam.rate : 0;
+    const finalMaxScore = data.finalExam.isFinished ? data.finalExam.rate : 0;
     let smallExamPoint = 0;
-    if (data.smallExam.smallExamArray.length !== 0) {
+    let smallIsFinishedLength = 0;
+    data.smallExam.smallExamArray.forEach((ele) => {
+      if (ele.isFinished) {
+        smallIsFinishedLength++;
+      }
+    });
+    if (smallIsFinishedLength > 0) {
       data.smallExam.smallExamArray.forEach((ele) => {
-        smallExamPoint += ele.score / data.smallExam.smallExamArray.length;
+        if (ele.isFinished) {
+          smallExamPoint += ele.score / smallIsFinishedLength;
+        }
       });
     }
-    smallExamPoint *= data.smallExam.rate * 0.01;
+    if (smallIsFinishedLength > 0) {
+      smallExamPoint *=
+        (data.smallExam.rate * 0.01 * smallIsFinishedLength) /
+        data.smallExam.smallExamArray.length;
+    }
 
     const smallMaxScore =
-      data.smallExam.smallExamArray.length > 0 ? data.smallExam.rate : 0;
+      smallIsFinishedLength > 0
+        ? (data.smallExam.rate * smallIsFinishedLength) /
+          data.smallExam.smallExamArray.length
+        : 0;
 
     let reportPoint = 0;
-
+    let reportIsFinishedLength = 0;
     data.reports.reportArray.forEach((ele) => {
-      reportPoint += ele.score / data.reports.reportArray.length;
+      if (ele.isFinished) {
+        reportIsFinishedLength++;
+      }
     });
-    reportPoint *= data.reports.rate * 0.01;
+    if (reportIsFinishedLength > 0) {
+      data.reports.reportArray.forEach((ele) => {
+        if (ele.isFinished) {
+          reportPoint += ele.score / reportIsFinishedLength;
+        }
+      });
+    }
+    reportPoint *=
+      (data.reports.rate * 0.01 * reportIsFinishedLength) /
+      data.reports.reportArray.length;
     const reportMaxScore =
-      data.reports.reportArray.length > 0 ? data.reports.rate : 0;
+      reportIsFinishedLength > 0
+        ? (data.reports.rate * reportIsFinishedLength) /
+          data.reports.reportArray.length
+        : 0;
     maxScore += parseFloat(middleMaxScore);
     maxScore += parseFloat(finalMaxScore);
     maxScore += parseFloat(reportMaxScore);
@@ -93,11 +123,10 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
     score += smallExamPoint;
     score += reportPoint;
     const scoreRate =
-      maxScore !== 0 ? Math.round((score / maxScore) * 100 * 10) / 10 : 0;
-    console.log(maxScore + "maxScore");
-    console.log(score);
+      maxScore !== 0 ? Math.round((score / maxScore) * 100 * 10) / 10 : "-";
+
     setSubjectEvoRate(scoreRate);
-    setSubjectEvo(score);
+    setSubjectEvo(Math.round(score * 10) / 10);
   }, [data]);
 
   useEffect(() => {

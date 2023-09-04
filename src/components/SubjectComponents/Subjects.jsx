@@ -32,7 +32,8 @@ export default function Subjects() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   console.log(auth.currentUser);
-  if (auth.currentUser !== null && first) {
+  // if (auth.currentUser !== null && first) {
+  useEffect(() => {
     //ログイン時初回
     setFirst(false);
     const data = getSubjectDatas();
@@ -40,61 +41,70 @@ export default function Subjects() {
       console.log(element);
       setSubjectsData(element);
     });
-  } else if (auth.currentUser !== null && !first) {
-    return (
-      <div>
-        <Box sx={{ ml: 6 }}>
-          <h2>教科一覧</h2>
-        </Box>
-        <Box
+  }, []);
+  // } else if (auth.currentUser !== null && !first) {
+  return (
+    <div>
+      <Box sx={{ ml: 6 }}>
+        <h2>教科一覧</h2>
+      </Box>
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Button
           sx={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "flex-end",
+            bgcolor: "#1976d2",
+            color: "white",
+            p: 0,
+            mr: 6,
+            "&:hover": {
+              backgroundColor: "#6d90b2",
+            },
           }}
+          onClick={handleOpen}
+          startIcon={<AddIcon />}
         >
-          <Button
-            sx={{ bgcolor: "#1976d2", color: "white", p: 0, mr: 6 }}
-            onClick={handleOpen}
-            startIcon={<AddIcon />}
-          >
-            追加
-          </Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <AddSubject
-                close={setOpen}
+          追加
+        </Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <AddSubject
+              close={setOpen}
+              setSubjectsData={setSubjectsData}
+              subjectsData={subjectsData}
+            />
+          </Box>
+        </Modal>
+      </Box>
+
+      <List sx={{ ml: 6, mr: 6 }}>
+        {subjectsData.map((subjectData, key) => {
+          return (
+            <Box key={key}>
+              <Subject
+                data={subjectData}
                 setSubjectsData={setSubjectsData}
                 subjectsData={subjectsData}
               />
             </Box>
-          </Modal>
-        </Box>
-
-        <List sx={{ ml: 6, mr: 6 }}>
-          {subjectsData.map((subjectData, key) => {
-            return (
-              <Box key={key}>
-                <Subject
-                  data={subjectData}
-                  setSubjectsData={setSubjectsData}
-                  subjectsData={subjectsData}
-                />
-              </Box>
-            );
-          })}
-        </List>
-      </div>
-    );
-  } else {
-    //ログイン前画面
-    return <h3>ログインしてください</h3>;
-  }
+          );
+        })}
+      </List>
+    </div>
+  );
+  // } else {
+  //   //ログイン前画面
+  //   return <h3>ログインしてください</h3>;
+  // }
   /*
     type subjectData = {
         
