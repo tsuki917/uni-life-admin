@@ -13,6 +13,7 @@ import Tasks from "./components/tasksComponent/Tasks.jsx";
 export default function App() {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
+  console.log("auth : " + auth);
   const [message, setMessage] = useState("");
   const mess = "";
 

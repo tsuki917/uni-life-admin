@@ -3,7 +3,7 @@ const path = require("path");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 const env = dotenv.config().parsed;
-
+console.log("process.env:" + process.env);
 module.exports = {
   entry: "./index.js",
   mode: "development",
@@ -40,7 +40,7 @@ module.exports = {
       template: path.join(__dirname, "public", "index.html"),
     }),
     new webpack.DefinePlugin({
-      "process.env": JSON.stringify(env),
+      "process.env": JSON.stringify(process.env),
     }),
   ],
 };
