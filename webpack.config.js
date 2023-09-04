@@ -3,6 +3,7 @@ const path = require("path");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 const env = dotenv.config().parsed;
+console.log(env);
 
 module.exports = {
   entry: "./index.js",
