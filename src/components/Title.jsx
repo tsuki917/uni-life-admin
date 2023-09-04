@@ -112,7 +112,7 @@ export default function Title({ login }) {
                   <Button
                     onClick={loginDeal}
                     variant="outlined"
-                    sx={{ color: "white", borderColor: "white" }}
+                    sx={{ color: "white", p: 1, m: 0, borderColor: "white" }}
                   >
                     ログイン
                   </Button>
