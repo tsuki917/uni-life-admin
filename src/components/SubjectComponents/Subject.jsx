@@ -12,6 +12,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link as LinkRouter } from "react-router-dom";
 import { db, auth } from "../../libs/fire";
 import { deleteDoc, doc } from "firebase/firestore";
+import { useMediaQuery } from "@mui/material";
 const style = {
   position: "absolute",
   top: "40%",
@@ -30,6 +31,7 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
   const [EvoAL, setEvoAL] = useState("計算中");
   const [EvoColor, setEvoColor] = useState({ color: "black" });
   const [maxRateName, setMaxRateName] = useState("");
+  const isSmallScreen = useMediaQuery("(max-width:400px)");
   console.log(data.name);
   useEffect(() => {
     let score = 0;
@@ -80,7 +82,7 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
         }
       });
     }
-    if (smallIsFinishedLength > 0) {
+    if (smallIsFinishedLength > 0 && data.smallExam.smallExamArray.length > 0) {
       smallExamPoint *=
         (data.smallExam.rate * 0.01 * smallIsFinishedLength) /
         data.smallExam.smallExamArray.length;
@@ -106,9 +108,12 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
         }
       });
     }
-    reportPoint *=
-      (data.reports.rate * 0.01 * reportIsFinishedLength) /
-      data.reports.reportArray.length;
+    if (reportIsFinishedLength > 0 && data.reports.reportArray.length > 0) {
+      reportPoint *=
+        (data.reports.rate * 0.01 * reportIsFinishedLength) /
+        data.reports.reportArray.length;
+    }
+
     const reportMaxScore =
       reportIsFinishedLength > 0
         ? (data.reports.rate * reportIsFinishedLength) /
@@ -169,122 +174,251 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
   };
 
   return (
-    <ListItem sx={{ bgcolor: "#eeeef0", mb: 1, width: 1 }}>
-      <Box
+    <div>
+      {isSmallScreen ? (
+        <ListItem sx={{ bgcolor: "#eeeef0", mb: 1, width: 1 }}>
+          {/* <Box
         sx={{
           flex: 1,
           display: "flex",
           justifyContent: "space-between",
           width: 1,
         }}
-      >
-        <Link
-          component={LinkRouter}
-          to={"/subjects/" + data.name}
-          underline="none"
-          sx={{ width: "90%" }}
-        >
+      > */}
+          <Link
+            component={LinkRouter}
+            to={"/subjects/" + data.name}
+            underline="none"
+            sx={{ width: "100%" }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                flex: 1,
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <ListItemText primary={data.name} />
+              <Button
+                variant="outlined"
+                sx={{ p: 0, m: 0, ml: 1, borderColor: "red", color: "red" }}
+                onClick={handleChangeFlag}
+                startIcon={<DeleteIcon />}
+              >
+                削除
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                p: 0,
+                m: 0,
+              }}
+            >
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexDirection: "column",
+                  p: 0,
+                  m: 0,
+                }}
+              >
+                <span>持ち点:{subjectEvo}点</span>
+                <span>得点率:{subjectEvoRate}%</span>
+              </Box>
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexDirection: "column",
+                  p: 0,
+                  m: 0,
+                }}
+              >
+                <span>最重要項目:{maxRateName}</span>
+
+                <span>
+                  推定評価:
+                  <span style={EvoColor}>
+                    <strong>{EvoAL}</strong>
+                  </span>
+                </span>
+              </Box>
+            </Box>
+          </Link>
+          {/* </Box> */}
+
+          <Modal open={modalFlag} onClose={handleChangeFlag}>
+            <Box sx={style}>
+              <Box sx={{ textAlign: "center" }}>
+                <h1>本当に削除しますか？</h1>
+              </Box>
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "space-around",
+                  flexDirection: "row",
+                  p: 0,
+                  m: 0,
+                }}
+              >
+                <Box
+                  sx={{
+                    flex: 1,
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    m: 2,
+                    width: 1,
+                  }}
+                >
+                  <Button
+                    variant="outlined"
+                    onClick={deleteSubject}
+                    sx={{ width: "50%" }}
+                  >
+                    はい
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={handleChangeFlag}
+                    sx={{ width: "50%" }}
+                  >
+                    いいえ
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+          </Modal>
+        </ListItem>
+      ) : (
+        <ListItem sx={{ bgcolor: "#eeeef0", mb: 1, width: 1 }}>
           <Box
             sx={{
               flex: 1,
               display: "flex",
               justifyContent: "space-between",
-              flexDirection: "row",
-              p: 0,
-              m: 0,
+              width: 1,
             }}
           >
-            <Box sx={{ width: "60%" }}>
-              <ListItemText primary={data.name} />
-            </Box>
-
-            <Box
-              sx={{
-                flex: 1,
-                display: "flex",
-                justifyContent: "space-between",
-                flexDirection: "column",
-                p: 0,
-                m: 0,
-              }}
+            <Link
+              component={LinkRouter}
+              to={"/subjects/" + data.name}
+              underline="none"
+              sx={{ width: "90%" }}
             >
-              <span>持ち点:{subjectEvo}点</span>
-              <span>得点率:{subjectEvoRate}%</span>
-            </Box>
-            <Box
-              sx={{
-                flex: 1,
-                display: "flex",
-                justifyContent: "space-between",
-                flexDirection: "column",
-                p: 0,
-                m: 0,
-              }}
-            >
-              <span>最重要項目:{maxRateName}</span>
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexDirection: "row",
+                  p: 0,
+                  m: 0,
+                }}
+              >
+                <Box sx={{ width: "60%" }}>
+                  <ListItemText primary={data.name} />
+                </Box>
 
-              <span>
-                推定評価:
-                <span style={EvoColor}>
-                  <strong>{EvoAL}</strong>
-                </span>
-              </span>
-            </Box>
+                <Box
+                  sx={{
+                    flex: 1,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexDirection: "column",
+                    p: 0,
+                    m: 0,
+                  }}
+                >
+                  <span>持ち点:{subjectEvo}点</span>
+                  <span>得点率:{subjectEvoRate}%</span>
+                </Box>
+                <Box
+                  sx={{
+                    flex: 1,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexDirection: "column",
+                    p: 0,
+                    m: 0,
+                  }}
+                >
+                  <span>最重要項目:{maxRateName}</span>
+
+                  <span>
+                    推定評価:
+                    <span style={EvoColor}>
+                      <strong>{EvoAL}</strong>
+                    </span>
+                  </span>
+                </Box>
+              </Box>
+            </Link>
           </Box>
-        </Link>
-      </Box>
-      <Button
-        variant="outlined"
-        sx={{ p: 0, m: 0, ml: 1, borderColor: "red", color: "red" }}
-        onClick={handleChangeFlag}
-        startIcon={<DeleteIcon />}
-      >
-        削除
-      </Button>
-      <Modal open={modalFlag} onClose={handleChangeFlag}>
-        <Box sx={style}>
-          <Box sx={{ textAlign: "center" }}>
-            <h1>本当に削除しますか？</h1>
-          </Box>
-          <Box
-            sx={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "space-around",
-              flexDirection: "row",
-              p: 0,
-              m: 0,
-            }}
+          <Button
+            variant="outlined"
+            sx={{ p: 0, m: 0, ml: 1, borderColor: "red", color: "red" }}
+            onClick={handleChangeFlag}
+            startIcon={<DeleteIcon />}
           >
-            <Box
-              sx={{
-                flex: 1,
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "row",
-                alignItems: "center",
-                m: 2,
-                width: 1,
-              }}
-            >
-              <Button
-                variant="outlined"
-                onClick={deleteSubject}
-                sx={{ width: "50%" }}
+            削除
+          </Button>
+          <Modal open={modalFlag} onClose={handleChangeFlag}>
+            <Box sx={style}>
+              <Box sx={{ textAlign: "center" }}>
+                <h1>本当に削除しますか？</h1>
+              </Box>
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "space-around",
+                  flexDirection: "row",
+                  p: 0,
+                  m: 0,
+                }}
               >
-                はい
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={handleChangeFlag}
-                sx={{ width: "50%" }}
-              >
-                いいえ
-              </Button>
+                <Box
+                  sx={{
+                    flex: 1,
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    m: 2,
+                    width: 1,
+                  }}
+                >
+                  <Button
+                    variant="outlined"
+                    onClick={deleteSubject}
+                    sx={{ width: "50%" }}
+                  >
+                    はい
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={handleChangeFlag}
+                    sx={{ width: "50%" }}
+                  >
+                    いいえ
+                  </Button>
+                </Box>
+              </Box>
             </Box>
-          </Box>
-        </Box>
-      </Modal>
-    </ListItem>
+          </Modal>
+        </ListItem>
+      )}
+    </div>
   );
 }

@@ -1,11 +1,12 @@
 import { auth, db } from "../../../libs/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { Modal, Box, Button } from "@mui/material";
+import { Modal, Box, Button, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { useMediaQuery } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -18,6 +19,17 @@ const style = {
   boxShadow: 5,
   p: 4,
 };
+const phonestyle = {
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 300,
+  bgcolor: "eeeef0",
+  border: "2px solid #000",
+  boxShadow: 5,
+  p: 4,
+};
 export const AddReport = ({ rate, data, name, set }) => {
   const [Xday, setXday] = useState();
   const [title, setTitle] = useState("");
@@ -25,6 +37,7 @@ export const AddReport = ({ rate, data, name, set }) => {
   const [flag, setFlag] = useState(false);
   const [message, setMessage] = useState();
   const [take, setTake] = useState(false); // 初期設定
+  const isSmallScreen = useMediaQuery("(max-width:400px)");
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
@@ -74,72 +87,135 @@ export const AddReport = ({ rate, data, name, set }) => {
     }
   };
   return (
-    <Box>
-      <Button
-        onClick={changeFlag}
-        variant="outlined"
-        sx={{ width: 1, textAlign: "center" }}
-        startIcon={<AddIcon />}
-      >
-        課題追加
-      </Button>
-      <Modal open={flag} onClose={changeFlag}>
-        <Box
-          sx={{
-            ...style,
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-        >
-          {message}
-          <label>
-            課題名
-            <input
-              //className=
-              type="text"
-              value={title}
-              //name=
-              onChange={(e) => {
-                setTitle(e.target.value);
+    <div>
+      {isSmallScreen ? (
+        <Box>
+          <Button
+            onClick={changeFlag}
+            variant="outlined"
+            sx={{ width: 1, textAlign: "center" }}
+            startIcon={<AddIcon />}
+          >
+            課題追加
+          </Button>
+          <Modal open={flag} onClose={changeFlag}>
+            <Box
+              sx={{
+                ...phonestyle,
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
               }}
-            />
-          </label>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <label>
-              期限
-              <DatePicker
-                //className=
-                inputFormat="yyyy/MM/dd"
-                onChange={(newDay) => {
-                  console.log(newDay);
-                  setXday(newDay);
+            >
+              {message}
+              <TextField
+                required
+                label="課題名"
+                variant="outlined"
+                maxLength="100"
+                value={title}
+                margin="normal"
+                onChange={(e) => {
+                  setTitle(e.target.value);
                 }}
               />
-            </label>
-          </LocalizationProvider>
-          <label>
-            成績
-            <input
-              //className=
-              type="number"
-              value={score}
-              //name=
-              min="0"
-              onChange={(e) => {
-                setScore(e.target.value);
-              }}
-            />
-          </label>
-          <input
-            //className=
-            type="button"
-            value="確定"
-            onClick={onAddEvent}
-          />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  sx={{ marginTop: 1 }}
+                  required
+                  label="期限"
+                  inputFormat="yyyy/MM/dd"
+                  margin="normal"
+                  onChange={(newDay) => {
+                    setXday(newDay);
+                  }}
+                />
+              </LocalizationProvider>
+              <TextField
+                label="成績(0~100)"
+                variant="outlined"
+                type="number"
+                value={score}
+                min="0"
+                max="100"
+                margin="normal"
+                onChange={(e) => {
+                  setScore(e.target.value);
+                }}
+              />
+              <Button
+                variant="outlined"
+                sx={{ marginTop: 2 }}
+                onClick={onAddEvent}
+              >
+                追加
+              </Button>
+            </Box>
+          </Modal>
         </Box>
-      </Modal>
-    </Box>
+      ) : (
+        <Box>
+          <Button
+            onClick={changeFlag}
+            variant="outlined"
+            sx={{ width: 1, textAlign: "center" }}
+            startIcon={<AddIcon />}
+          >
+            課題追加
+          </Button>
+          <Modal open={flag} onClose={changeFlag}>
+            <Box
+              sx={{
+                ...phonestyle,
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              {message}
+              <TextField
+                required
+                label="課題名"
+                variant="outlined"
+                maxLength="100"
+                value={title}
+                margin="normal"
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  required
+                  label="期限"
+                  inputFormat="yyyy/MM/dd"
+                  margin="normal"
+                  onChange={(newDay) => {
+                    setXday(newDay);
+                  }}
+                />
+              </LocalizationProvider>
+              <TextField
+                label="成績(0~100)"
+                variant="outlined"
+                type="number"
+                value={score}
+                min="0"
+                max="100"
+                margin="normal"
+                onChange={(e) => {
+                  setScore(e.target.value);
+                }}
+              />
+              <Button variant="outlined" onClick={onAddEvent}>
+                追加
+              </Button>
+            </Box>
+          </Modal>
+        </Box>
+      )}
+    </div>
   );
 };
