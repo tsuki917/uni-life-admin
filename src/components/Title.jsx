@@ -47,7 +47,7 @@ export default function Title({ login }) {
             color="inherit"
             sx={{ fontSize: 24 }}
             LinkComponent={Link}
-            to=""
+            to="/"
             // onClick={(e) => {
             //   pageChange(e);
             // }}
@@ -65,8 +65,29 @@ export default function Title({ login }) {
                   backgroundColor: "#d9d9db", // 選択されているアイテムの背景色を指定
                   color: "black", // 選択されているアイテムのテキスト色を指定
                 },
+                "& .MuiToggleButton-root.Mui-selected:hover": {
+                  backgroundColor: "#d9d9db", // ホバー時の背景色を選択されたアイテムと同じに設定
+                  color: "black", // ホバー時のテキスト色も選択されたアイテムと同じに設定
+                },
               }}
             >
+              <ToggleButton
+                value="home"
+                aria-label="home"
+                LinkComponent={Link}
+                to="/"
+                sx={{
+                  bgcolor: "background.paper",
+                  "&:hover": {
+                    bgcolor: "#d9d9db", // ホバー時の背景色も指定（必要に応じて）
+                  },
+                  ml: 4,
+                  fontSize: 12,
+                }}
+              >
+                <HomeIcon />
+                Home
+              </ToggleButton>
               <ToggleButton
                 value="subject"
                 aria-label="subject"
