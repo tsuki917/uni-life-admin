@@ -2,9 +2,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
-// const env = dotenv.config().parsed;
-// console.log(env);
-
+const env = dotenv.config().parsed;
+console.log(env);
+console.log(process.env);
 module.exports = {
   entry: "./index.js",
   mode: "development",
@@ -40,8 +40,8 @@ module.exports = {
       // eslint-disable-next-line no-undef
       template: path.join(__dirname, "public", "index.html"),
     }),
-    // new webpack.DefinePlugin({
-    //   "process.env": JSON.stringify(env),
-    // }),
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(env),
+    }),
   ],
 };
