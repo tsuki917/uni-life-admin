@@ -4,7 +4,7 @@ const webpack = require("webpack");
 // const dotenv = require("dotenv");
 // const env = dotenv.config().parsed;
 
-// console.log(process.env.REACT_APP_API_KEY);
+console.log(process.env.REACT_APP_API_KEY);
 module.exports = {
   entry: "./index.js",
   mode: "development",
@@ -40,8 +40,8 @@ module.exports = {
       // eslint-disable-next-line no-undef
       template: path.join(__dirname, "public", "index.html"),
     }),
-    // new webpack.DefinePlugin({
-    //   "process.env": JSON.stringify(env),
-    // }),
+    new webpack.DefinePlugin({
+      "process.env": process.env,
+    }),
   ],
 };
