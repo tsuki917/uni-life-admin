@@ -3,6 +3,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Button, Modal, Box } from "@mui/material";
 import { Delete } from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material";
 const style = {
   position: "absolute",
   top: "40%",
@@ -14,8 +15,20 @@ const style = {
   boxShadow: 5,
   p: 4,
 };
+const phonestyle = {
+  position: "absolute",
+  top: "40%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 300,
+  bgcolor: "eeeef0",
+  border: "2px solid #000",
+  boxShadow: 5,
+  p: 4,
+};
 export const DeleteReport = ({ rate, data, index, name, set }) => {
   const [flag, setFlag] = useState(false);
+  const isSmallScreen = useMediaQuery("(max-width:400px)");
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
@@ -33,22 +46,68 @@ export const DeleteReport = ({ rate, data, index, name, set }) => {
     set(event.reports.reportArray);
   };
   return (
-    <Box>
-      <Button
-        sx={{ p: 0, m: 0, ml: 1, borderColor: "red", color: "red" }}
-        onClick={changeFlag}
-        variant="outlined"
-        startIcon={<Delete />}
-      >
-        削除
-      </Button>
-      <Modal open={flag} onClose={changeFlag}>
-        <Box sx={style}>
-          <h2>本当に消しますか？</h2>
-          <Button onClick={onAddEvent}>はい</Button>
-          <Button onClick={changeFlag}>いいえ</Button>
+    <div>
+      {isSmallScreen ? (
+        <Box>
+          <Button
+            sx={{ p: 0, m: 0, ml: 1, borderColor: "red", color: "red" }}
+            onClick={changeFlag}
+            variant="outlined"
+            startIcon={<Delete />}
+          >
+            削除
+          </Button>
+          <Modal open={flag} onClose={changeFlag}>
+            <Box sx={phonestyle}>
+              <h2>本当に消しますか？</h2>
+              <Button
+                variant="outlined"
+                sx={{ width: "50%" }}
+                onClick={onAddEvent}
+              >
+                はい
+              </Button>
+              <Button
+                variant="outlined"
+                sx={{ width: "50%" }}
+                onClick={changeFlag}
+              >
+                いいえ
+              </Button>
+            </Box>
+          </Modal>
         </Box>
-      </Modal>
-    </Box>
+      ) : (
+        <Box>
+          <Button
+            sx={{ p: 0, m: 0, ml: 1, borderColor: "red", color: "red" }}
+            onClick={changeFlag}
+            variant="outlined"
+            startIcon={<Delete />}
+          >
+            削除
+          </Button>
+          <Modal open={flag} onClose={changeFlag}>
+            <Box sx={style}>
+              <h2>本当に消しますか？</h2>
+              <Button
+                variant="outlined"
+                sx={{ width: "50%" }}
+                onClick={onAddEvent}
+              >
+                はい
+              </Button>
+              <Button
+                variant="outlined"
+                sx={{ width: "50%" }}
+                onClick={changeFlag}
+              >
+                いいえ
+              </Button>
+            </Box>
+          </Modal>
+        </Box>
+      )}
+    </div>
   );
 };

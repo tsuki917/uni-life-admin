@@ -10,6 +10,7 @@ import { ChangeSubject } from "./Form/ChangeSubject";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, Button, Box } from "@mui/material";
 import { Link as LinkRouter } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 export default function SubjectDetail() {
   const [smallExamData, setSmallExamData] = useState([]);
   const [smallExamRate, setSmallExamRate] = useState(0);
@@ -30,6 +31,7 @@ export default function SubjectDetail() {
 
   const data = decodeURI(useLocation().pathname);
   const targetSubject = data.split("subjects/")[1];
+  const isSmallScreen = useMediaQuery("(max-width:400px)");
 
   useEffect(() => {
     const fetchData = getFirebaseData(targetSubject);
@@ -279,44 +281,47 @@ export default function SubjectDetail() {
       return "評価の変動はありません";
     }
   };
-  return reportData === undefined ? (
+  return (
     <div>
-      <p>Loding</p>
-      <Button
-        onClick={() => {
-          console.log(reportData);
-        }}
-      ></Button>
-    </div>
-  ) : (
-    <Box sx={{ mx: 6 }}>
-      <Link component={LinkRouter} to={"/subjects"}>
-        <ArrowBackIcon />
-      </Link>
-      <Box
-        sx={{
-          border: 3,
-          borderColor: "primary.main",
-          borderRadius: "16px",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            marginLeft: 10,
-          }}
-        >
-          <h1>{flag ? subjectName : targetSubject}</h1>
+      {isSmallScreen ? (
+        reportData === undefined ? (
+          <div>
+            <p>Loding</p>
+            <Button
+              onClick={() => {
+                console.log(reportData);
+              }}
+            ></Button>
+          </div>
+        ) : (
+          <Box sx={{ mx: 0 }}>
+            <Link component={LinkRouter} to={"/subjects"}>
+              <ArrowBackIcon />
+            </Link>
+            <Box
+              sx={{
+                border: 2,
+                borderColor: "primary.main",
+                borderRadius: "16px",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  // justifyContent: "center",
+                  marginLeft: 1,
+                }}
+              >
+                <h2>{flag ? subjectName : targetSubject}</h2>
 
-          <ChangeSubject
-            all={all}
-            setAll={setAll}
-            setSubject={setSubjectName}
-            change={changeFlag}
-          />
-        </Box>
-        {/* <Box
+                <ChangeSubject
+                  all={all}
+                  setAll={setAll}
+                  setSubject={setSubjectName}
+                  change={changeFlag}
+                />
+              </Box>
+              {/* <Box
           sx={{
             flex: 1,
             display: "flex",
@@ -325,69 +330,183 @@ export default function SubjectDetail() {
             textAlign: "center",
           }}
         > */}
-        <Box
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "center",
+                  //justifyContent: "flex-end",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  //width: "80%",
+                }}
+              >
+                <h4 style={{ marginLeft: 10, marginRight: 10 }}>
+                  得点率:{scoreRate}%
+                </h4>
+                <h4 style={{ marginLeft: 10, marginRight: 10 }}>
+                  得点:{score}
+                </h4>
+                <h4 style={{ marginLeft: 10, marginRight: 10 }}>{judge()}</h4>
+                <h4 style={{ marginLeft: 10, marginRight: 10 }}>{future()}</h4>
+              </Box>
+            </Box>
+
+            {finalExamData !== null &&
+              middleExamData !== null &&
+              reportRate !== null &&
+              smallExamRate !== null &&
+              parseInt(reportRate) +
+                parseInt(smallExamRate) +
+                parseInt(middleExamData.rate) +
+                parseInt(finalExamData.rate) !==
+                100 && (
+                <p style={{ color: "red" }}>
+                  割合の合計が100%ではありません（現在
+                  {parseInt(reportRate) +
+                    parseInt(smallExamRate) +
+                    parseInt(middleExamData.rate) +
+                    parseInt(finalExamData.rate)}
+                  ％）
+                </p>
+              )}
+            <Report
+              reportData={reportData}
+              reportRate={reportRate}
+              name={name}
+              setData={setReportData}
+              setRate={setReportRate}
+            />
+            <SmallExam
+              smallExamData={smallExamData}
+              smallExamRate={smallExamRate}
+              name={name}
+              setData={setSmallExamData}
+              setRate={setSmallExamRate}
+            />
+            <MiddleExam
+              middleExamData={middleExamData}
+              name={name}
+              set={setMiddleExamData}
+            />
+            <FinalExam
+              finalExamData={finalExamData}
+              name={name}
+              set={setFinalExamData}
+            />
+          </Box>
+        )
+      ) : reportData === undefined ? (
+        <div>
+          <p>Loding</p>
+          <Button
+            onClick={() => {
+              console.log(reportData);
+            }}
+          ></Button>
+        </div>
+      ) : (
+        <Box sx={{ mx: 6 }}>
+          <Link component={LinkRouter} to={"/subjects"}>
+            <ArrowBackIcon />
+          </Link>
+          <Box
+            sx={{
+              border: 3,
+              borderColor: "primary.main",
+              borderRadius: "16px",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginLeft: 10,
+              }}
+            >
+              <h1>{flag ? subjectName : targetSubject}</h1>
+
+              <ChangeSubject
+                all={all}
+                setAll={setAll}
+                setSubject={setSubjectName}
+                change={changeFlag}
+              />
+            </Box>
+            {/* <Box
           sx={{
             flex: 1,
             display: "flex",
-            justifyContent: "center",
-            //justifyContent: "flex-end",
-            alignItems: "center",
-            flexWrap: "wrap",
-            //width: "80%",
+            justifyContent: "space-between",
+            width: 1,
+            textAlign: "center",
           }}
-        >
-          <h3 style={{ marginLeft: 20, marginRight: 20 }}>
-            得点率:{scoreRate}%
-          </h3>
-          <h3 style={{ marginLeft: 20, marginRight: 20 }}>得点:{score}</h3>
-          <h3 style={{ marginLeft: 20, marginRight: 20 }}>{judge()}</h3>
-          <h3 style={{ marginLeft: 20, marginRight: 20 }}>{future()}</h3>
-        </Box>
-      </Box>
+        > */}
+            <Box
+              sx={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
+                //justifyContent: "flex-end",
+                alignItems: "center",
+                flexWrap: "wrap",
+                //width: "80%",
+              }}
+            >
+              <h3 style={{ marginLeft: 20, marginRight: 20 }}>
+                得点率:{scoreRate}%
+              </h3>
+              <h3 style={{ marginLeft: 20, marginRight: 20 }}>得点:{score}</h3>
+              <h3 style={{ marginLeft: 20, marginRight: 20 }}>{judge()}</h3>
+              <h3 style={{ marginLeft: 20, marginRight: 20 }}>{future()}</h3>
+            </Box>
+          </Box>
 
-      {finalExamData !== null &&
-        middleExamData !== null &&
-        reportRate !== null &&
-        smallExamRate !== null &&
-        parseInt(reportRate) +
-          parseInt(smallExamRate) +
-          parseInt(middleExamData.rate) +
-          parseInt(finalExamData.rate) !==
-          100 && (
-          <p style={{ color: "red" }}>
-            割合の合計が100%ではありません（現在
-            {parseInt(reportRate) +
+          {finalExamData !== null &&
+            middleExamData !== null &&
+            reportRate !== null &&
+            smallExamRate !== null &&
+            parseInt(reportRate) +
               parseInt(smallExamRate) +
               parseInt(middleExamData.rate) +
-              parseInt(finalExamData.rate)}
-            ％）
-          </p>
-        )}
-      <Report
-        reportData={reportData}
-        reportRate={reportRate}
-        name={name}
-        setData={setReportData}
-        setRate={setReportRate}
-      />
-      <SmallExam
-        smallExamData={smallExamData}
-        smallExamRate={smallExamRate}
-        name={name}
-        setData={setSmallExamData}
-        setRate={setSmallExamRate}
-      />
-      <MiddleExam
-        middleExamData={middleExamData}
-        name={name}
-        set={setMiddleExamData}
-      />
-      <FinalExam
-        finalExamData={finalExamData}
-        name={name}
-        set={setFinalExamData}
-      />
-    </Box>
+              parseInt(finalExamData.rate) !==
+              100 && (
+              <p style={{ color: "red" }}>
+                割合の合計が100%ではありません（現在
+                {parseInt(reportRate) +
+                  parseInt(smallExamRate) +
+                  parseInt(middleExamData.rate) +
+                  parseInt(finalExamData.rate)}
+                ％）
+              </p>
+            )}
+          <Report
+            reportData={reportData}
+            reportRate={reportRate}
+            name={name}
+            setData={setReportData}
+            setRate={setReportRate}
+          />
+          <SmallExam
+            smallExamData={smallExamData}
+            smallExamRate={smallExamRate}
+            name={name}
+            setData={setSmallExamData}
+            setRate={setSmallExamRate}
+          />
+          <MiddleExam
+            middleExamData={middleExamData}
+            name={name}
+            set={setMiddleExamData}
+          />
+          <FinalExam
+            finalExamData={finalExamData}
+            name={name}
+            set={setFinalExamData}
+          />
+        </Box>
+      )}
+    </div>
   );
 }
 
