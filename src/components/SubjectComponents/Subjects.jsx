@@ -31,7 +31,7 @@ export default function Subjects() {
   const [first, setFirst] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log(auth.currentUser);
+  console.log("auth.currentUser:" + auth.currentUser);
   // if (auth.currentUser !== null && first) {
   useEffect(() => {
     //ログイン時初回
