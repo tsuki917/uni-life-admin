@@ -15,6 +15,7 @@ import {
 import Subject from "./Subject.jsx";
 import AddSubject from "../SubjectComponents/Form/AddSubject.jsx";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const style = {
   position: "absolute",
@@ -28,12 +29,13 @@ const style = {
   p: 4,
 };
 export default function Subjects() {
+  const theme = useTheme();
   const [subjectsData, setSubjectsData] = useState([]);
   const [open, setOpen] = useState(false);
   const [first, setFirst] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   console.log(auth.currentUser);
   // if (auth.currentUser !== null && first) {
   useEffect(() => {

@@ -13,6 +13,7 @@ import { Link as LinkRouter } from "react-router-dom";
 import { db, auth } from "../../libs/fire";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const style = {
   position: "absolute",
   top: "40%",
@@ -25,13 +26,14 @@ const style = {
   p: 4,
 };
 export default function Subject({ data, setSubjectsData, subjectsData }) {
+  const theme = useTheme();
   const [subjectEvo, setSubjectEvo] = useState(0);
   const [subjectEvoRate, setSubjectEvoRate] = useState(0);
   const [modalFlag, setModalFlag] = useState(false);
   const [EvoAL, setEvoAL] = useState("計算中");
   const [EvoColor, setEvoColor] = useState({ color: "black" });
   const [maxRateName, setMaxRateName] = useState("");
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   console.log(data.name);
   useEffect(() => {
     let score = 0;
@@ -189,7 +191,7 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
             component={LinkRouter}
             to={"/subjects/" + data.name}
             underline="none"
-            sx={{ width: "50%" }}
+            sx={{ width: "100%" }}
           >
             <Box
               sx={{
@@ -200,39 +202,6 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
               }}
             >
               <ListItemText primary={data.name} />
-            </Box>
-          </Link>
-          <Box
-            sx={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "space-between",
-              flexDirection: "row",
-              p: 0,
-              m: 0,
-            }}
-          >
-            <Box
-              sx={{
-                flex: 1,
-                display: "flex",
-                justifyContent: "space-between",
-                flexDirection: "column",
-                p: 0,
-                m: 0,
-              }}
-            >
-              <span>持ち点:{subjectEvo}点</span>
-              <span>得点率:{subjectEvoRate}%</span>
-
-              <span>最重要項目:{maxRateName}</span>
-
-              <span>
-                推定評価:
-                <span style={EvoColor}>
-                  <strong>{EvoAL}</strong>
-                </span>
-              </span>
               <Button
                 variant="outlined"
                 sx={{ p: 0, m: 0, ml: 1, borderColor: "red", color: "red" }}
@@ -242,8 +211,50 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
                 削除
               </Button>
             </Box>
-          </Box>
+            <Box
+              sx={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                p: 0,
+                m: 0,
+              }}
+            >
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexDirection: "column",
+                  p: 0,
+                  m: 0,
+                }}
+              >
+                <span>持ち点:{subjectEvo}点</span>
+                <span>得点率:{subjectEvoRate}%</span>
+              </Box>
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexDirection: "column",
+                  p: 0,
+                  m: 0,
+                }}
+              >
+                <span>最重要項目:{maxRateName}</span>
 
+                <span>
+                  推定評価:
+                  <span style={EvoColor}>
+                    <strong>{EvoAL}</strong>
+                  </span>
+                </span>
+              </Box>
+            </Box>
+          </Link>
           {/* </Box> */}
 
           <Modal open={modalFlag} onClose={handleChangeFlag}>
