@@ -227,6 +227,23 @@ export default function Title({ login }) {
                   }}
                 >
                   <ToggleButton
+                    value="home"
+                    aria-label="home"
+                    LinkComponent={RouterLink}
+                    to="/"
+                    sx={{
+                      bgcolor: "background.paper",
+                      "&:hover": {
+                        bgcolor: "#d9d9db", // ホバー時の背景色も指定（必要に応じて）
+                      },
+                      ml: 4,
+                      fontSize: 12,
+                    }}
+                  >
+                    <LocalLibrary />
+                    subject
+                  </ToggleButton>
+                  <ToggleButton
                     value="subject"
                     aria-label="subject"
                     LinkComponent={RouterLink}
