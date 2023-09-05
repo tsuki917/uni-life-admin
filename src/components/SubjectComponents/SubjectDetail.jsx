@@ -11,7 +11,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, Button, Box } from "@mui/material";
 import { Link as LinkRouter } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 export default function SubjectDetail() {
+  const theme = useTheme();
   const [smallExamData, setSmallExamData] = useState([]);
   const [smallExamRate, setSmallExamRate] = useState(0);
   const [middleExamData, setMiddleExamData] = useState(null);
@@ -31,7 +33,7 @@ export default function SubjectDetail() {
 
   const data = decodeURI(useLocation().pathname);
   const targetSubject = data.split("subjects/")[1];
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const fetchData = getFirebaseData(targetSubject);
@@ -296,7 +298,7 @@ export default function SubjectDetail() {
         ) : (
           <Box sx={{ mx: 0 }}>
             <Link component={LinkRouter} to={"/subjects"}>
-              <ArrowBackIcon />
+              <ArrowBackIcon sx={{ width: 40, height: 40 }} />
             </Link>
             <Box
               sx={{
@@ -308,7 +310,7 @@ export default function SubjectDetail() {
               <Box
                 sx={{
                   display: "flex",
-                  // justifyContent: "center",
+                  alignItems: "center",
                   marginLeft: 1,
                 }}
               >
@@ -408,7 +410,7 @@ export default function SubjectDetail() {
       ) : (
         <Box sx={{ mx: 6 }}>
           <Link component={LinkRouter} to={"/subjects"}>
-            <ArrowBackIcon />
+            <ArrowBackIcon sx={{ width: 40, height: 40 }} />
           </Link>
           <Box
             sx={{

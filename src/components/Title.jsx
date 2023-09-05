@@ -112,7 +112,14 @@ export default function Title({ login }) {
                   <Button
                     onClick={loginDeal}
                     variant="outlined"
-                    sx={{ color: "white", p: 1, m: 0, borderColor: "white" }}
+                    sx={{
+                      color: "white",
+                      p: 1,
+                      m: 0,
+                      borderColor: "white",
+                      marginTop: "4px",
+                      marginRight: "12px",
+                    }}
                   >
                     ログイン
                   </Button>
@@ -213,8 +220,29 @@ export default function Title({ login }) {
                       backgroundColor: "#d9d9db", // 選択されているアイテムの背景色を指定
                       color: "black", // 選択されているアイテムのテキスト色を指定
                     },
+                    "& .MuiToggleButton-root.Mui-selected:hover": {
+                      backgroundColor: "#d9d9db", // ホバー時の背景色を指定
+                      color: "black", // ホバー時のテキスト色を指定
+                    },
                   }}
                 >
+                  <ToggleButton
+                    value="home"
+                    aria-label="home"
+                    LinkComponent={RouterLink}
+                    to="/"
+                    sx={{
+                      bgcolor: "background.paper",
+                      "&:hover": {
+                        bgcolor: "#d9d9db", // ホバー時の背景色も指定（必要に応じて）
+                      },
+                      ml: 4,
+                      fontSize: 12,
+                    }}
+                  >
+                    <HomeIcon />
+                    Home
+                  </ToggleButton>
                   <ToggleButton
                     value="subject"
                     aria-label="subject"
