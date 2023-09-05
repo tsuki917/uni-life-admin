@@ -55,6 +55,7 @@ export default function Subjects() {
           <Box sx={{ ml: 0 }}>
             <h2>教科一覧</h2>
           </Box>
+          <p>A:90%~ B:80%~ C:70%~ D:60%~ E:~60%</p>
           <Box
             sx={{
               flex: 1,
@@ -111,8 +112,9 @@ export default function Subjects() {
         </div>
       ) : (
         <div>
-          <Box sx={{ ml: 6 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", ml: 0 }}>
             <h2>教科一覧</h2>
+            <p>A:90%~　B:80%~　C:70%~　D:60%~　E:~60%</p>
           </Box>
           <Box
             sx={{
