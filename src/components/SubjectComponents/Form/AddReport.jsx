@@ -7,6 +7,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const style = {
   position: "absolute",
@@ -31,13 +32,14 @@ const phonestyle = {
   p: 4,
 };
 export const AddReport = ({ rate, data, name, set }) => {
+  const theme = useTheme();
   const [Xday, setXday] = useState();
   const [title, setTitle] = useState("");
   const [score, setScore] = useState(null);
   const [flag, setFlag] = useState(false);
   const [message, setMessage] = useState();
   const [take, setTake] = useState(false); // 初期設定
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };

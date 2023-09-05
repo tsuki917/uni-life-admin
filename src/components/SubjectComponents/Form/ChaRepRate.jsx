@@ -3,6 +3,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Button, Modal, Box, TextField } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const style = {
   position: "absolute",
   top: "40%",
@@ -32,9 +33,10 @@ const phonestyle = {
   marginRight: 10,
 };
 export const ChaRepRate = ({ data, name, set }) => {
+  const theme = useTheme();
   const [rate, setRate] = useState(0);
   const [flag, setFlag] = useState(false);
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
@@ -61,7 +63,12 @@ export const ChaRepRate = ({ data, name, set }) => {
             alignItems: "flex-start",
           }}
         >
-          <Button variant="outlined" onClick={changeFlag} sx={{ ml: 1 }}>
+          <Button
+            size="small"
+            variant="outlined"
+            onClick={changeFlag}
+            sx={{ ml: 1 }}
+          >
             割合変更
           </Button>
           <Modal open={flag} onClose={changeFlag}>

@@ -7,6 +7,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const style = {
   position: "absolute",
@@ -32,12 +33,13 @@ const phonestyle = {
 };
 
 export const ChangeFinal = ({ data, name, set }) => {
+  const theme = useTheme();
   const [Xday, setXday] = useState();
   const [score, setScore] = useState(data.score);
   const [title, setTitle] = useState(data.title);
   const [flag, setFlag] = useState(false);
   const [message, setMessage] = useState();
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   if (Xday === undefined && data.Xday !== "未入力") {
     // 前データの引継ぎ
     //Dateのタイムスタンプはミリ秒単位, Firestoreのタイムスタンプは秒単位？
@@ -73,7 +75,7 @@ export const ChangeFinal = ({ data, name, set }) => {
           {!flag && (
             <Button
               variant="outlined"
-              sx={{ p: 0 }}
+              sx={{ p: 0, height: 30, marginLeft: "8px" }}
               onClick={changeFlag}
               startIcon={<EditIcon />}
             >

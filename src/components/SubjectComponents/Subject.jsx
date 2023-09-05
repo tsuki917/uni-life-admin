@@ -13,6 +13,7 @@ import { Link as LinkRouter } from "react-router-dom";
 import { db, auth } from "../../libs/fire";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const style = {
   position: "absolute",
   top: "40%",
@@ -25,13 +26,14 @@ const style = {
   p: 4,
 };
 export default function Subject({ data, setSubjectsData, subjectsData }) {
+  const theme = useTheme();
   const [subjectEvo, setSubjectEvo] = useState(0);
   const [subjectEvoRate, setSubjectEvoRate] = useState(0);
   const [modalFlag, setModalFlag] = useState(false);
   const [EvoAL, setEvoAL] = useState("計算中");
   const [EvoColor, setEvoColor] = useState({ color: "black" });
   const [maxRateName, setMaxRateName] = useState("");
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   console.log(data.name);
   useEffect(() => {
     let score = 0;

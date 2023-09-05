@@ -3,6 +3,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Modal, Box, Button, TextField } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const style = {
   position: "absolute",
   top: "40%",
@@ -33,9 +34,10 @@ const phonestyle = {
 };
 
 export const ChaFinRate = ({ data, name, set }) => {
+  const theme = useTheme();
   const [rate, setRate] = useState(0);
   const [flag, setFlag] = useState(false);
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
@@ -67,6 +69,7 @@ export const ChaFinRate = ({ data, name, set }) => {
             variant="outlined"
             onClick={changeFlag}
             sx={{ color: "#1976d2", ml: 1 }}
+            size="small"
           >
             割合変更
           </Button>

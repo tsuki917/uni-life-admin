@@ -3,6 +3,7 @@ import { Button, Box, TextField } from "@mui/material";
 import { db, auth } from "../../../libs/fire.js";
 import { setDoc, doc } from "firebase/firestore";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const style = {
   position: "absolute",
   top: "40%",
@@ -26,13 +27,14 @@ const phonestyle = {
   p: 4,
 };
 export default function AddSubject({ close, setSubjectsData, subjectsData }) {
+  const theme = useTheme();
   const [subjectName, setSubjectname] = useState("");
   const [finalRate, setFinalRate] = useState(0);
   const [middleRate, setMiddleRate] = useState(0);
   const [smallRate, setsmallRate] = useState(0);
   const [reportRate, setReportRate] = useState(0);
   const [message, setMessage] = useState();
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const handleSubmit = (e) => {};
 
   const addSubjectData = async (

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Button, Modal, Box } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const style = {
   position: "absolute",
   top: "40%",
@@ -27,8 +28,9 @@ const phonestyle = {
   p: 4,
 };
 export const DeleteReport = ({ rate, data, index, name, set }) => {
+  const theme = useTheme();
   const [flag, setFlag] = useState(false);
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
@@ -50,7 +52,14 @@ export const DeleteReport = ({ rate, data, index, name, set }) => {
       {isSmallScreen ? (
         <Box>
           <Button
-            sx={{ p: 0, m: 0, ml: 1, borderColor: "red", color: "red" }}
+            sx={{
+              p: 0,
+              m: 0,
+              ml: 1,
+              borderColor: "red",
+              color: "red",
+              height: 30,
+            }}
             onClick={changeFlag}
             variant="outlined"
             startIcon={<Delete />}

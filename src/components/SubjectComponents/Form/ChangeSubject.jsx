@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import { Button, Modal, Box, TextField } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const style = {
   position: "absolute",
   top: "40%",
@@ -38,10 +39,11 @@ const phonestyle = {
   marginRight: 10,
 };
 export const ChangeSubject = ({ all, setAll, setSubject, change }) => {
+  const theme = useTheme();
   const [name, setName] = useState("");
   const [flag, setFlag] = useState(false);
   const [message, setMessage] = useState();
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const changeFlag = () => {
     setFlag((prev) => !prev);
   };
@@ -90,6 +92,7 @@ export const ChangeSubject = ({ all, setAll, setSubject, change }) => {
               sx={{ mt: 3, mb: 3, ml: 1 }}
               onClick={changeFlag}
               variant="outlined"
+              size="small"
             >
               教科名変更
             </Button>

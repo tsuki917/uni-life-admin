@@ -7,6 +7,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const style = {
   position: "absolute",
@@ -31,13 +32,14 @@ const phonestyle = {
   p: 4,
 };
 export const ChangeSmall = ({ rate, data, index, name, set }) => {
+  const theme = useTheme();
   const [Xday, setXday] = useState();
   const [title, setTitle] = useState(data[index].title);
   const [score, setScore] = useState(data[index].score);
   const [flag, setFlag] = useState(false);
   const [take, setTake] = useState(false);
   const [message, setMessage] = useState();
-  const isSmallScreen = useMediaQuery("(max-width:400px)");
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   if (Xday === undefined) {
     // 前データの引継ぎ
     setXday(dayjs(data[index].Xday.seconds * 1000));
@@ -101,7 +103,7 @@ export const ChangeSmall = ({ rate, data, index, name, set }) => {
           {!flag && (
             <Button
               variant="outlined"
-              sx={{ p: 0 }}
+              sx={{ p: 0, height: 30, marginBottom: "4px" }}
               onClick={changeFlag}
               startIcon={<EditIcon />}
             >
