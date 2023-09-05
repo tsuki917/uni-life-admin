@@ -240,8 +240,8 @@ export default function Title({ login }) {
                       fontSize: 12,
                     }}
                   >
-                    <LocalLibrary />
-                    subject
+                    <HomeIcon />
+                    Home
                   </ToggleButton>
                   <ToggleButton
                     value="subject"
