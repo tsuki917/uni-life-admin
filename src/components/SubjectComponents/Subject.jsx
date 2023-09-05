@@ -191,7 +191,7 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
             component={LinkRouter}
             to={"/subjects/" + data.name}
             underline="none"
-            sx={{ width: "100%" }}
+            sx={{ width: "50%" }}
           >
             <Box
               sx={{
@@ -202,6 +202,40 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
               }}
             >
               <ListItemText primary={data.name} />
+            </Box>
+          </Link>
+
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "row",
+              p: 0,
+              m: 0,
+            }}
+          >
+            <Box
+              sx={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "space-between",
+                flexDirection: "column",
+                p: 0,
+                m: 0,
+              }}
+            >
+              <span>持ち点:{subjectEvo}点</span>
+              <span>得点率:{subjectEvoRate}%</span>
+
+              <span>最重要項目:{maxRateName}</span>
+
+              <span>
+                推定評価:
+                <span style={EvoColor}>
+                  <strong>{EvoAL}</strong>
+                </span>
+              </span>
               <Button
                 variant="outlined"
                 sx={{ p: 0, m: 0, ml: 1, borderColor: "red", color: "red" }}
@@ -211,50 +245,7 @@ export default function Subject({ data, setSubjectsData, subjectsData }) {
                 削除
               </Button>
             </Box>
-            <Box
-              sx={{
-                flex: 1,
-                display: "flex",
-                justifyContent: "space-between",
-                flexDirection: "row",
-                p: 0,
-                m: 0,
-              }}
-            >
-              <Box
-                sx={{
-                  flex: 1,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  flexDirection: "column",
-                  p: 0,
-                  m: 0,
-                }}
-              >
-                <span>持ち点:{subjectEvo}点</span>
-                <span>得点率:{subjectEvoRate}%</span>
-              </Box>
-              <Box
-                sx={{
-                  flex: 1,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  flexDirection: "column",
-                  p: 0,
-                  m: 0,
-                }}
-              >
-                <span>最重要項目:{maxRateName}</span>
-
-                <span>
-                  推定評価:
-                  <span style={EvoColor}>
-                    <strong>{EvoAL}</strong>
-                  </span>
-                </span>
-              </Box>
-            </Box>
-          </Link>
+          </Box>
           {/* </Box> */}
 
           <Modal open={modalFlag} onClose={handleChangeFlag}>
