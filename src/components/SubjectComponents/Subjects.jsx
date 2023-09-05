@@ -112,7 +112,7 @@ export default function Subjects() {
         </div>
       ) : (
         <div>
-          <Box sx={{ display: "flex", justifyContent: "space-between", ml: 0 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mx: 6 }}>
             <h2>教科一覧</h2>
             <p>A:90%~　B:80%~　C:70%~　D:60%~　E:~60%</p>
           </Box>
