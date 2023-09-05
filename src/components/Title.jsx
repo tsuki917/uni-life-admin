@@ -220,6 +220,10 @@ export default function Title({ login }) {
                       backgroundColor: "#d9d9db", // 選択されているアイテムの背景色を指定
                       color: "black", // 選択されているアイテムのテキスト色を指定
                     },
+                    "& .MuiToggleButton-root.Mui-selected:hover": {
+                      backgroundColor: "#d9d9db", // ホバー時の背景色を指定
+                      color: "black", // ホバー時のテキスト色を指定
+                    },
                   }}
                 >
                   <ToggleButton
